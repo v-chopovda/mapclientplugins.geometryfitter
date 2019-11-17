@@ -25,17 +25,17 @@ class GeometricFitStep(WorkflowStepMountPoint):
         # Ports:
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#uses',
-                      'OpenCMISS model file location'))
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#file_location'))
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#uses',
-                      'OpenCMISS data file location'))
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#file_location'))
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#provides',
-                      'OpenCMISS model file location'))
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#file_location'))
         # Port data:
-        self._portData0 = None # OpenCMISS model file location
-        self._portData1 = None # OpenCMISS data file location
-        self._portData2 = None # OpenCMISS model file location
+        self._portData0 = None # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
+        self._portData1 = None # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
+        self._portData2 = None # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
         # Config:
         self._config = {}
         self._config['identifier'] = ''
@@ -59,9 +59,9 @@ class GeometricFitStep(WorkflowStepMountPoint):
         :param dataIn: The data to set for the port at the given index.
         """
         if index == 0:
-            self._portData0 = dataIn # OpenCMISS model file location
+            self._portData0 = dataIn # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
         elif index == 1:
-            self._portData1 = dataIn # OpenCMISS data file location
+            self._portData1 = dataIn # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
 
     def getPortData(self, index):
         """
@@ -71,7 +71,7 @@ class GeometricFitStep(WorkflowStepMountPoint):
 
         :param index: Index of the port to return.
         """
-        return self._portData2 # OpenCMISS model file location
+        return self._portData2 # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
 
     def configure(self):
         """
