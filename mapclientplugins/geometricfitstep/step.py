@@ -8,6 +8,8 @@ from PySide import QtGui
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.geometricfitstep.configuredialog import ConfigureDialog
+from mapclientplugins.geometricfitstep.model.geometricfitmodel import GeometricFitModel
+from mapclientplugins.geometricfitstep.view.geometricfitwidget import GeometricFitWidget
 
 
 class GeometricFitStep(WorkflowStepMountPoint):
@@ -33,12 +35,14 @@ class GeometricFitStep(WorkflowStepMountPoint):
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#provides',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#file_location'))
         # Port data:
-        self._portData0 = None # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
-        self._portData1 = None # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
-        self._portData2 = None # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
+        self._port0_inputZincModelFile = None  # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
+        self._port1_inputZincDataFile = None  # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
+        self._port2_outputZincModelFile = None  # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
         # Config:
         self._config = {}
         self._config['identifier'] = ''
+        self._model = None
+        self._view = None
 
     def execute(self):
         """
@@ -47,7 +51,12 @@ class GeometricFitStep(WorkflowStepMountPoint):
         may be connected up to a button in a widget for example.
         """
         # Put your execute step code here before calling the '_doneExecution' method.
-        self._doneExecution()
+        assert self._model is None
+        assert self._view is None
+        self._model = GeometricFitModel(self._port0_inputZincModelFile, self._port1_inputZincDataFile, self._location, self._config['identifier'])
+        self._view = GeometricFitWidget(self._model)
+        self._view.registerDoneExecution(self._doneExecution)
+        self._setCurrentWidget(self._view)
 
     def setPortData(self, index, dataIn):
         """
@@ -59,9 +68,9 @@ class GeometricFitStep(WorkflowStepMountPoint):
         :param dataIn: The data to set for the port at the given index.
         """
         if index == 0:
-            self._portData0 = dataIn # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
+            self._port0_inputZincModelFile = dataIn # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
         elif index == 1:
-            self._portData1 = dataIn # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
+            self._port1_inputZincDataFile = dataIn # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
 
     def getPortData(self, index):
         """
@@ -71,7 +80,7 @@ class GeometricFitStep(WorkflowStepMountPoint):
 
         :param index: Index of the port to return.
         """
-        return self._portData2 # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
+        return self._port2_outputZincModelFile # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
 
     def configure(self):
         """
