@@ -9,6 +9,7 @@ from opencmiss.zinc.graphics import Graphics
 from opencmiss.zinc.material import Material
 from opencmiss.zinc.node import Node
 from opencmiss.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_NORMALISED_WINDOW_FIT_LEFT
+from opencmiss.zinc.scenefilter import Scenefilter
 from opencmiss.zinc.result import RESULT_OK
 from mapclientplugins.geometricfitstep.utils import vectorops
 from scaffoldfitter.fitter import Fitter
@@ -34,6 +35,14 @@ class GeometricFitModel(object):
         self._initGraphicsModules()
         self._settings = {
             "displayAxes" : True,
+            "displayMarkerDataPoints" : True,
+            "displayMarkerDataNames" : False,
+            "displayMarkerDataProjections" : True,
+            "displayMarkerPoints" : True,
+            "displayMarkerNames" : False,
+            "displayDataPoints" : True,
+            "displayDataProjections" : True,
+            "displayDataProjectionPoints" : True,
             "displayNodePoints" : False,
             "displayNodeNumbers" : False,
             "displayNodeDerivatives" : False,
@@ -159,6 +168,55 @@ class GeometricFitModel(object):
         graphics = self.getScene().findGraphicsByName("displayNodeDerivatives" + nodeDerivativeLabel)
         graphics.setVisibilityFlag(show and self.isDisplayNodeDerivatives())
 
+
+    def isDisplayMarkerDataPoints(self):
+        return self._getVisibility("displayMarkerDataPoints")
+
+    def setDisplayMarkerDataPoints(self, show):
+        self._setVisibility("displayMarkerDataPoints", show)
+
+    def isDisplayMarkerDataNames(self):
+        return self._getVisibility("displayMarkerDataNames")
+
+    def setDisplayMarkerDataNames(self, show):
+        self._setVisibility("displayMarkerDataNames", show)
+
+    def isDisplayMarkerDataProjections(self):
+        return self._getVisibility("displayMarkerDataProjections")
+
+    def setDisplayMarkerDataProjections(self, show):
+        self._setVisibility("displayMarkerDataProjections", show)
+
+    def isDisplayMarkerPoints(self):
+        return self._getVisibility("displayMarkerPoints")
+
+    def setDisplayMarkerPoints(self, show):
+        self._setVisibility("displayMarkerPoints", show)
+
+    def isDisplayMarkerNames(self):
+        return self._getVisibility("displayMarkerNames")
+
+    def setDisplayMarkerNames(self, show):
+        self._setVisibility("displayMarkerNames", show)
+
+    def isDisplayDataPoints(self):
+        return self._getVisibility("displayDataPoints")
+
+    def setDisplayDataPoints(self, show):
+        self._setVisibility("displayDataPoints", show)
+
+    def isDisplayDataProjections(self):
+        return self._getVisibility("displayDataProjections")
+
+    def setDisplayDataProjections(self, show):
+        self._setVisibility("displayDataProjections", show)
+
+    def isDisplayDataProjectionPoints(self):
+        return self._getVisibility("displayDataProjectionPoints")
+
+    def setDisplayDataProjectionPoints(self, show):
+        self._setVisibility("displayDataProjectionPoints", show)
+
     def isDisplayNodeNumbers(self):
         return self._getVisibility("displayNodeNumbers")
 
@@ -280,6 +338,7 @@ class GeometricFitModel(object):
                 if maxScale == 0.0:
                     maxScale = 1.0
                 glyphWidth = 0.01*maxScale
+            glyphWidthSmall = 0.25*glyphWidth
 
         # make graphics
         scene = self._fitter.getRegion().getScene()
@@ -294,6 +353,134 @@ class GeometricFitModel(object):
             axes.setMaterial(self._materialmodule.findMaterialByName("grey50"))
             axes.setName("displayAxes")
             axes.setVisibilityFlag(self.isDisplayAxes())
+
+            # marker points, projections
+
+            markerGroup = self._fitter.getMarkerGroup()
+            markerDataGroup, markerDataCoordinates, markerDataName = self._fitter.getMarkerDataFields()
+            markerDataLocation, markerDataLocationCoordinates, markerDataDelta = self._fitter.getMarkerDataLocationFields()
+            markerNodeGroup, markerLocation, markerCoordinates, markerName = self._fitter.getMarkerModelFields()
+            markerDataLocationGroupField = self._fitter.getMarkerDataLocationGroupField()
+
+            markerDataPoints = scene.createGraphicsPoints()
+            markerDataPoints.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
+            if markerDataLocationGroupField:
+                markerDataPoints.setSubgroupField(markerDataLocationGroupField)
+            if markerDataCoordinates:
+                markerDataPoints.setCoordinateField(markerDataCoordinates)
+            pointattr = markerDataPoints.getGraphicspointattributes()
+            pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+            pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_CROSS)
+            markerDataPoints.setMaterial(self._materialmodule.findMaterialByName("yellow"))
+            markerDataPoints.setName("displayMarkerDataPoints")
+            markerDataPoints.setVisibilityFlag(self.isDisplayMarkerDataPoints())
+
+            markerDataNames = scene.createGraphicsPoints()
+            markerDataNames.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
+            if markerDataLocationGroupField:
+                markerDataNames.setSubgroupField(markerDataLocationGroupField)
+            if markerDataCoordinates:
+                markerDataNames.setCoordinateField(markerDataCoordinates)
+            pointattr = markerDataNames.getGraphicspointattributes()
+            pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+            pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_NONE)
+            if markerDataName:
+                pointattr.setLabelField(markerDataName)
+            markerDataNames.setMaterial(self._materialmodule.findMaterialByName("yellow"))
+            markerDataNames.setName("displayMarkerDataNames")
+            markerDataNames.setVisibilityFlag(self.isDisplayMarkerDataNames())
+
+            markerDataProjections = scene.createGraphicsPoints()
+            markerDataProjections.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
+            if markerDataLocationGroupField:
+                markerDataProjections.setSubgroupField(markerDataLocationGroupField)
+            if markerDataCoordinates:
+                markerDataProjections.setCoordinateField(markerDataCoordinates)
+            pointAttr = markerDataProjections.getGraphicspointattributes()
+            pointAttr.setGlyphShapeType(Glyph.SHAPE_TYPE_LINE)
+            pointAttr.setBaseSize([0.0,1.0,1.0])
+            pointAttr.setScaleFactors([1.0,0.0,0.0])
+            if markerDataDelta:
+                pointAttr.setOrientationScaleField(markerDataDelta)
+            markerDataProjections.setMaterial(self._materialmodule.findMaterialByName("magenta"))
+            markerDataProjections.setName("displayMarkerDataProjections")
+            markerDataProjections.setVisibilityFlag(self.isDisplayMarkerDataProjections())
+
+            markerPoints = scene.createGraphicsPoints()
+            markerPoints.setFieldDomainType(Field.DOMAIN_TYPE_NODES)
+            if markerGroup:
+                markerPoints.setSubgroupField(markerGroup)
+            if markerCoordinates:
+                markerPoints.setCoordinateField(markerCoordinates)
+            pointattr = markerPoints.getGraphicspointattributes()
+            pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+            pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_CROSS)
+            markerPoints.setMaterial(self._materialmodule.findMaterialByName("white"))
+            markerPoints.setName("displayMarkerPoints")
+            markerPoints.setVisibilityFlag(self.isDisplayMarkerPoints())
+
+            markerNames = scene.createGraphicsPoints()
+            markerNames.setFieldDomainType(Field.DOMAIN_TYPE_NODES)
+            if markerGroup:
+                markerNames.setSubgroupField(markerGroup)
+            if markerCoordinates:
+                markerNames.setCoordinateField(markerCoordinates)
+            pointattr = markerNames.getGraphicspointattributes()
+            pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+            pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_NONE)
+            if markerName:
+                pointattr.setLabelField(markerName)
+            markerNames.setMaterial(self._materialmodule.findMaterialByName("white"))
+            markerNames.setName("displayMarkerNames")
+            markerNames.setVisibilityFlag(self.isDisplayMarkerNames())
+
+            # data points, projections and projection points
+
+            meshDimension = 2
+            dataCoordinates = self._fitter.getDataCoordinatesField()
+            dataProjectionCoordinates = self._fitter.getDataProjectionCoordinatesField(meshDimension)
+            dataProjectionDelta = self._fitter.getDataProjectionDeltaField(meshDimension)
+            dataProjectionError = self._fitter.getDataProjectionErrorField(meshDimension)
+            dataPoints = scene.createGraphicsPoints()
+            dataPoints.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
+            if dataCoordinates:
+                dataPoints.setCoordinateField(dataCoordinates)
+            pointattr = dataPoints.getGraphicspointattributes()
+            pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+            pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_CROSS)
+            dataPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
+            dataPoints.setName("displayDataPoints")
+            dataPoints.setVisibilityFlag(self.isDisplayDataPoints())
+
+            dataProjections = scene.createGraphicsPoints()
+            dataProjections.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
+            if dataCoordinates:
+                dataProjections.setCoordinateField(dataCoordinates)
+            #dataProjections.setSubgroupField(self._activeDataPointGroupField)
+            pointAttr = dataProjections.getGraphicspointattributes()
+            pointAttr.setGlyphShapeType(Glyph.SHAPE_TYPE_LINE)
+            pointAttr.setBaseSize([0.0,1.0,1.0])
+            pointAttr.setScaleFactors([1.0,0.0,0.0])
+            if dataProjectionDelta:
+                pointAttr.setOrientationScaleField(dataProjectionDelta)
+            if dataProjectionError:
+                dataProjections.setDataField(dataProjectionError)
+            spectrummodule = scene.getSpectrummodule()
+            spectrum = spectrummodule.getDefaultSpectrum()
+            dataProjections.setSpectrum(spectrum)
+            dataProjections.setName("displayDataProjections")
+            dataPoints.setVisibilityFlag(self.isDisplayDataProjections())
+
+            dataProjectionPoints = scene.createGraphicsPoints()
+            dataProjectionPoints.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
+            if dataProjectionCoordinates:
+                dataProjectionPoints.setCoordinateField(dataProjectionCoordinates)
+            pointattr = dataProjectionPoints.getGraphicspointattributes()
+            pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+            pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_CROSS)
+            dataProjectionPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
+            dataProjectionPoints.setName("displayDataProjectionPoints")
+            dataProjectionPoints.setVisibilityFlag(self.isDisplayDataProjectionPoints())
 
             nodePoints = scene.createGraphicsPoints()
             nodePoints.setFieldDomainType(Field.DOMAIN_TYPE_NODES)
@@ -377,6 +564,12 @@ class GeometricFitModel(object):
             surfaces.setMaterial(surfacesMaterial)
             surfaces.setName("displaySurfaces")
             surfaces.setVisibilityFlag(self.isDisplaySurfaces())
+
+    def autorangeSpectrum(self):
+        scene = self._fitter.getRegion().getScene()
+        spectrummodule = scene.getSpectrummodule()
+        spectrum = spectrummodule.getDefaultSpectrum()
+        spectrum.autorange(scene, Scenefilter())
 
 # === Align Utilities ===
 

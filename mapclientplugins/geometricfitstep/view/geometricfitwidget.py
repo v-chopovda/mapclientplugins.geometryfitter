@@ -7,7 +7,7 @@ from mapclientplugins.geometricfitstep.view.ui_geometricfitwidget import Ui_Geom
 from opencmiss.zinc.scene import Scene
 from scaffoldfitter.fitterstepalign import FitterStepAlign
 from scaffoldfitter.fitterstepfit import FitterStepFit
-from scaffoldfitter.utils.zinc_utils import FieldIsCoordinateCapable
+from scaffoldfitter.utils.zinc_utils import FieldIsManagedCoordinates, FieldIsManagedGroup
 
 
 def QLineEdit_parseVector3(lineedit):
@@ -80,6 +80,14 @@ class GeometricFitWidget(QtGui.QWidget):
         if sceneviewer is not None:
             self._model.createGraphics()
             sceneviewer.setScene(self._model.getScene())
+            self._refreshGraphics()
+
+    def _refreshGraphics(self):
+        """
+        Autorange spectrum and force redraw of graphics.
+        """
+        self._model.autorangeSpectrum()
+        self._ui.alignmentsceneviewerwidget.paintGL()
 
     def _makeConnections(self):
         self._makeConnectionsGeneral()
@@ -143,6 +151,7 @@ class GeometricFitWidget(QtGui.QWidget):
                 self._sceneChanged()
                 for index in range(currentIndex):
                     fitterSteps[index].run()
+                    self._refreshGraphics()
                 for index in range(currentIndex, len(fitterSteps)):
                     fitterSteps[index].setHasRun(False)
             self._currentFitterStep = self._fitter.getNextFitterStep(self._currentFitterStep)
@@ -167,13 +176,13 @@ class GeometricFitWidget(QtGui.QWidget):
                     if not step.hasRun():
                         step.run()
                         self._refreshStepItem(step)
-                        # force update graphics here
+                        self._refreshGraphics()
             elif self._currentFitterStep.hasRun() and (not isChecked):
                 self._fitter.loadModel()
                 self._sceneChanged()
                 for index in range(currentIndex):
                     fitterSteps[index].run()
-                # force update graphics here
+                self._refreshGraphics()
                 for index in range(currentIndex, len(fitterSteps)):
                     step = fitterSteps[index]
                     if step.hasRun():
@@ -260,10 +269,16 @@ class GeometricFitWidget(QtGui.QWidget):
 
     def _makeConnectionsDisplay(self):
         self._ui.displayAxes_checkBox.clicked.connect(self._displayAxesClicked)
-        self._ui.displayElementAxes_checkBox.clicked.connect(self._displayElementAxesClicked)
-        self._ui.displayElementNumbers_checkBox.clicked.connect(self._displayElementNumbersClicked)
-        self._ui.displayLines_checkBox.clicked.connect(self._displayLinesClicked)
-        self._ui.displayLinesExterior_checkBox.clicked.connect(self._displayLinesExteriorClicked)
+        self._ui.displayMarkerDataPoints_checkBox.clicked.connect(self._displayMarkerDataPointsClicked)
+        self._ui.displayMarkerDataNames_checkBox.clicked.connect(self._displayMarkerDataNamesClicked)
+        self._ui.displayMarkerDataProjections_checkBox.clicked.connect(self._displayMarkerDataProjectionsClicked)
+        self._ui.displayMarkerPoints_checkBox.clicked.connect(self._displayMarkerPointsClicked)
+        self._ui.displayMarkerNames_checkBox.clicked.connect(self._displayMarkerNamesClicked)
+        self._ui.displayDataPoints_checkBox.clicked.connect(self._displayDataPointsClicked)
+        self._ui.displayDataProjections_checkBox.clicked.connect(self._displayDataProjectionsClicked)
+        self._ui.displayDataProjectionPoints_checkBox.clicked.connect(self._displayDataProjectionPointsClicked)
+        self._ui.displayNodePoints_checkBox.clicked.connect(self._displayNodePointsClicked)
+        self._ui.displayNodeNumbers_checkBox.clicked.connect(self._displayNodeNumbersClicked)
         self._ui.displayNodeDerivativeLabelsD1_checkBox.clicked.connect(self._displayNodeDerivativeLabelsD1Clicked)
         self._ui.displayNodeDerivativeLabelsD2_checkBox.clicked.connect(self._displayNodeDerivativeLabelsD2Clicked)
         self._ui.displayNodeDerivativeLabelsD3_checkBox.clicked.connect(self._displayNodeDerivativeLabelsD3Clicked)
@@ -272,8 +287,10 @@ class GeometricFitWidget(QtGui.QWidget):
         self._ui.displayNodeDerivativeLabelsD23_checkBox.clicked.connect(self._displayNodeDerivativeLabelsD23Clicked)
         self._ui.displayNodeDerivativeLabelsD123_checkBox.clicked.connect(self._displayNodeDerivativeLabelsD123Clicked)
         self._ui.displayNodeDerivatives_checkBox.clicked.connect(self._displayNodeDerivativesClicked)
-        self._ui.displayNodeNumbers_checkBox.clicked.connect(self._displayNodeNumbersClicked)
-        self._ui.displayNodePoints_checkBox.clicked.connect(self._displayNodePointsClicked)
+        self._ui.displayElementAxes_checkBox.clicked.connect(self._displayElementAxesClicked)
+        self._ui.displayElementNumbers_checkBox.clicked.connect(self._displayElementNumbersClicked)
+        self._ui.displayLines_checkBox.clicked.connect(self._displayLinesClicked)
+        self._ui.displayLinesExterior_checkBox.clicked.connect(self._displayLinesExteriorClicked)
         self._ui.displaySurfaces_checkBox.clicked.connect(self._displaySurfacesClicked)
         self._ui.displaySurfacesExterior_checkBox.clicked.connect(self._displaySurfacesExteriorClicked)
         self._ui.displaySurfacesTranslucent_checkBox.clicked.connect(self._displaySurfacesTranslucentClicked)
@@ -284,6 +301,14 @@ class GeometricFitWidget(QtGui.QWidget):
         Update display widgets to display settings for model graphics display.
         """
         self._ui.displayAxes_checkBox.setChecked(self._model.isDisplayAxes())
+        self._ui.displayMarkerDataPoints_checkBox.setChecked(self._model.isDisplayMarkerDataPoints())
+        self._ui.displayMarkerDataNames_checkBox.setChecked(self._model.isDisplayMarkerDataNames())
+        self._ui.displayMarkerDataProjections_checkBox.setChecked(self._model.isDisplayMarkerDataProjections())
+        self._ui.displayMarkerPoints_checkBox.setChecked(self._model.isDisplayMarkerPoints())
+        self._ui.displayMarkerNames_checkBox.setChecked(self._model.isDisplayMarkerNames())
+        self._ui.displayDataPoints_checkBox.setChecked(self._model.isDisplayDataPoints())
+        self._ui.displayDataProjections_checkBox.setChecked(self._model.isDisplayDataProjections())
+        self._ui.displayDataProjectionPoints_checkBox.setChecked(self._model.isDisplayDataProjectionPoints())
         self._ui.displayNodePoints_checkBox.setChecked(self._model.isDisplayNodePoints())
         self._ui.displayNodeNumbers_checkBox.setChecked(self._model.isDisplayNodeNumbers())
         self._ui.displayNodeDerivativeLabelsD1_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels("D1"))
@@ -305,6 +330,30 @@ class GeometricFitWidget(QtGui.QWidget):
 
     def _displayAxesClicked(self):
         self._model.setDisplayAxes(self._ui.displayAxes_checkBox.isChecked())
+
+    def _displayMarkerDataPointsClicked(self):
+        self._model.setDisplayMarkerDataPoints(self._ui.displayMarkerDataPoints_checkBox.isChecked())
+
+    def _displayMarkerDataNamesClicked(self):
+        self._model.setDisplayMarkerDataNames(self._ui.displayMarkerDataNames_checkBox.isChecked())
+
+    def _displayMarkerDataProjectionsClicked(self):
+        self._model.setDisplayMarkerDataProjections(self._ui.displayMarkerDataProjections_checkBox.isChecked())
+
+    def _displayMarkerPointsClicked(self):
+        self._model.setDisplayMarkerPoints(self._ui.displayMarkerPoints_checkBox.isChecked())
+
+    def _displayMarkerNamesClicked(self):
+        self._model.setDisplayMarkerNames(self._ui.displayMarkerNames_checkBox.isChecked())
+
+    def _displayDataPointsClicked(self):
+        self._model.setDisplayDataPoints(self._ui.displayDataPoints_checkBox.isChecked())
+
+    def _displayDataProjectionsClicked(self):
+        self._model.setDisplayDataProjections(self._ui.displayDataProjections_checkBox.isChecked())
+
+    def _displayDataProjectionPointsClicked(self):
+        self._model.setDisplayDataProjectionPoints(self._ui.displayDataProjectionPoints_checkBox.isChecked())
 
     def _displayNodePointsClicked(self):
         self._model.setDisplayNodePoints(self._ui.displayNodePoints_checkBox.isChecked())
@@ -371,10 +420,13 @@ class GeometricFitWidget(QtGui.QWidget):
         """
         self._ui.configModelCoordinates_fieldChooser.setRegion(self._region)
         self._ui.configModelCoordinates_fieldChooser.setNullObjectName("-")
-        self._ui.configModelCoordinates_fieldChooser.setConditional(FieldIsCoordinateCapable)
+        self._ui.configModelCoordinates_fieldChooser.setConditional(FieldIsManagedCoordinates)
         self._ui.configDataCoordinates_fieldChooser.setRegion(self._region)
         self._ui.configDataCoordinates_fieldChooser.setNullObjectName("-")
-        self._ui.configDataCoordinates_fieldChooser.setConditional(FieldIsCoordinateCapable)
+        self._ui.configDataCoordinates_fieldChooser.setConditional(FieldIsManagedCoordinates)
+        self._ui.configMarkerGroup_fieldChooser.setRegion(self._region)
+        self._ui.configMarkerGroup_fieldChooser.setNullObjectName("-")
+        self._ui.configMarkerGroup_fieldChooser.setConditional(FieldIsManagedGroup)
 
     def _updateConfigWidgets(self):
         """
@@ -382,11 +434,12 @@ class GeometricFitWidget(QtGui.QWidget):
         """
         self._ui.configModelCoordinates_fieldChooser.setField(self._fitter.getModelCoordinatesField())
         self._ui.configDataCoordinates_fieldChooser.setField(self._fitter.getDataCoordinatesField())
+        self._ui.configMarkerGroup_fieldChooser.setField(self._fitter.getMarkerGroup())
 
     def _makeConnectionsConfig(self):
-        #QtCore.QObject.connect(self.coordinate_field_chooser, QtCore.SIGNAL("currentIndexChanged(int)"), GraphicsEditorWidget.coordinateFieldChanged)
         self._ui.configModelCoordinates_fieldChooser.currentIndexChanged.connect(self._configModelCoordinatesFieldChanged)
         self._ui.configDataCoordinates_fieldChooser.currentIndexChanged.connect(self._configDataCoordinatesFieldChanged)
+        self._ui.configMarkerGroup_fieldChooser.currentIndexChanged.connect(self._configMarkerGroupChanged)
 
     def _configModelCoordinatesFieldChanged(self, index):
         """
@@ -403,6 +456,14 @@ class GeometricFitWidget(QtGui.QWidget):
         field = self._ui.configDataCoordinates_fieldChooser.getField()
         if field:
             self._fitter.setDataCoordinatesField(field)
+
+    def _configMarkerGroupChanged(self, index):
+        """
+        Callback for change in marker group field chooser widget.
+        """
+        group = self._ui.configMarkerGroup_fieldChooser.getField()
+        if group:
+            self._fitter.setMarkerGroup(group)
 
 # === align widgets ===
 
@@ -459,6 +520,8 @@ class GeometricFitWidget(QtGui.QWidget):
 # === fit widgets ===
 
     def _makeConnectionsFit(self):
+        self._ui.fitMarkerWeight_lineEdit.editingFinished.connect(self._fitMarkerWeightEntered)
+
         self._ui.fitStrainPenalty_lineEdit.editingFinished.connect(self._fitStrainPenaltyEntered)
         self._ui.fitCurvaturePenalty_lineEdit.editingFinished.connect(self._fitCurvaturePenaltyEntered)
         self._ui.fitEdgeDiscontinuityPenalty_lineEdit.editingFinished.connect(self._fitEdgeDiscontinuityPenaltyEntered)
@@ -474,12 +537,22 @@ class GeometricFitWidget(QtGui.QWidget):
         Update fit widgets to display parameters from fit step.
         """
         fit = self._getFit()
-        realFormat = "{:.4g}"
+        #realFormat = "{:.4g}"
+        realFormat = "{:.16}"
+        self._ui.fitMarkerWeight_lineEdit.setText(realFormat.format(fit.getMarkerWeight()))
         self._ui.fitStrainPenalty_lineEdit.setText(realFormat.format(fit.getStrainPenaltyWeight()))
         self._ui.fitCurvaturePenalty_lineEdit.setText(realFormat.format(fit.getCurvaturePenaltyWeight()))
         self._ui.fitEdgeDiscontinuityPenalty_lineEdit.setText(realFormat.format(fit.getEdgeDiscontinuityPenaltyWeight()))
         self._ui.fitIterations_spinBox.setValue(fit.getNumberOfIterations())
         self._ui.fitUpdateReferenceState_checkBox.setCheckState(QtCore.Qt.Checked if fit.isUpdateReferenceState() else QtCore.Qt.Unchecked)
+
+    def _fitMarkerWeightEntered(self):
+        value = QLineEdit_parseRealNonNegative(self._ui.fitMarkerWeight_lineEdit)
+        if value >= 0.0:
+            self._getFit().setMarkerWeight(value)
+        else:
+            print("Invalid marker weight; must be non-negative")
+            self._updateFitWidgets()
 
     def _fitStrainPenaltyEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.fitStrainPenalty_lineEdit)
