@@ -70,7 +70,9 @@ class GeometricFitWidget(QtGui.QWidget):
         self._sceneChanged()
         sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
         if sceneviewer is not None:
-             sceneviewer.viewAll()
+            sceneviewer.setTransparencyMode(sceneviewer.TRANSPARENCY_MODE_SLOW)
+            self._autoPerturbLines()
+            sceneviewer.viewAll()
 
     def _sceneChanged(self):
         """
@@ -537,7 +539,6 @@ class GeometricFitWidget(QtGui.QWidget):
         Update fit widgets to display parameters from fit step.
         """
         fit = self._getFit()
-        #realFormat = "{:.4g}"
         realFormat = "{:.16}"
         self._ui.fitMarkerWeight_lineEdit.setText(realFormat.format(fit.getMarkerWeight()))
         self._ui.fitStrainPenalty_lineEdit.setText(realFormat.format(fit.getStrainPenaltyWeight()))
