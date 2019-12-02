@@ -17,7 +17,7 @@ def QLineEdit_parseVector3(lineedit):
     """
     try:
         text = lineedit.text()
-        values = [ float(value) for value in text.split(',') ]
+        values = [ float(value) for value in text.split(",") ]
         if len(values) == 3:
             return values
     except:
@@ -61,18 +61,25 @@ class GeometricFitWidget(QtGui.QWidget):
         self._updateGeneralWidgets()
         self._updateConfigWidgets()
         self._updateDisplayWidgets()
-        self._model.createGraphics()
         self._makeConnections()
 
     def _graphicsInitialized(self):
         """
         Callback for when SceneviewerWidget is initialised
-        Set custom scene from model
+        """
+        self._sceneChanged()
+        sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
+        if sceneviewer is not None:
+             sceneviewer.viewAll()
+
+    def _sceneChanged(self):
+        """
+        Set custom scene from model.
         """
         sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
         if sceneviewer is not None:
+            self._model.createGraphics()
             sceneviewer.setScene(self._model.getScene())
-            sceneviewer.viewAll()
 
     def _makeConnections(self):
         self._makeConnectionsGeneral()
@@ -99,12 +106,12 @@ class GeometricFitWidget(QtGui.QWidget):
         self._ui.stepsAddAlign_pushButton.clicked.connect(self._stepsAddAlignClicked)
         self._ui.stepsAddFit_pushButton.clicked.connect(self._stepsAddFitClicked)
         self._ui.stepsDelete_pushButton.clicked.connect(self._stepsDeleteClicked)
-        self._ui.steps_listView.clicked.connect(self._stepsListItemClicked)
+        self._ui.steps_listView.clicked[QtCore.QModelIndex].connect(self._stepsListItemClicked)
         self._ui.done_pushButton.clicked.connect(self._doneClicked)
         self._ui.viewAll_pushButton.clicked.connect(self._viewAllClicked)
 
     def _updateGeneralWidgets(self):
-        self._ui.identifier_label.setText('Identifier:  ' + self._model.getIdentifier())
+        self._ui.identifier_label.setText("Identifier:  " + self._model.getIdentifier())
         self._buildStepsList()
 
     def _stepsAddAlignClicked(self):
@@ -126,44 +133,65 @@ class GeometricFitWidget(QtGui.QWidget):
         Delete the currently selected step, except for config.
         Select next step after, or before if none.
         """
-        #print("_stepsDeleteClicked")
         destroyFitterStep = self._currentFitterStep
         if destroyFitterStep:
+            if destroyFitterStep.hasRun():
+                # Undo to before step being destroyed
+                fitterSteps = self._fitter.getFitterSteps()
+                currentIndex = fitterSteps.index(self._currentFitterStep)
+                self._fitter.loadModel()
+                self._sceneChanged()
+                for index in range(currentIndex):
+                    fitterSteps[index].run()
+                for index in range(currentIndex, len(fitterSteps)):
+                    fitterSteps[index].setHasRun(False)
             self._currentFitterStep = self._fitter.getNextFitterStep(self._currentFitterStep)
             destroyFitterStep.destroy()
             self._buildStepsList()
 
-    def _stepsListItemClicked(self):
+    def _stepsListItemClicked(self, modelIndex):
         """
         Changes current step and possibly changes checked/run status.
         """
-        modelIndex = self._ui.steps_listView.currentIndex()
         model = modelIndex.model()
-        item = model.item(modelIndex.row())
-        #print("_stepsListItemClicked", item.checkState() == QtCore.Qt.Checked)
-        step = item.data()
-        self._currentFitterStep = step
+        item = model.itemFromIndex(modelIndex)
+        isChecked = item.checkState() == QtCore.Qt.Checked
+        self._currentFitterStep = item.data()
+        if self._currentFitterStep:
+            fitterSteps = self._fitter.getFitterSteps()
+            currentIndex = fitterSteps.index(self._currentFitterStep)
+            #print("currentIndex", currentIndex, isChecked)
+            if (not self._currentFitterStep.hasRun()) and isChecked:
+                for index in range(currentIndex + 1):
+                    step = fitterSteps[index]
+                    if not step.hasRun():
+                        step.run()
+                        self._refreshStepItem(step)
+                        # force update graphics here
+            elif self._currentFitterStep.hasRun() and (not isChecked):
+                self._fitter.loadModel()
+                self._sceneChanged()
+                for index in range(currentIndex):
+                    fitterSteps[index].run()
+                # force update graphics here
+                for index in range(currentIndex, len(fitterSteps)):
+                    step = fitterSteps[index]
+                    if step.hasRun():
+                        step.setHasRun(False)
+                        self._refreshStepItem(step)
         self._updateFitterStepWidgets()
-        #visibilityFlag = item.checkState() == QtCore.Qt.Checked
-        #graphics.setVisibilityFlag(visibilityFlag)
-        #selectedModelIndex = self._ui.steps_listView.currentIndex()
-        #selectedItem = model.item(selectedModelIndex.row())
-        #selectedGraphics = selectedItem.data()
-        #if graphics == selectedGraphics:
-        #    self._ui.graphics_editor.setGraphics(selectedGraphics)
 
     def _buildStepsList(self):
-        '''
+        """
         Fill the graphics list view with the list of graphics for current region/scene
-        '''
-        #GRC store in self?
+        """
         self._stepsItems = QtGui.QStandardItemModel(self._ui.steps_listView)
         selectedIndex = None
         fitter = self._model.getFitter()
         # fitter configuration appears as first step called "Config"
         item = QtGui.QStandardItem("Config")
         item.setData(None)
-        item.setCheckable(True)
+        item.setCheckable(False)
         item.setEditable(False)
         self._stepsItems.appendRow(item)
         selectedIndex = self._stepsItems.indexFromItem(item)
@@ -185,6 +213,17 @@ class GeometricFitWidget(QtGui.QWidget):
         self._ui.steps_listView.setCurrentIndex(selectedIndex)
         self._ui.steps_listView.show()
         self._updateFitterStepWidgets()
+
+    def _refreshStepItem(self, step):
+        """
+        Update check state and selection of step in steps list view.
+        :param stepIndex: Row index of item in step items.
+        """
+        item = self._stepsItems.item(self._fitter.getFitterSteps().index(step) + 1)
+        item.setCheckState(QtCore.Qt.Checked if step.hasRun() else QtCore.Qt.Unchecked)
+        step = item.data()
+        if step == self._currentFitterStep:
+            self._ui.steps_listView.setCurrentIndex(self._stepsItems.indexFromItem(item))
 
     def _updateFitterStepWidgets(self):
         """
@@ -247,13 +286,13 @@ class GeometricFitWidget(QtGui.QWidget):
         self._ui.displayAxes_checkBox.setChecked(self._model.isDisplayAxes())
         self._ui.displayNodePoints_checkBox.setChecked(self._model.isDisplayNodePoints())
         self._ui.displayNodeNumbers_checkBox.setChecked(self._model.isDisplayNodeNumbers())
-        self._ui.displayNodeDerivativeLabelsD1_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels('D1'))
-        self._ui.displayNodeDerivativeLabelsD2_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels('D2'))
-        self._ui.displayNodeDerivativeLabelsD3_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels('D3'))
-        self._ui.displayNodeDerivativeLabelsD12_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels('D12'))
-        self._ui.displayNodeDerivativeLabelsD13_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels('D13'))
-        self._ui.displayNodeDerivativeLabelsD23_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels('D23'))
-        self._ui.displayNodeDerivativeLabelsD123_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels('D123'))
+        self._ui.displayNodeDerivativeLabelsD1_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels("D1"))
+        self._ui.displayNodeDerivativeLabelsD2_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels("D2"))
+        self._ui.displayNodeDerivativeLabelsD3_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels("D3"))
+        self._ui.displayNodeDerivativeLabelsD12_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels("D12"))
+        self._ui.displayNodeDerivativeLabelsD13_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels("D13"))
+        self._ui.displayNodeDerivativeLabelsD23_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels("D23"))
+        self._ui.displayNodeDerivativeLabelsD123_checkBox.setChecked(self._model.isDisplayNodeDerivativeLabels("D123"))
         self._ui.displayNodeDerivatives_checkBox.setChecked(self._model.isDisplayNodeDerivatives())
         self._ui.displayElementNumbers_checkBox.setChecked(self._model.isDisplayElementNumbers())
         self._ui.displayElementAxes_checkBox.setChecked(self._model.isDisplayElementAxes())
@@ -277,25 +316,25 @@ class GeometricFitWidget(QtGui.QWidget):
         self._model.setDisplayNodeDerivatives(self._ui.displayNodeDerivatives_checkBox.isChecked())
 
     def _displayNodeDerivativeLabelsD1Clicked(self):
-        self._model.setDisplayNodeDerivativeLabels('D1', self._ui.displayNodeDerivativeLabelsD1_checkBox.isChecked())
+        self._model.setDisplayNodeDerivativeLabels("D1", self._ui.displayNodeDerivativeLabelsD1_checkBox.isChecked())
 
     def _displayNodeDerivativeLabelsD2Clicked(self):
-        self._model.setDisplayNodeDerivativeLabels('D2', self._ui.displayNodeDerivativeLabelsD2_checkBox.isChecked())
+        self._model.setDisplayNodeDerivativeLabels("D2", self._ui.displayNodeDerivativeLabelsD2_checkBox.isChecked())
 
     def _displayNodeDerivativeLabelsD3Clicked(self):
-        self._model.setDisplayNodeDerivativeLabels('D3', self._ui.displayNodeDerivativeLabelsD3_checkBox.isChecked())
+        self._model.setDisplayNodeDerivativeLabels("D3", self._ui.displayNodeDerivativeLabelsD3_checkBox.isChecked())
 
     def _displayNodeDerivativeLabelsD12Clicked(self):
-        self._model.setDisplayNodeDerivativeLabels('D12', self._ui.displayNodeDerivativeLabelsD12_checkBox.isChecked())
+        self._model.setDisplayNodeDerivativeLabels("D12", self._ui.displayNodeDerivativeLabelsD12_checkBox.isChecked())
 
     def _displayNodeDerivativeLabelsD13Clicked(self):
-        self._model.setDisplayNodeDerivativeLabels('D13', self._ui.displayNodeDerivativeLabelsD13_checkBox.isChecked())
+        self._model.setDisplayNodeDerivativeLabels("D13", self._ui.displayNodeDerivativeLabelsD13_checkBox.isChecked())
 
     def _displayNodeDerivativeLabelsD23Clicked(self):
-        self._model.setDisplayNodeDerivativeLabels('D23', self._ui.displayNodeDerivativeLabelsD23_checkBox.isChecked())
+        self._model.setDisplayNodeDerivativeLabels("D23", self._ui.displayNodeDerivativeLabelsD23_checkBox.isChecked())
 
     def _displayNodeDerivativeLabelsD123Clicked(self):
-        self._model.setDisplayNodeDerivativeLabels('D123', self._ui.displayNodeDerivativeLabelsD123_checkBox.isChecked())
+        self._model.setDisplayNodeDerivativeLabels("D123", self._ui.displayNodeDerivativeLabelsD123_checkBox.isChecked())
 
     def _displayElementAxesClicked(self):
         self._model.setDisplayElementAxes(self._ui.displayElementAxes_checkBox.isChecked())
@@ -331,10 +370,10 @@ class GeometricFitWidget(QtGui.QWidget):
         Set up config widgets and display values from fitter object.
         """
         self._ui.configModelCoordinates_fieldChooser.setRegion(self._region)
-        self._ui.configModelCoordinates_fieldChooser.setNullObjectName('-')
+        self._ui.configModelCoordinates_fieldChooser.setNullObjectName("-")
         self._ui.configModelCoordinates_fieldChooser.setConditional(FieldIsCoordinateCapable)
         self._ui.configDataCoordinates_fieldChooser.setRegion(self._region)
-        self._ui.configDataCoordinates_fieldChooser.setNullObjectName('-')
+        self._ui.configDataCoordinates_fieldChooser.setNullObjectName("-")
         self._ui.configDataCoordinates_fieldChooser.setConditional(FieldIsCoordinateCapable)
 
     def _updateConfigWidgets(self):

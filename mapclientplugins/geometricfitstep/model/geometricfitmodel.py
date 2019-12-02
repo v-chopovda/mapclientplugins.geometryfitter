@@ -15,7 +15,7 @@ from scaffoldfitter.fitter import Fitter
 from scaffoldfitter.utils.zinc_utils import ZincCacheChanges, evaluateNodesetCoordinatesRange
 
 
-nodeDerivativeLabels = [ 'D1', 'D2', 'D3', 'D12', 'D13', 'D23', 'D123' ]
+nodeDerivativeLabels = [ "D1", "D2", "D3", "D12", "D13", "D23", "D123" ]
 
 class GeometricFitModel(object):
     """
@@ -27,26 +27,25 @@ class GeometricFitModel(object):
         :param location: Path to folder for mapclient step name.
         """
         self._fitter = Fitter(inputZincModelFile, inputZincDataFile)
+        #self._fitter.setDiagnosticLevel(1)
         self._location = os.path.join(location, identifier)
         self._identifier = identifier
         self._context = self._fitter.getContext()
-        self._region = self._fitter.getRegion()
-        self._scene = self._region.getScene()
         self._initGraphicsModules()
         self._settings = {
-            'displayAxes' : True,
-            'displayNodePoints' : False,
-            'displayNodeNumbers' : False,
-            'displayNodeDerivatives' : False,
-            'displayNodeDerivativeLabels' : nodeDerivativeLabels[0:3],
-            'displayElementNumbers' : False,
-            'displayElementAxes' : False,
-            'displayLines' : True,
-            'displayLinesExterior' : False,
-            'displaySurfaces' : True,
-            'displaySurfacesExterior' : True,
-            'displaySurfacesTranslucent' : True,
-            'displaySurfacesWireframe' : False
+            "displayAxes" : True,
+            "displayNodePoints" : False,
+            "displayNodeNumbers" : False,
+            "displayNodeDerivatives" : False,
+            "displayNodeDerivativeLabels" : nodeDerivativeLabels[0:3],
+            "displayElementNumbers" : False,
+            "displayElementAxes" : False,
+            "displayLines" : True,
+            "displayLinesExterior" : False,
+            "displaySurfaces" : True,
+            "displaySurfacesExterior" : True,
+            "displaySurfacesTranslucent" : True,
+            "displaySurfacesWireframe" : False
         }
 
     def _initGraphicsModules(self):
@@ -54,7 +53,7 @@ class GeometricFitModel(object):
         with ZincCacheChanges(self._materialmodule):
             self._materialmodule.defineStandardMaterials()
             solid_blue = self._materialmodule.createMaterial()
-            solid_blue.setName('solid_blue')
+            solid_blue.setName("solid_blue")
             solid_blue.setManaged(True)
             solid_blue.setAttributeReal3(Material.ATTRIBUTE_AMBIENT, [ 0.0, 0.2, 0.6 ])
             solid_blue.setAttributeReal3(Material.ATTRIBUTE_DIFFUSE, [ 0.0, 0.7, 1.0 ])
@@ -62,7 +61,7 @@ class GeometricFitModel(object):
             solid_blue.setAttributeReal3(Material.ATTRIBUTE_SPECULAR, [ 0.1, 0.1, 0.1 ])
             solid_blue.setAttributeReal(Material.ATTRIBUTE_SHININESS , 0.2)
             trans_blue = self._materialmodule.createMaterial()
-            trans_blue.setName('trans_blue')
+            trans_blue.setName("trans_blue")
             trans_blue.setManaged(True)
             trans_blue.setAttributeReal3(Material.ATTRIBUTE_AMBIENT, [ 0.0, 0.2, 0.6 ])
             trans_blue.setAttributeReal3(Material.ATTRIBUTE_DIFFUSE, [ 0.0, 0.7, 1.0 ])
@@ -85,63 +84,67 @@ class GeometricFitModel(object):
     def getFitter(self):
         return self._fitter
 
+    def getRegion(self):
+        return self._fitter.getRegion()
+
     def getScene(self):
-        return self._scene
+        return self._fitter.getRegion().getScene()
 
     def _getVisibility(self, graphicsName):
         return self._settings[graphicsName]
 
     def _setVisibility(self, graphicsName, show):
         self._settings[graphicsName] = show
-        graphics = self._scene.findGraphicsByName(graphicsName)
+        graphics = self.getScene().findGraphicsByName(graphicsName)
         graphics.setVisibilityFlag(show)
 
     def isDisplayAxes(self):
-        return self._getVisibility('displayAxes')
+        return self._getVisibility("displayAxes")
 
     def setDisplayAxes(self, show):
-        self._setVisibility('displayAxes', show)
+        self._setVisibility("displayAxes", show)
 
     def isDisplayElementNumbers(self):
-        return self._getVisibility('displayElementNumbers')
+        return self._getVisibility("displayElementNumbers")
 
     def setDisplayElementNumbers(self, show):
-        self._setVisibility('displayElementNumbers', show)
+        self._setVisibility("displayElementNumbers", show)
 
     def isDisplayLines(self):
-        return self._getVisibility('displayLines')
+        return self._getVisibility("displayLines")
 
     def setDisplayLines(self, show):
-        self._setVisibility('displayLines', show)
+        self._setVisibility("displayLines", show)
 
     def isDisplayLinesExterior(self):
-        return self._settings['displayLinesExterior']
+        return self._settings["displayLinesExterior"]
 
     def setDisplayLinesExterior(self, isExterior):
-        self._settings['displayLinesExterior'] = isExterior
-        lines = self._scene.findGraphicsByName('displayLines')
+        self._settings["displayLinesExterior"] = isExterior
+        lines = self.getScene().findGraphicsByName("displayLines")
         lines.setExterior(self.isDisplayLinesExterior())
 
     def isDisplayNodeDerivatives(self):
-        return self._getVisibility('displayNodeDerivatives')
+        return self._getVisibility("displayNodeDerivatives")
 
     def setDisplayNodeDerivatives(self, show):
-        self._settings['displayNodeDerivatives'] = show
+        self._settings["displayNodeDerivatives"] = show
+        scene = self.getScene()
         for nodeDerivativeLabel in nodeDerivativeLabels:
-            graphics = self._scene.findGraphicsByName('displayNodeDerivatives' + nodeDerivativeLabel)
+            graphics = scene.findGraphicsByName("displayNodeDerivatives" + nodeDerivativeLabel)
             graphics.setVisibilityFlag(show and self.isDisplayNodeDerivativeLabels(nodeDerivativeLabel))
 
     def isDisplayNodeDerivativeLabels(self, nodeDerivativeLabel):
-        '''
-        :param nodeDerivativeLabel: Label from nodeDerivativeLabels ('D1', 'D2' ...)
-        '''
-        return nodeDerivativeLabel in self._settings['displayNodeDerivativeLabels']
+        """
+        :param nodeDerivativeLabel: Label from nodeDerivativeLabels ("D1", "D2" ...)
+        """
+        return nodeDerivativeLabel in self._settings["displayNodeDerivativeLabels"]
 
     def setDisplayNodeDerivativeLabels(self, nodeDerivativeLabel, show):
-        '''
-        :param nodeDerivativeLabel: Label from nodeDerivativeLabels ('D1', 'D2' ...)
-        '''
-        shown = nodeDerivativeLabel in self._settings['displayNodeDerivativeLabels']
+        """
+        :param nodeDerivativeLabel: Label from nodeDerivativeLabels ("D1", "D2" ...)
+        """
+        shown = nodeDerivativeLabel in self._settings["displayNodeDerivativeLabels"]
         if show:
             if not shown:
                 # keep in same order as nodeDerivativeLabels
@@ -149,69 +152,70 @@ class GeometricFitModel(object):
                 for label in nodeDerivativeLabels:
                     if (label == nodeDerivativeLabel) or self.isDisplayNodeDerivativeLabels(label):
                         nodeDerivativeLabels.append(label)
-                self._settings['displayNodeDerivativeLabels'] = nodeDerivativeLabels
+                self._settings["displayNodeDerivativeLabels"] = nodeDerivativeLabels
         else:
             if shown:
-                self._settings['displayNodeDerivativeLabels'].remove(nodeDerivativeLabel)
-        graphics = self._scene.findGraphicsByName('displayNodeDerivatives' + nodeDerivativeLabel)
+                self._settings["displayNodeDerivativeLabels"].remove(nodeDerivativeLabel)
+        graphics = self.getScene().findGraphicsByName("displayNodeDerivatives" + nodeDerivativeLabel)
         graphics.setVisibilityFlag(show and self.isDisplayNodeDerivatives())
 
     def isDisplayNodeNumbers(self):
-        return self._getVisibility('displayNodeNumbers')
+        return self._getVisibility("displayNodeNumbers")
 
     def setDisplayNodeNumbers(self, show):
-        self._setVisibility('displayNodeNumbers', show)
+        self._setVisibility("displayNodeNumbers", show)
 
     def isDisplayNodePoints(self):
-        return self._getVisibility('displayNodePoints')
+        return self._getVisibility("displayNodePoints")
 
     def setDisplayNodePoints(self, show):
-        self._setVisibility('displayNodePoints', show)
+        self._setVisibility("displayNodePoints", show)
 
     def isDisplaySurfaces(self):
-        return self._getVisibility('displaySurfaces')
+        return self._getVisibility("displaySurfaces")
 
     def setDisplaySurfaces(self, show):
-        self._setVisibility('displaySurfaces', show)
+        self._setVisibility("displaySurfaces", show)
 
     def isDisplaySurfacesExterior(self):
-        return self._settings['displaySurfacesExterior']
+        return self._settings["displaySurfacesExterior"]
 
     def setDisplaySurfacesExterior(self, isExterior):
-        self._settings['displaySurfacesExterior'] = isExterior
-        surfaces = self._scene.findGraphicsByName('displaySurfaces')
+        self._settings["displaySurfacesExterior"] = isExterior
+        surfaces = self.getScene().findGraphicsByName("displaySurfaces")
         surfaces.setExterior(self.isDisplaySurfacesExterior() if (self._fitter.getHighestDimensionMesh().getDimension() == 3) else False)
 
     def isDisplaySurfacesTranslucent(self):
-        return self._settings['displaySurfacesTranslucent']
+        return self._settings["displaySurfacesTranslucent"]
 
     def setDisplaySurfacesTranslucent(self, isTranslucent):
-        self._settings['displaySurfacesTranslucent'] = isTranslucent
-        surfaces = self._scene.findGraphicsByName('displaySurfaces')
-        surfacesMaterial = self._materialmodule.findMaterialByName('trans_blue' if isTranslucent else 'solid_blue')
+        self._settings["displaySurfacesTranslucent"] = isTranslucent
+        surfaces = self.getScene().findGraphicsByName("displaySurfaces")
+        surfacesMaterial = self._materialmodule.findMaterialByName("trans_blue" if isTranslucent else "solid_blue")
         surfaces.setMaterial(surfacesMaterial)
 
     def isDisplaySurfacesWireframe(self):
-        return self._settings['displaySurfacesWireframe']
+        return self._settings["displaySurfacesWireframe"]
 
     def setDisplaySurfacesWireframe(self, isWireframe):
-        self._settings['displaySurfacesWireframe'] = isWireframe
-        surfaces = self._scene.findGraphicsByName('displaySurfaces')
+        self._settings["displaySurfacesWireframe"] = isWireframe
+        surfaces = self.getScene().findGraphicsByName("displaySurfaces")
         surfaces.setRenderPolygonMode(Graphics.RENDER_POLYGON_MODE_WIREFRAME if isWireframe else Graphics.RENDER_POLYGON_MODE_SHADED)
 
     def isDisplayElementAxes(self):
-        return self._getVisibility('displayElementAxes')
+        return self._getVisibility("displayElementAxes")
 
     def setDisplayElementAxes(self, show):
-        self._setVisibility('displayElementAxes', show)
+        self._setVisibility("displayElementAxes", show)
 
     def needPerturbLines(self):
         """
         Return if solid surfaces are drawn with lines, requiring perturb lines to be activated.
         """
-        if self._region is None:
+        region = self.getRegion()
+        if region is None:
             return False
-        mesh2d = self._region.getFieldmodule().findMeshByDimension(2)
+        mesh2d = region.getFieldmodule().findMeshByDimension(2)
         if mesh2d.getSize() == 0:
             return False
         return self.isDisplayLines() and self.isDisplaySurfaces() and not self.isDisplaySurfacesTranslucent()
@@ -230,10 +234,8 @@ class GeometricFitModel(object):
                 Node.VALUE_LABEL_D_DS1, Node.VALUE_LABEL_D_DS2, Node.VALUE_LABEL_D_DS3,
                 Node.VALUE_LABEL_D2_DS1DS2, Node.VALUE_LABEL_D2_DS1DS3, Node.VALUE_LABEL_D2_DS2DS3, Node.VALUE_LABEL_D3_DS1DS2DS3 ] ]
             elementDerivativesField = fieldmodule.createFieldConcatenate([ fieldmodule.createFieldDerivative(modelCoordinates, d + 1) for d in range(meshDimension) ])
-            cmiss_number = fieldmodule.findFieldByName('cmiss_number')
-            if self._fitter.getMarkerGroup():
-                markerNodeGroup, markerLocation, markerName = self._fitter.getMarkerModelFields()
-                markerModelCoordinates = fieldmodule.createFieldEmbedded(modelCoordinates, markerLocation)
+            cmiss_number = fieldmodule.findFieldByName("cmiss_number")
+            markerNodeGroup, markerLocation, markerCoordinates, markerName = self._fitter.getMarkerModelFields()
 
             # get sizing for axes
             axesScale = 1.0
@@ -282,14 +284,15 @@ class GeometricFitModel(object):
         # make graphics
         scene = self._fitter.getRegion().getScene()
         with ZincCacheChanges(scene):
+            scene.removeAllGraphics()
 
             axes = scene.createGraphicsPoints()
             pointattr = axes.getGraphicspointattributes()
             pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_AXES_XYZ)
             pointattr.setBaseSize([ axesScale, axesScale, axesScale ])
-            pointattr.setLabelText(1, '  ' + str(axesScale))
-            axes.setMaterial(self._materialmodule.findMaterialByName('grey50'))
-            axes.setName('displayAxes')
+            pointattr.setLabelText(1, "  " + str(axesScale))
+            axes.setMaterial(self._materialmodule.findMaterialByName("grey50"))
+            axes.setName("displayAxes")
             axes.setVisibilityFlag(self.isDisplayAxes())
 
             nodePoints = scene.createGraphicsPoints()
@@ -298,8 +301,8 @@ class GeometricFitModel(object):
             pointattr = nodePoints.getGraphicspointattributes()
             pointattr.setBaseSize([glyphWidth, glyphWidth, glyphWidth])
             pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_SPHERE)
-            nodePoints.setMaterial(self._materialmodule.findMaterialByName('white'))
-            nodePoints.setName('displayNodePoints')
+            nodePoints.setMaterial(self._materialmodule.findMaterialByName("white"))
+            nodePoints.setName("displayNodePoints")
             nodePoints.setVisibilityFlag(self.isDisplayNodePoints())
 
             nodeNumbers = scene.createGraphicsPoints()
@@ -308,12 +311,12 @@ class GeometricFitModel(object):
             pointattr = nodeNumbers.getGraphicspointattributes()
             pointattr.setLabelField(cmiss_number)
             pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_NONE)
-            nodeNumbers.setMaterial(self._materialmodule.findMaterialByName('green'))
-            nodeNumbers.setName('displayNodeNumbers')
+            nodeNumbers.setMaterial(self._materialmodule.findMaterialByName("green"))
+            nodeNumbers.setName("displayNodeNumbers")
             nodeNumbers.setVisibilityFlag(self.isDisplayNodeNumbers())
 
-            # names in same order as nodeDerivativeLabels 'D1', 'D2', 'D3', 'D12', 'D13', 'D23', 'D123' and nodeDerivativeFields
-            nodeDerivativeMaterialNames = [ 'gold', 'silver', 'green', 'cyan', 'magenta', 'yellow', 'blue' ]
+            # names in same order as nodeDerivativeLabels "D1", "D2", "D3", "D12", "D13", "D23", "D123" and nodeDerivativeFields
+            nodeDerivativeMaterialNames = [ "gold", "silver", "green", "cyan", "magenta", "yellow", "blue" ]
             derivativeScales = [ 1.0, 1.0, 1.0, 0.5, 0.5, 0.5, 0.25 ]
             for i in range(len(nodeDerivativeLabels)):
                 nodeDerivativeLabel = nodeDerivativeLabels[i]
@@ -328,7 +331,7 @@ class GeometricFitModel(object):
                 material = self._materialmodule.findMaterialByName(nodeDerivativeMaterialNames[i])
                 nodeDerivatives.setMaterial(material)
                 nodeDerivatives.setSelectedMaterial(material)
-                nodeDerivatives.setName('displayNodeDerivatives' + nodeDerivativeLabel)
+                nodeDerivatives.setName("displayNodeDerivatives" + nodeDerivativeLabel)
                 nodeDerivatives.setVisibilityFlag(self.isDisplayNodeDerivatives() and self.isDisplayNodeDerivativeLabels(nodeDerivativeLabel))
 
             elementNumbers = scene.createGraphicsPoints()
@@ -337,8 +340,8 @@ class GeometricFitModel(object):
             pointattr = elementNumbers.getGraphicspointattributes()
             pointattr.setLabelField(cmiss_number)
             pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_NONE)
-            elementNumbers.setMaterial(self._materialmodule.findMaterialByName('cyan'))
-            elementNumbers.setName('displayElementNumbers')
+            elementNumbers.setMaterial(self._materialmodule.findMaterialByName("cyan"))
+            elementNumbers.setName("displayElementNumbers")
             elementNumbers.setVisibilityFlag(self.isDisplayElementNumbers())
 
             elementAxes = scene.createGraphicsPoints()
@@ -356,23 +359,23 @@ class GeometricFitModel(object):
             else:
                 pointattr.setBaseSize([0.0, 0.0, 0.0])
                 pointattr.setScaleFactors([0.25, 0.25, 0.25])
-            elementAxes.setMaterial(self._materialmodule.findMaterialByName('yellow'))
-            elementAxes.setName('displayElementAxes')
+            elementAxes.setMaterial(self._materialmodule.findMaterialByName("yellow"))
+            elementAxes.setName("displayElementAxes")
             elementAxes.setVisibilityFlag(self.isDisplayElementAxes())
 
             lines = scene.createGraphicsLines()
             lines.setCoordinateField(modelCoordinates)
             lines.setExterior(self.isDisplayLinesExterior())
-            lines.setName('displayLines')
+            lines.setName("displayLines")
             lines.setVisibilityFlag(self.isDisplayLines())
 
             surfaces = scene.createGraphicsSurfaces()
             surfaces.setCoordinateField(modelCoordinates)
             surfaces.setRenderPolygonMode(Graphics.RENDER_POLYGON_MODE_WIREFRAME if self.isDisplaySurfacesWireframe() else Graphics.RENDER_POLYGON_MODE_SHADED)
             surfaces.setExterior(self.isDisplaySurfacesExterior() if (meshDimension == 3) else False)
-            surfacesMaterial = self._materialmodule.findMaterialByName('trans_blue' if self.isDisplaySurfacesTranslucent() else 'solid_blue')
+            surfacesMaterial = self._materialmodule.findMaterialByName("trans_blue" if self.isDisplaySurfacesTranslucent() else "solid_blue")
             surfaces.setMaterial(surfacesMaterial)
-            surfaces.setName('displaySurfaces')
+            surfaces.setName("displaySurfaces")
             surfaces.setVisibilityFlag(self.isDisplaySurfaces())
 
 # === Align Utilities ===
@@ -380,25 +383,25 @@ class GeometricFitModel(object):
     def rotateModel(self, axis, angle):
         quat = vectorops.axisAngleToQuaternion(axis, angle)
         mat1 = vectorops.rotmx(quat)
-        mat2 = vectorops.eulerToRotationMatrix3(self._alignSettings['euler_angles'])
+        mat2 = vectorops.eulerToRotationMatrix3(self._alignSettings["euler_angles"])
         if self.isAlignMirror():
             mat2[0] = vectorops.mult(mat2[0], -1.0)
         newmat = vectorops.matrixmult(mat1, mat2)
         if self.isAlignMirror():
             newmat[0] = vectorops.mult(newmat[0], -1.0)
-        self._alignSettings['euler_angles'] = vectorops.rotationMatrix3ToEuler(newmat)
+        self._alignSettings["euler_angles"] = vectorops.rotationMatrix3ToEuler(newmat)
         self._applyAlignSettings()
 
     def scaleModel(self, factor):
-        self._alignSettings['scale'] *= factor
+        self._alignSettings["scale"] *= factor
         self._applyAlignSettings()
 
     def translateModel(self, relativeOffset):
-        self._alignSettings['offset'] = vectorops.add(self._alignSettings['offset'], relativeOffset)
+        self._alignSettings["offset"] = vectorops.add(self._alignSettings["offset"], relativeOffset)
         self._applyAlignSettings()
 
     def _autorangeSpectrum(self):
-        scene = self._scene
+        scene = self.getScene()
         spectrummodule = scene.getSpectrummodule()
         spectrum = spectrummodule.getDefaultSpectrum()
         scenefiltermodule = scene.getScenefiltermodule()

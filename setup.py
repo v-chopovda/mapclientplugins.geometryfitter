@@ -18,7 +18,12 @@ def readfile(filename, split=False):
 readme = readfile("README.rst", split=True)[3:]  # skip title
 # For requirements not hosted on PyPi place listings
 # into the 'requirements.txt' file.
-requires = []  # minimal requirements listing
+requires = [
+    # minimal requirements listing
+    #'ZincPythonTools @ https://api.github.com/repos/OpenCMISS-Bindings/ZincPythonTools/tarball/master',
+    #'scaffoldfitter @ https://api.github.com/repos/ABI-Software/scaffoldfitter/tarball/master',
+    #'opencmiss.utils @ https://api.github.com/repos/OpenCMISS-Bindings/opencmiss.utils/tarball/master',
+]
 source_license = readfile("LICENSE")
 
 

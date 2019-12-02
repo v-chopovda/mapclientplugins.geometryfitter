@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mapclientplugins\geometricfitstep\qt\geometricfitwidget.ui'
 #
-# Created: Wed Nov 27 13:39:21 2019
+# Created: Thu Nov 28 12:16:01 2019
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,7 +27,7 @@ class Ui_GeometricFitWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.dockWidget.sizePolicy().hasHeightForWidth())
         self.dockWidget.setSizePolicy(sizePolicy)
-        self.dockWidget.setMinimumSize(QtCore.QSize(811, 1617))
+        self.dockWidget.setMinimumSize(QtCore.QSize(0, 0))
         self.dockWidget.setFeatures(QtGui.QDockWidget.DockWidgetFloatable|QtGui.QDockWidget.DockWidgetMovable)
         self.dockWidget.setAllowedAreas(QtCore.Qt.AllDockWidgetAreas)
         self.dockWidget.setObjectName("dockWidget")
@@ -46,7 +46,7 @@ class Ui_GeometricFitWidget(object):
         self.steps_groupBox = QtGui.QGroupBox(self.dockWidgetContents)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(1)
+        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.steps_groupBox.sizePolicy().hasHeightForWidth())
         self.steps_groupBox.setSizePolicy(sizePolicy)
         self.steps_groupBox.setObjectName("steps_groupBox")
@@ -81,7 +81,7 @@ class Ui_GeometricFitWidget(object):
         self.config_groupBox = QtGui.QGroupBox(self.dockWidgetContents)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(1)
+        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.config_groupBox.sizePolicy().hasHeightForWidth())
         self.config_groupBox.setSizePolicy(sizePolicy)
         self.config_groupBox.setObjectName("config_groupBox")
@@ -103,7 +103,7 @@ class Ui_GeometricFitWidget(object):
         self.align_groupBox = QtGui.QGroupBox(self.dockWidgetContents)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(1)
+        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.align_groupBox.sizePolicy().hasHeightForWidth())
         self.align_groupBox.setSizePolicy(sizePolicy)
         self.align_groupBox.setObjectName("align_groupBox")
@@ -135,7 +135,7 @@ class Ui_GeometricFitWidget(object):
         self.fit_groupBox = QtGui.QGroupBox(self.dockWidgetContents)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(1)
+        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.fit_groupBox.sizePolicy().hasHeightForWidth())
         self.fit_groupBox.setSizePolicy(sizePolicy)
         self.fit_groupBox.setObjectName("fit_groupBox")
