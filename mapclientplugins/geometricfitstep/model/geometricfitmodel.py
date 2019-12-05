@@ -13,6 +13,7 @@ from opencmiss.zinc.scenefilter import Scenefilter
 from opencmiss.zinc.result import RESULT_OK
 from mapclientplugins.geometricfitstep.utils import vectorops
 from scaffoldfitter.fitter import Fitter
+from scaffoldfitter.fitterjson import decodeJSONFitterSteps
 from scaffoldfitter.utils.zinc_utils import ZincCacheChanges, evaluateNodesetCoordinatesRange
 
 
@@ -31,7 +32,6 @@ class GeometricFitModel(object):
         #self._fitter.setDiagnosticLevel(1)
         self._location = os.path.join(location, identifier)
         self._identifier = identifier
-        self._context = self._fitter.getContext()
         self._initGraphicsModules()
         self._settings = {
             "displayAxes" : True,
@@ -56,9 +56,12 @@ class GeometricFitModel(object):
             "displaySurfacesTranslucent" : True,
             "displaySurfacesWireframe" : False
         }
+        self._loadSettings()
+        self._fitter.load()
 
     def _initGraphicsModules(self):
-        self._materialmodule = self._context.getMaterialmodule()
+        context = self._fitter.getContext()
+        self._materialmodule = context.getMaterialmodule()
         with ZincCacheChanges(self._materialmodule):
             self._materialmodule.defineStandardMaterials()
             solid_blue = self._materialmodule.createMaterial()
@@ -78,17 +81,53 @@ class GeometricFitModel(object):
             trans_blue.setAttributeReal3(Material.ATTRIBUTE_SPECULAR, [ 0.1, 0.1, 0.1 ])
             trans_blue.setAttributeReal(Material.ATTRIBUTE_ALPHA , 0.3)
             trans_blue.setAttributeReal(Material.ATTRIBUTE_SHININESS , 0.2)
-        glyphmodule = self._context.getGlyphmodule()
+        glyphmodule = context.getGlyphmodule()
         glyphmodule.defineStandardGlyphs()
-        tessellationmodule = self._context.getTessellationmodule()
+        tessellationmodule = context.getTessellationmodule()
         defaultTessellation = tessellationmodule.getDefaultTessellation()
         defaultTessellation.setRefinementFactors([12])
+
+    def _getFitSettingsFileName(self):
+        return self._location + "-settings.json"
+
+    def _getDisplaySettingsFileName(self):
+        return self._location + "-display-settings.json"
+
+    def _loadSettings(self):
+        try:
+            with open(self._getFitSettingsFileName(), "r") as f:
+                self._fitter.decodeSettingsJSON(f.read(), decodeJSONFitterSteps)
+        except:
+            pass
+        try:
+            with open(self._getDisplaySettingsFileName(), "r") as f:
+                savedSettings = json.loads(f.read())
+                self._settings.update(savedSettings)
+        except:
+            pass
+
+    def _saveSettings(self):
+        with open(self._getFitSettingsFileName(), "w") as f:
+            f.write(self._fitter.encodeSettingsJSON())
+        with open(self._getDisplaySettingsFileName(), "w") as f:
+            f.write(json.dumps(self._settings, sort_keys=False, indent=4))
+
+    def getOutputModelFileName(self):
+        return self._location + ".exf"
+
+    def done(self):
+        self._saveSettings()
+        fitterSteps = self._fitter.getFitterSteps()
+        for fitterStep in fitterSteps:
+            if not fitterStep.hasRun():
+                fitterStep.run()
+        self._fitter.writeModel(self.getOutputModelFileName())
 
     def getIdentifier(self):
         return self._identifier
 
     def getContext(self):
-        return self._context
+        return self._fitter.getContext()
 
     def getFitter(self):
         return self._fitter

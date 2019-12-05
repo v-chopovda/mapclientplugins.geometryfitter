@@ -51,7 +51,6 @@ class GeometricFitWidget(QtGui.QWidget):
         self._ui.alignmentsceneviewerwidget.setModel(model)
         self._model = model
         self._fitter = self._model.getFitter()
-        self._context = self._fitter.getContext()
         self._region = self._fitter.getRegion()
         self._scene = self._region.getScene()
         self._currentFitterStep = None  # Current FitterStep being edited; None = Fitter config
@@ -149,7 +148,7 @@ class GeometricFitWidget(QtGui.QWidget):
                 # Undo to before step being destroyed
                 fitterSteps = self._fitter.getFitterSteps()
                 currentIndex = fitterSteps.index(self._currentFitterStep)
-                self._fitter.loadModel()
+                self._fitter.load()
                 self._sceneChanged()
                 for index in range(currentIndex):
                     fitterSteps[index].run()
@@ -180,7 +179,7 @@ class GeometricFitWidget(QtGui.QWidget):
                         self._refreshStepItem(step)
                         self._refreshGraphics()
             elif self._currentFitterStep.hasRun() and (not isChecked):
-                self._fitter.loadModel()
+                self._fitter.load()
                 self._sceneChanged()
                 for index in range(currentIndex):
                     fitterSteps[index].run()
@@ -257,10 +256,7 @@ class GeometricFitWidget(QtGui.QWidget):
         self._ui.stepsDelete_pushButton.setEnabled(self._currentFitterStep is not None)
 
     def _doneClicked(self):
-        self._model.setStatePostAlign() # ensure model is transformed; does nothing if not in align tab
-        self._model.writeOutputModel()
-        #sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
-        #sceneviewer.setScene(Scene())
+        self._model.done()
         self._ui.dockWidget.setFloating(False)
         self._callback()
 

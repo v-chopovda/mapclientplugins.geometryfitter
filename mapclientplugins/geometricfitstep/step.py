@@ -51,8 +51,6 @@ class GeometricFitStep(WorkflowStepMountPoint):
         may be connected up to a button in a widget for example.
         """
         # Put your execute step code here before calling the '_doneExecution' method.
-        assert self._model is None
-        assert self._view is None
         self._model = GeometricFitModel(self._port0_inputZincModelFile, self._port1_inputZincDataFile, self._location, self._config['identifier'])
         self._view = GeometricFitWidget(self._model)
         self._view.registerDoneExecution(self._doneExecution)
@@ -80,7 +78,8 @@ class GeometricFitStep(WorkflowStepMountPoint):
 
         :param index: Index of the port to return.
         """
-        return self._port2_outputZincModelFile # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
+        self._port2_outputZincModelFile = self._model.getOutputModelFileName()
+        return self._model_port2_outputZincModelFile # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
 
     def configure(self):
         """
