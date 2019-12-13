@@ -3,6 +3,8 @@ Geometric fit model adding visualisations to github.com/ABI-Software/scaffoldfit
 """
 import os
 import json
+from opencmiss.utils.zinc.finiteelement import evaluateNodesetCoordinatesRange
+from opencmiss.utils.zinc.general import ZincCacheChanges
 from opencmiss.zinc.field import Field, FieldFindMeshLocation
 from opencmiss.zinc.glyph import Glyph
 from opencmiss.zinc.graphics import Graphics
@@ -14,7 +16,6 @@ from opencmiss.zinc.result import RESULT_OK
 from mapclientplugins.geometricfitstep.utils import vectorops
 from scaffoldfitter.fitter import Fitter
 from scaffoldfitter.fitterjson import decodeJSONFitterSteps
-from scaffoldfitter.utils.zinc_utils import ZincCacheChanges, evaluateNodesetCoordinatesRange
 
 
 nodeDerivativeLabels = [ "D1", "D2", "D3", "D12", "D13", "D23", "D123" ]

@@ -7,7 +7,7 @@ from mapclientplugins.geometricfitstep.view.ui_geometricfitwidget import Ui_Geom
 from opencmiss.zinc.scene import Scene
 from scaffoldfitter.fitterstepalign import FitterStepAlign
 from scaffoldfitter.fitterstepfit import FitterStepFit
-from scaffoldfitter.utils.zinc_utils import FieldIsManagedCoordinates, FieldIsManagedGroup
+from opencmiss.utils.zinc.field import FieldIsManagedCoordinates, FieldIsManagedGroup
 
 
 def QLineEdit_parseVector3(lineedit):
