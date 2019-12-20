@@ -3,8 +3,8 @@ Geometric fit model adding visualisations to github.com/ABI-Software/scaffoldfit
 """
 import os
 import json
-from opencmiss.utils.zinc.finiteelement import evaluateNodesetCoordinatesRange
-from opencmiss.utils.zinc.general import ZincCacheChanges
+from opencmiss.utils.zinc.finiteelement import evaluateFieldNodesetRange
+from opencmiss.utils.zinc.general import ChangeManager
 from opencmiss.zinc.field import Field, FieldFindMeshLocation
 from opencmiss.zinc.glyph import Glyph
 from opencmiss.zinc.graphics import Graphics
@@ -63,7 +63,7 @@ class GeometricFitModel(object):
     def _initGraphicsModules(self):
         context = self._fitter.getContext()
         self._materialmodule = context.getMaterialmodule()
-        with ZincCacheChanges(self._materialmodule):
+        with ChangeManager(self._materialmodule):
             self._materialmodule.defineStandardMaterials()
             solid_blue = self._materialmodule.createMaterial()
             solid_blue.setName("solid_blue")
@@ -326,7 +326,7 @@ class GeometricFitModel(object):
         componentsCount = modelCoordinates.getNumberOfComponents()
 
         # prepare fields and calculate axis and glyph scaling
-        with ZincCacheChanges(fieldmodule):
+        with ChangeManager(fieldmodule):
             # fields in same order as nodeDerivativeLabels
             nodeDerivativeFields = [ fieldmodule.createFieldNodeValue(modelCoordinates, derivative, 1) for derivative in [
                 Node.VALUE_LABEL_D_DS1, Node.VALUE_LABEL_D_DS2, Node.VALUE_LABEL_D_DS3,
@@ -338,7 +338,7 @@ class GeometricFitModel(object):
             # get sizing for axes
             axesScale = 1.0
             nodes = fieldmodule.findNodesetByFieldDomainType(Field.DOMAIN_TYPE_NODES)
-            minX, maxX = evaluateNodesetCoordinatesRange(modelCoordinates, nodes)
+            minX, maxX = evaluateFieldNodesetRange(modelCoordinates, nodes)
             if componentsCount == 1:
                 maxRange = maxX - minX
             else:
@@ -382,7 +382,7 @@ class GeometricFitModel(object):
 
         # make graphics
         scene = self._fitter.getRegion().getScene()
-        with ZincCacheChanges(scene):
+        with ChangeManager(scene):
             scene.removeAllGraphics()
 
             axes = scene.createGraphicsPoints()
@@ -406,6 +406,8 @@ class GeometricFitModel(object):
             markerDataPoints.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
             if markerDataLocationGroupField:
                 markerDataPoints.setSubgroupField(markerDataLocationGroupField)
+            elif markerGroup:
+                markerDataPoints.setSubgroupField(markerGroup)
             if markerDataCoordinates:
                 markerDataPoints.setCoordinateField(markerDataCoordinates)
             pointattr = markerDataPoints.getGraphicspointattributes()
@@ -419,6 +421,8 @@ class GeometricFitModel(object):
             markerDataNames.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
             if markerDataLocationGroupField:
                 markerDataNames.setSubgroupField(markerDataLocationGroupField)
+            elif markerGroup:
+                markerDataPoints.setSubgroupField(markerGroup)
             if markerDataCoordinates:
                 markerDataNames.setCoordinateField(markerDataCoordinates)
             pointattr = markerDataNames.getGraphicspointattributes()
@@ -434,6 +438,8 @@ class GeometricFitModel(object):
             markerDataProjections.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
             if markerDataLocationGroupField:
                 markerDataProjections.setSubgroupField(markerDataLocationGroupField)
+            elif markerGroup:
+                markerDataPoints.setSubgroupField(markerGroup)
             if markerDataCoordinates:
                 markerDataProjections.setCoordinateField(markerDataCoordinates)
             pointAttr = markerDataProjections.getGraphicspointattributes()
@@ -486,8 +492,10 @@ class GeometricFitModel(object):
             if dataCoordinates:
                 dataPoints.setCoordinateField(dataCoordinates)
             pointattr = dataPoints.getGraphicspointattributes()
-            pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
             pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_CROSS)
+            pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+            #pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
+            #dataPoints.setRenderPointSize(2.0);
             dataPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
             dataPoints.setName("displayDataPoints")
             dataPoints.setVisibilityFlag(self.isDisplayDataPoints())
@@ -516,8 +524,10 @@ class GeometricFitModel(object):
             if dataProjectionCoordinates:
                 dataProjectionPoints.setCoordinateField(dataProjectionCoordinates)
             pointattr = dataProjectionPoints.getGraphicspointattributes()
-            pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
             pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_CROSS)
+            pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+            #pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
+            #dataPoints.setRenderPointSize(2.0);
             dataProjectionPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
             dataProjectionPoints.setName("displayDataProjectionPoints")
             dataProjectionPoints.setVisibilityFlag(self.isDisplayDataProjectionPoints())

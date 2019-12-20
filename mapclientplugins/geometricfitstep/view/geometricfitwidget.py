@@ -4,10 +4,10 @@ User interface for github.com/ABI-Software/scaffoldfitter
 from PySide import QtGui, QtCore
 
 from mapclientplugins.geometricfitstep.view.ui_geometricfitwidget import Ui_GeometricFitWidget
+from opencmiss.utils.zinc.field import fieldIsManagedCoordinates, fieldIsManagedGroup
 from opencmiss.zinc.scene import Scene
 from scaffoldfitter.fitterstepalign import FitterStepAlign
 from scaffoldfitter.fitterstepfit import FitterStepFit
-from opencmiss.utils.zinc.field import FieldIsManagedCoordinates, FieldIsManagedGroup
 
 
 def QLineEdit_parseVector3(lineedit):
@@ -418,13 +418,13 @@ class GeometricFitWidget(QtGui.QWidget):
         """
         self._ui.configModelCoordinates_fieldChooser.setRegion(self._region)
         self._ui.configModelCoordinates_fieldChooser.setNullObjectName("-")
-        self._ui.configModelCoordinates_fieldChooser.setConditional(FieldIsManagedCoordinates)
+        self._ui.configModelCoordinates_fieldChooser.setConditional(fieldIsManagedCoordinates)
         self._ui.configDataCoordinates_fieldChooser.setRegion(self._region)
         self._ui.configDataCoordinates_fieldChooser.setNullObjectName("-")
-        self._ui.configDataCoordinates_fieldChooser.setConditional(FieldIsManagedCoordinates)
+        self._ui.configDataCoordinates_fieldChooser.setConditional(fieldIsManagedCoordinates)
         self._ui.configMarkerGroup_fieldChooser.setRegion(self._region)
         self._ui.configMarkerGroup_fieldChooser.setNullObjectName("-")
-        self._ui.configMarkerGroup_fieldChooser.setConditional(FieldIsManagedGroup)
+        self._ui.configMarkerGroup_fieldChooser.setConditional(fieldIsManagedGroup)
 
     def _updateConfigWidgets(self):
         """
