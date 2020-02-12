@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mapclientplugins\geometricfitstep\qt\geometricfitwidget.ui'
 #
-# Created: Wed Feb 12 16:22:04 2020
+# Created: Wed Feb 12 17:11:44 2020
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,7 +27,7 @@ class Ui_GeometricFitWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.dockWidget.sizePolicy().hasHeightForWidth())
         self.dockWidget.setSizePolicy(sizePolicy)
-        self.dockWidget.setMinimumSize(QtCore.QSize(779, 1069))
+        self.dockWidget.setMinimumSize(QtCore.QSize(0, 0))
         self.dockWidget.setFeatures(QtGui.QDockWidget.DockWidgetFloatable|QtGui.QDockWidget.DockWidgetMovable)
         self.dockWidget.setAllowedAreas(QtCore.Qt.AllDockWidgetAreas)
         self.dockWidget.setObjectName("dockWidget")
@@ -93,7 +93,7 @@ class Ui_GeometricFitWidget(object):
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollArea.setObjectName("stepedit_scrollArea")
         self.stepedit_scrollAreaWidgetContents = QtGui.QWidget()
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 671, 776))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 671, 764))
         self.stepedit_scrollAreaWidgetContents.setObjectName("stepedit_scrollAreaWidgetContents")
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setSpacing(0)
