@@ -240,13 +240,19 @@ class GeometricFitWidget(QtGui.QWidget):
         Update and display widgets for currentFitterStep
         """
         if self._currentFitterStep is None:
-            self._ui.stepedit_stackedWidget.setCurrentWidget(self._ui.config_page)
+            self._ui.config_groupBox.show()
+            self._ui.align_groupBox.hide()
+            self._ui.fit_groupBox.hide()
         elif isinstance(self._currentFitterStep, FitterStepAlign):
             self._updateAlignWidgets()
-            self._ui.stepedit_stackedWidget.setCurrentWidget(self._ui.align_page)
+            self._ui.config_groupBox.hide()
+            self._ui.align_groupBox.show()
+            self._ui.fit_groupBox.hide()
         else:  # elif isinstance(self._currentFitterStep, FitterStepFit):
             self._updateFitWidgets()
-            self._ui.stepedit_stackedWidget.setCurrentWidget(self._ui.fit_page)
+            self._ui.config_groupBox.hide()
+            self._ui.align_groupBox.hide()
+            self._ui.fit_groupBox.show()
         self._ui.stepsDelete_pushButton.setEnabled(self._currentFitterStep is not None)
 
     def _doneClicked(self):
@@ -513,7 +519,6 @@ class GeometricFitWidget(QtGui.QWidget):
 
     def _makeConnectionsFit(self):
         self._ui.fitMarkerWeight_lineEdit.editingFinished.connect(self._fitMarkerWeightEntered)
-
         self._ui.fitStrainPenalty_lineEdit.editingFinished.connect(self._fitStrainPenaltyEntered)
         self._ui.fitCurvaturePenalty_lineEdit.editingFinished.connect(self._fitCurvaturePenaltyEntered)
         self._ui.fitEdgeDiscontinuityPenalty_lineEdit.editingFinished.connect(self._fitEdgeDiscontinuityPenaltyEntered)
