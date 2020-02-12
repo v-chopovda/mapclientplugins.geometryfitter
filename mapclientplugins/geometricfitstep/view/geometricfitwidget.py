@@ -240,19 +240,13 @@ class GeometricFitWidget(QtGui.QWidget):
         Update and display widgets for currentFitterStep
         """
         if self._currentFitterStep is None:
-            self._ui.config_groupBox.show()
-            self._ui.align_groupBox.hide()
-            self._ui.fit_groupBox.hide()
+            self._ui.stepedit_stackedWidget.setCurrentWidget(self._ui.config_page)
         elif isinstance(self._currentFitterStep, FitterStepAlign):
             self._updateAlignWidgets()
-            self._ui.config_groupBox.hide()
-            self._ui.align_groupBox.show()
-            self._ui.fit_groupBox.hide()
+            self._ui.stepedit_stackedWidget.setCurrentWidget(self._ui.align_page)
         else:  # elif isinstance(self._currentFitterStep, FitterStepFit):
             self._updateFitWidgets()
-            self._ui.config_groupBox.hide()
-            self._ui.align_groupBox.hide()
-            self._ui.fit_groupBox.show()
+            self._ui.stepedit_stackedWidget.setCurrentWidget(self._ui.fit_page)
         self._ui.stepsDelete_pushButton.setEnabled(self._currentFitterStep is not None)
 
     def _doneClicked(self):
@@ -497,7 +491,7 @@ class GeometricFitWidget(QtGui.QWidget):
             self._getAlign().setRotation(values)
         else:
             print("Invalid model rotation Euler angles entered")
-            self._updateAlignWidgets()
+        self._updateAlignWidgets()
 
     def _alignScaleEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.alignScale_lineEdit)
@@ -505,7 +499,7 @@ class GeometricFitWidget(QtGui.QWidget):
             self._getAlign().setScale(value)
         else:
             print("Invalid model scale entered")
-            self._updateAlignWidgets()
+        self._updateAlignWidgets()
 
     def _alignTranslationEntered(self):
         values = QLineEdit_parseVector3(self._ui.alignTranslation_lineEdit)
@@ -513,7 +507,7 @@ class GeometricFitWidget(QtGui.QWidget):
             self._getAlign().setTranslation(values)
         else:
             print("Invalid model translation entered")
-            self._updateAlignWidgets()
+        self._updateAlignWidgets()
 
 # === fit widgets ===
 
@@ -549,7 +543,7 @@ class GeometricFitWidget(QtGui.QWidget):
             self._getFit().setMarkerWeight(value)
         else:
             print("Invalid marker weight; must be non-negative")
-            self._updateFitWidgets()
+        self._updateFitWidgets()
 
     def _fitStrainPenaltyEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.fitStrainPenalty_lineEdit)
@@ -557,7 +551,7 @@ class GeometricFitWidget(QtGui.QWidget):
             self._getFit().setStrainPenaltyWeight(value)
         else:
             print("Invalid penalty weight; must be non-negative")
-            self._updateFitWidgets()
+        self._updateFitWidgets()
 
     def _fitCurvaturePenaltyEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.fitCurvaturePenalty_lineEdit)
@@ -565,7 +559,7 @@ class GeometricFitWidget(QtGui.QWidget):
             self._getFit().setCurvaturePenaltyWeight(value)
         else:
             print("Invalid penalty weight; must be non-negative")
-            self._updateFitWidgets()
+        self._updateFitWidgets()
 
     def _fitEdgeDiscontinuityPenaltyEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.fitEdgeDiscontinuityPenalty_lineEdit)
@@ -573,7 +567,7 @@ class GeometricFitWidget(QtGui.QWidget):
             self._getFit().setEdgeDiscontinuityPenaltyWeight(value)
         else:
             print("Invalid penalty weight; must be non-negative")
-            self._updateFitWidgets()
+        self._updateFitWidgets()
 
     def _fitIterationsValueChanged(self, value):
         self._getFit().setNumberOfIterations(value)
