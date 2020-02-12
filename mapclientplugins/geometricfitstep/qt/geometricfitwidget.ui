@@ -36,8 +36,8 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>779</width>
-       <height>1069</height>
+       <width>0</width>
+       <height>0</height>
       </size>
      </property>
      <property name="features">
@@ -151,7 +151,7 @@
                <x>0</x>
                <y>0</y>
                <width>671</width>
-               <height>776</height>
+               <height>764</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -996,7 +996,6 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <zorder>dockWidget</zorder>
     </widget>
    </item>
   </layout>
