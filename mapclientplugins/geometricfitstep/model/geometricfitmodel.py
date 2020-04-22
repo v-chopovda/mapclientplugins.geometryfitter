@@ -422,7 +422,7 @@ class GeometricFitModel(object):
             if markerDataLocationGroupField:
                 markerDataNames.setSubgroupField(markerDataLocationGroupField)
             elif markerGroup:
-                markerDataPoints.setSubgroupField(markerGroup)
+                markerDataNames.setSubgroupField(markerGroup)
             if markerDataCoordinates:
                 markerDataNames.setCoordinateField(markerDataCoordinates)
             pointattr = markerDataNames.getGraphicspointattributes()
@@ -492,10 +492,10 @@ class GeometricFitModel(object):
             if dataCoordinates:
                 dataPoints.setCoordinateField(dataCoordinates)
             pointattr = dataPoints.getGraphicspointattributes()
-            pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_CROSS)
-            pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
-            #pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
-            #dataPoints.setRenderPointSize(2.0);
+            #pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_DIAMOND)
+            #pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+            pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
+            dataPoints.setRenderPointSize(2.0);
             dataPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
             dataPoints.setName("displayDataPoints")
             dataPoints.setVisibilityFlag(self.isDisplayDataPoints())
@@ -517,17 +517,17 @@ class GeometricFitModel(object):
             spectrum = spectrummodule.getDefaultSpectrum()
             dataProjections.setSpectrum(spectrum)
             dataProjections.setName("displayDataProjections")
-            dataPoints.setVisibilityFlag(self.isDisplayDataProjections())
+            dataProjections.setVisibilityFlag(self.isDisplayDataProjections())
 
             dataProjectionPoints = scene.createGraphicsPoints()
             dataProjectionPoints.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
             if dataProjectionCoordinates:
                 dataProjectionPoints.setCoordinateField(dataProjectionCoordinates)
             pointattr = dataProjectionPoints.getGraphicspointattributes()
-            pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_CROSS)
-            pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
-            #pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
-            #dataPoints.setRenderPointSize(2.0);
+            #pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_DIAMOND)
+            #pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+            pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
+            dataProjectionPoints.setRenderPointSize(2.0);
             dataProjectionPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
             dataProjectionPoints.setName("displayDataProjectionPoints")
             dataProjectionPoints.setVisibilityFlag(self.isDisplayDataProjectionPoints())
