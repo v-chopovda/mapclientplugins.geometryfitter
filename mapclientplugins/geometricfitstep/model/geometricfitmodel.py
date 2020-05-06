@@ -3,6 +3,7 @@ Geometric fit model adding visualisations to github.com/ABI-Software/scaffoldfit
 """
 import os
 import json
+from opencmiss.utils.maths.vectorops import add, axis_angle_to_rotation_matrix, euler_to_rotation_matrix, matrix_mult, rotation_matrix_to_euler
 from opencmiss.utils.zinc.finiteelement import evaluateFieldNodesetRange
 from opencmiss.utils.zinc.general import ChangeManager
 from opencmiss.zinc.field import Field, FieldFindMeshLocation
@@ -13,7 +14,6 @@ from opencmiss.zinc.node import Node
 from opencmiss.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_NORMALISED_WINDOW_FIT_LEFT
 from opencmiss.zinc.scenefilter import Scenefilter
 from opencmiss.zinc.result import RESULT_OK
-from mapclientplugins.geometricfitstep.utils import vectorops
 from scaffoldfitter.fitter import Fitter
 from scaffoldfitter.fitterjson import decodeJSONFitterSteps
 
@@ -95,17 +95,19 @@ class GeometricFitModel(object):
         return self._location + "-display-settings.json"
 
     def _loadSettings(self):
-        try:
-            with open(self._getFitSettingsFileName(), "r") as f:
-                self._fitter.decodeSettingsJSON(f.read(), decodeJSONFitterSteps)
-        except:
-            pass
-        try:
-            with open(self._getDisplaySettingsFileName(), "r") as f:
-                savedSettings = json.loads(f.read())
-                self._settings.update(savedSettings)
-        except:
-            pass
+        #try:
+        with open(self._getFitSettingsFileName(), "r") as f:
+            self._fitter.decodeSettingsJSON(f.read(), decodeJSONFitterSteps)
+        #except:
+        #    print('_loadSettings FitSettings EXCEPTION')
+        #    raise()
+        #try:
+        with open(self._getDisplaySettingsFileName(), "r") as f:
+            savedSettings = json.loads(f.read())
+            self._settings.update(savedSettings)
+        #except:
+        #    print('_loadSettings DisplaySettings EXCEPTION')
+        #    pass
 
     def _saveSettings(self):
         with open(self._getFitSettingsFileName(), "w") as f:
@@ -624,15 +626,10 @@ class GeometricFitModel(object):
 # === Align Utilities ===
 
     def rotateModel(self, axis, angle):
-        quat = vectorops.axisAngleToQuaternion(axis, angle)
-        mat1 = vectorops.rotmx(quat)
-        mat2 = vectorops.eulerToRotationMatrix3(self._alignSettings["euler_angles"])
-        if self.isAlignMirror():
-            mat2[0] = vectorops.mult(mat2[0], -1.0)
-        newmat = vectorops.matrixmult(mat1, mat2)
-        if self.isAlignMirror():
-            newmat[0] = vectorops.mult(newmat[0], -1.0)
-        self._alignSettings["euler_angles"] = vectorops.rotationMatrix3ToEuler(newmat)
+        mat1 = axis_angle_to_rotation_matrix(axis, angle)
+        mat2 = euler_to_rotation_matrix(self._alignSettings["euler_angles"])
+        newmat = matrix_mult(mat1, mat2)
+        self._alignSettings["euler_angles"] = rotation_matrix_to_euler(newmat)
         self._applyAlignSettings()
 
     def scaleModel(self, factor):
@@ -640,7 +637,7 @@ class GeometricFitModel(object):
         self._applyAlignSettings()
 
     def translateModel(self, relativeOffset):
-        self._alignSettings["offset"] = vectorops.add(self._alignSettings["offset"], relativeOffset)
+        self._alignSettings["offset"] = add(self._alignSettings["offset"], relativeOffset)
         self._applyAlignSettings()
 
     def _autorangeSpectrum(self):
