@@ -148,6 +148,22 @@ class GeometricFitWidget(QtGui.QWidget):
         self._fitter.addFitterStep(self._currentFitterStep)  # Future: , lastFitterStep
         self._buildStepsList()
 
+    def runToStep(self, endStep):
+        """
+        Run fitter steps up to specified end step.
+        """
+        fitterSteps = self._fitter.getFitterSteps()
+        endIndex = fitterSteps.index(endStep)
+        sceneChanged = self._fitter.run(endStep)
+        if sceneChanged:
+            for index in range(endIndex + 1, len(fitterSteps)):
+                self._refreshStepItem(fitterSteps[index])
+            self._sceneChanged()
+        else:
+            for index in range(1, endIndex + 1):
+                self._refreshStepItem(fitterSteps[index])
+            self._refreshGraphics()
+
     def _stepsDeleteClicked(self):
         """
         Delete the currently selected step, except for initial config.
@@ -155,16 +171,11 @@ class GeometricFitWidget(QtGui.QWidget):
         """
         assert self._currentFitterStep is not self._fitter.getInitialFitterStepConfig()
         if self._currentFitterStep.hasRun():
-            # Undo to before step being destroyed
+            # reload and run to step before current
             fitterSteps = self._fitter.getFitterSteps()
-            currentIndex = fitterSteps.index(self._currentFitterStep)
-            self._fitter.load()
+            index = fitterSteps.index(self._currentFitterStep)
+            self._fitter.run(fitterSteps[index - 1])
             self._sceneChanged()
-            for index in range(1, currentIndex):  # initialFitterStepConfig is run by load()
-                fitterSteps[index].run()
-                self._refreshGraphics()
-            for index in range(currentIndex, len(fitterSteps)):
-                fitterSteps[index].setHasRun(False)
         self._currentFitterStep = self._fitter.removeFitterStep(self._currentFitterStep)
         self._buildStepsList()
 
@@ -174,31 +185,20 @@ class GeometricFitWidget(QtGui.QWidget):
         """
         model = modelIndex.model()
         item = model.itemFromIndex(modelIndex)
-        self._currentFitterStep = item.data()
-        isInitialConfig = self._currentFitterStep is self._fitter.getInitialFitterStepConfig()
+        step = item.data()
+        if step != self._currentFitterStep:
+           self._currentFitterStep = step
+           self._updateFitterStepWidgets()
+        isInitialConfig = step is self._fitter.getInitialFitterStepConfig()
         isChecked = True if isInitialConfig else (item.checkState() == QtCore.Qt.Checked)
-        fitterSteps = self._fitter.getFitterSteps()
-        currentIndex = fitterSteps.index(self._currentFitterStep)
-        #print("currentIndex", currentIndex, isChecked)
-        if (not self._currentFitterStep.hasRun()) and isChecked:
-            for index in range(currentIndex + 1):
-                step = fitterSteps[index]
-                if not step.hasRun():
-                    step.run()
-                    self._refreshStepItem(step)
-                    self._refreshGraphics()
-        elif self._currentFitterStep.hasRun() and (not isChecked):
-            self._fitter.load()
-            self._sceneChanged()
-            for index in range(1, currentIndex):  # initialFitterStepConfig is run by load()
-                fitterSteps[index].run()
-            self._refreshGraphics()
-            for index in range(currentIndex, len(fitterSteps)):
-                step = fitterSteps[index]
-                if step.hasRun():
-                    step.setHasRun(False)
-                    self._refreshStepItem(step)
-        self._updateFitterStepWidgets()
+        if step.hasRun() != isChecked:
+            if isChecked:
+                endStep = step
+            else:
+                fitterSteps = self._fitter.getFitterSteps()
+                index = fitterSteps.index(step)
+                endStep = fitterSteps[index - 1]
+            self.runToStep(endStep)
 
     def _buildStepsList(self):
         """
@@ -485,7 +485,10 @@ class GeometricFitWidget(QtGui.QWidget):
 
     def _configProjectionCentreGroupsClicked(self):
         state = self._ui.configProjectionCentreGroups_checkBox.checkState()
-        self._getConfig().setProjectionCentreGroups(state == QtCore.Qt.Checked)
+        config = self._getConfig()
+        if config.setProjectionCentreGroups(state == QtCore.Qt.Checked):
+            if config is self._fitter.getInitialFitterStepConfig():
+                self.runToStep(config)
 
 # === align widgets ===
 
