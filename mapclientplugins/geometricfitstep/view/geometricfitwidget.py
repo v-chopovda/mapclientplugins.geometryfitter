@@ -487,8 +487,12 @@ class GeometricFitWidget(QtGui.QWidget):
         state = self._ui.configProjectionCentreGroups_checkBox.checkState()
         config = self._getConfig()
         if config.setProjectionCentreGroups(state == QtCore.Qt.Checked):
-            if config is self._fitter.getInitialFitterStepConfig():
-                self.runToStep(config)
+            fitterSteps = self._fitter.getFitterSteps()
+            index = fitterSteps.index(config)
+            if config.hasRun() and (((index + 1) == len(fitterSteps)) or (not fitterSteps[index + 1].hasRun())):
+                config.run()
+                self._refreshStepItem(config)
+                self._refreshGraphics()
 
 # === align widgets ===
 
@@ -550,6 +554,7 @@ class GeometricFitWidget(QtGui.QWidget):
         self._ui.fitCurvaturePenalty_lineEdit.editingFinished.connect(self._fitCurvaturePenaltyEntered)
         self._ui.fitEdgeDiscontinuityPenalty_lineEdit.editingFinished.connect(self._fitEdgeDiscontinuityPenaltyEntered)
         self._ui.fitIterations_spinBox.valueChanged.connect(self._fitIterationsValueChanged)
+        self._ui.fitMaximumSubIterations_spinBox.valueChanged.connect(self._fitMaximumSubIterationsValueChanged)
         self._ui.fitUpdateReferenceState_checkBox.clicked.connect(self._fitUpdateReferenceStateClicked)
 
     def _getFit(self):
@@ -567,6 +572,7 @@ class GeometricFitWidget(QtGui.QWidget):
         self._ui.fitCurvaturePenalty_lineEdit.setText(realFormat.format(fit.getCurvaturePenaltyWeight()))
         self._ui.fitEdgeDiscontinuityPenalty_lineEdit.setText(realFormat.format(fit.getEdgeDiscontinuityPenaltyWeight()))
         self._ui.fitIterations_spinBox.setValue(fit.getNumberOfIterations())
+        self._ui.fitMaximumSubIterations_spinBox.setValue(fit.getMaximumSubIterations())
         self._ui.fitUpdateReferenceState_checkBox.setCheckState(QtCore.Qt.Checked if fit.isUpdateReferenceState() else QtCore.Qt.Unchecked)
 
     def _fitMarkerWeightEntered(self):
@@ -603,6 +609,9 @@ class GeometricFitWidget(QtGui.QWidget):
 
     def _fitIterationsValueChanged(self, value):
         self._getFit().setNumberOfIterations(value)
+
+    def _fitMaximumSubIterationsValueChanged(self, value):
+        self._getFit().setMaximumSubIterations(value)
 
     def _fitUpdateReferenceStateClicked(self):
         state = self._ui.fitUpdateReferenceState_checkBox.checkState()

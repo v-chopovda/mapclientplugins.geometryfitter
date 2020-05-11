@@ -96,15 +96,19 @@ class GeometricFitModel(object):
 
     def _loadSettings(self):
         #try:
-        with open(self._getFitSettingsFileName(), "r") as f:
-            self._fitter.decodeSettingsJSON(f.read(), decodeJSONFitterSteps)
+        fitSettingsFileName = self._getFitSettingsFileName()
+        if os.path.isfile(fitSettingsFileName):
+            with open(fitSettingsFileName, "r") as f:
+                self._fitter.decodeSettingsJSON(f.read(), decodeJSONFitterSteps)
         #except:
         #    print('_loadSettings FitSettings EXCEPTION')
         #    raise()
         #try:
-        with open(self._getDisplaySettingsFileName(), "r") as f:
-            savedSettings = json.loads(f.read())
-            self._settings.update(savedSettings)
+        displaySettingsFileName = self._getDisplaySettingsFileName()
+        if os.path.isfile(displaySettingsFileName):
+            with open(displaySettingsFileName, "r") as f:
+                savedSettings = json.loads(f.read())
+                self._settings.update(savedSettings)
         #except:
         #    print('_loadSettings DisplaySettings EXCEPTION')
         #    pass
@@ -441,7 +445,7 @@ class GeometricFitModel(object):
             if markerDataLocationGroupField:
                 markerDataProjections.setSubgroupField(markerDataLocationGroupField)
             elif markerGroup:
-                markerDataPoints.setSubgroupField(markerGroup)
+                markerDataProjections.setSubgroupField(markerGroup)
             if markerDataCoordinates:
                 markerDataProjections.setCoordinateField(markerDataCoordinates)
             pointAttr = markerDataProjections.getGraphicspointattributes()
@@ -484,11 +488,11 @@ class GeometricFitModel(object):
 
             # data points, projections and projection points
 
-            meshDimension = 2
+            projectionMeshDimension = 2
             dataCoordinates = self._fitter.getDataCoordinatesField()
-            dataProjectionCoordinates = self._fitter.getDataProjectionCoordinatesField(meshDimension)
-            dataProjectionDelta = self._fitter.getDataProjectionDeltaField(meshDimension)
-            dataProjectionError = self._fitter.getDataProjectionErrorField(meshDimension)
+            dataProjectionCoordinates = self._fitter.getDataProjectionCoordinatesField(projectionMeshDimension)
+            dataProjectionDelta = self._fitter.getDataProjectionDeltaField(projectionMeshDimension)
+            dataProjectionError = self._fitter.getDataProjectionErrorField(projectionMeshDimension)
             dataPoints = scene.createGraphicsPoints()
             dataPoints.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
             if dataCoordinates:
