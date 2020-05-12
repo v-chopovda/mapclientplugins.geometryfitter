@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1718</width>
-    <height>1394</height>
+    <height>1100</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -33,12 +33,6 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
      </property>
      <property name="features">
       <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
@@ -102,6 +96,13 @@
               </widget>
              </item>
              <item>
+              <widget class="QPushButton" name="stepsAddConfig_pushButton">
+               <property name="text">
+                <string>Add Config</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="stepsAddFit_pushButton">
                <property name="text">
                 <string>Add Fit</string>
@@ -150,8 +151,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>671</width>
-               <height>764</height>
+               <width>352</width>
+               <height>543</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -172,60 +173,113 @@
                 <property name="title">
                  <string>Config</string>
                 </property>
-                <layout class="QFormLayout" name="formLayout_4">
-                 <property name="fieldGrowthPolicy">
-                  <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-                 </property>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="configModelCoordinates_label">
-                   <property name="text">
-                    <string>Model coordinates:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="FieldChooserWidget" name="configModelCoordinates_fieldChooser">
+                <layout class="QVBoxLayout" name="verticalLayout_4">
+                 <item>
+                  <widget class="QGroupBox" name="configInitial_groupBox">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="configDataCoordinates_label">
-                   <property name="text">
-                    <string>Data coordinates:</string>
+                   <property name="title">
+                    <string>Initial</string>
                    </property>
+                   <layout class="QFormLayout" name="formLayout">
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="configModelCoordinates_label">
+                      <property name="text">
+                       <string>Model coordinates:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="FieldChooserWidget" name="configModelCoordinates_fieldChooser">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="configDataCoordinates_label">
+                      <property name="text">
+                       <string>Data coordinates:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QLabel" name="configMarkerGroup_label">
+                      <property name="text">
+                       <string>Marker group:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="FieldChooserWidget" name="configDataCoordinates_fieldChooser">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="FieldChooserWidget" name="configMarkerGroup_fieldChooser">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
-                 <item row="1" column="1">
-                  <widget class="FieldChooserWidget" name="configDataCoordinates_fieldChooser">
+                 <item>
+                  <widget class="QGroupBox" name="configProjection_groupBox">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="title">
+                    <string>Projection</string>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_5">
+                    <item>
+                     <widget class="QCheckBox" name="configProjectionCentreGroups_checkBox">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="text">
+                       <string>Centre groups</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="configMarkerGroup_label">
-                   <property name="text">
-                    <string>Marker group:</string>
+                 <item>
+                  <spacer name="config_verticalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
                    </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="FieldChooserWidget" name="configMarkerGroup_fieldChooser">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
                    </property>
-                  </widget>
+                  </spacer>
                  </item>
                 </layout>
                </widget>
@@ -336,6 +390,23 @@
                  <property name="fieldGrowthPolicy">
                   <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
                  </property>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="fitMarkerWeight_label">
+                   <property name="text">
+                    <string>Marker weight:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="fitMarkerWeight_lineEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="2" column="0">
                   <widget class="QLabel" name="fitStrainPenalty_label">
                    <property name="text">
@@ -370,42 +441,6 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="6" column="0">
-                  <widget class="QCheckBox" name="fitUpdateReferenceState_checkBox">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="text">
-                    <string>Update reference state</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="0">
-                  <widget class="QLabel" name="fitIterations_label">
-                   <property name="text">
-                    <string>Iterations:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="1">
-                  <widget class="QSpinBox" name="fitIterations_spinBox">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimum">
-                    <number>1</number>
-                   </property>
-                   <property name="maximum">
-                    <number>1000</number>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="4" column="0">
                   <widget class="QLabel" name="fitEdgeDiscontinuityPenalty_label">
                    <property name="text">
@@ -423,20 +458,62 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="fitMarkerWeight_label">
+                 <item row="6" column="0">
+                  <widget class="QLabel" name="fitIterations_label">
                    <property name="text">
-                    <string>Marker weight:</string>
+                    <string>Iterations:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="1">
-                  <widget class="QLineEdit" name="fitMarkerWeight_lineEdit">
+                 <item row="6" column="1">
+                  <widget class="QSpinBox" name="fitIterations_spinBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
+                   </property>
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>1000</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="1">
+                  <widget class="QSpinBox" name="fitMaximumSubIterations_spinBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>1000</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="8" column="0">
+                  <widget class="QCheckBox" name="fitUpdateReferenceState_checkBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>Update reference state</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="0">
+                  <widget class="QLabel" name="fitMaximumSubIterations_label">
+                   <property name="text">
+                    <string>Maximum subiterations:</string>
                    </property>
                   </widget>
                  </item>
