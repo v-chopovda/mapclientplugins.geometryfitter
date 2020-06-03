@@ -3,10 +3,10 @@ Created on Jul 23, 2015
 
 @author: Richard Christie
 '''
+from opencmiss.utils.maths import vectorops
 from opencmiss.zinc.node import Node
 from opencmiss.zinc.field import Field
 from opencmiss.zinc.status import OK as ZINC_OK
-from mapclientplugins.smoothfitstep.maths import vectorops
 
 
 def copyNodalParameters(sourceField, targetField, time = 0.0):
