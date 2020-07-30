@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1718</width>
-    <height>1100</height>
+    <height>1105</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -151,8 +151,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>352</width>
-               <height>543</height>
+               <width>671</width>
+               <height>1006</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1042,6 +1042,13 @@
            <widget class="QPushButton" name="viewAll_pushButton">
             <property name="text">
              <string>View All</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stdViews_pushButton">
+            <property name="text">
+             <string>Std. Views</string>
             </property>
            </widget>
           </item>
