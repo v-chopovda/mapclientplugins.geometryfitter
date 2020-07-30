@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mapclientplugins\geometricfitstep\qt\geometricfitwidget.ui'
 #
-# Created: Mon May 11 18:06:08 2020
+# Created: Thu Jul 30 12:10:18 2020
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_GeometricFitWidget(object):
     def setupUi(self, GeometricFitWidget):
         GeometricFitWidget.setObjectName("GeometricFitWidget")
-        GeometricFitWidget.resize(1718, 1100)
+        GeometricFitWidget.resize(1718, 1105)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -95,7 +95,7 @@ class Ui_GeometricFitWidget(object):
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollArea.setObjectName("stepedit_scrollArea")
         self.stepedit_scrollAreaWidgetContents = QtGui.QWidget()
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 352, 543))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 671, 1006))
         self.stepedit_scrollAreaWidgetContents.setObjectName("stepedit_scrollAreaWidgetContents")
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setSpacing(0)
@@ -570,6 +570,9 @@ class Ui_GeometricFitWidget(object):
         self.viewAll_pushButton = QtGui.QPushButton(self.bottom_frame)
         self.viewAll_pushButton.setObjectName("viewAll_pushButton")
         self.horizontalLayout_2.addWidget(self.viewAll_pushButton)
+        self.stdViews_pushButton = QtGui.QPushButton(self.bottom_frame)
+        self.stdViews_pushButton.setObjectName("stdViews_pushButton")
+        self.horizontalLayout_2.addWidget(self.stdViews_pushButton)
         self.done_pushButton = QtGui.QPushButton(self.bottom_frame)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -651,6 +654,7 @@ class Ui_GeometricFitWidget(object):
         self.displaySurfacesTranslucent_checkBox.setText(QtGui.QApplication.translate("GeometricFitWidget", "Transluc.", None, QtGui.QApplication.UnicodeUTF8))
         self.displaySurfacesWireframe_checkBox.setText(QtGui.QApplication.translate("GeometricFitWidget", "Wireframe", None, QtGui.QApplication.UnicodeUTF8))
         self.viewAll_pushButton.setText(QtGui.QApplication.translate("GeometricFitWidget", "View All", None, QtGui.QApplication.UnicodeUTF8))
+        self.stdViews_pushButton.setText(QtGui.QApplication.translate("GeometricFitWidget", "Std. Views", None, QtGui.QApplication.UnicodeUTF8))
         self.done_pushButton.setText(QtGui.QApplication.translate("GeometricFitWidget", "Done", None, QtGui.QApplication.UnicodeUTF8))
 
 from .alignmentsceneviewerwidget import AlignmentSceneviewerWidget

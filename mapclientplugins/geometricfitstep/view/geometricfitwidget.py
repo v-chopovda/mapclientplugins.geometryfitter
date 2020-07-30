@@ -4,6 +4,7 @@ User interface for github.com/ABI-Software/scaffoldfitter
 from PySide import QtGui, QtCore
 
 from mapclientplugins.geometricfitstep.view.ui_geometricfitwidget import Ui_GeometricFitWidget
+from opencmiss.utils.maths.vectorops import dot, magnitude, mult, normalize, sub
 from opencmiss.utils.zinc.field import fieldIsManagedCoordinates, fieldIsManagedGroup
 from opencmiss.zinc.scene import Scene
 from scaffoldfitter.fitterstepalign import FitterStepAlign
@@ -117,8 +118,9 @@ class GeometricFitWidget(QtGui.QWidget):
         self._ui.stepsAddFit_pushButton.clicked.connect(self._stepsAddFitClicked)
         self._ui.stepsDelete_pushButton.clicked.connect(self._stepsDeleteClicked)
         self._ui.steps_listView.clicked[QtCore.QModelIndex].connect(self._stepsListItemClicked)
-        self._ui.done_pushButton.clicked.connect(self._doneClicked)
-        self._ui.viewAll_pushButton.clicked.connect(self._viewAllClicked)
+        self._ui.done_pushButton.clicked.connect(self._doneButtonClicked)
+        self._ui.stdViews_pushButton.clicked.connect(self._stdViewsButtonClicked)
+        self._ui.viewAll_pushButton.clicked.connect(self._viewAllButtonClicked)
 
     def _updateGeneralWidgets(self):
         self._ui.identifier_label.setText("Identifier:  " + self._model.getIdentifier())
@@ -267,12 +269,41 @@ class GeometricFitWidget(QtGui.QWidget):
         self._ui.fit_groupBox.setVisible(isFit)
         self._ui.stepsDelete_pushButton.setEnabled(not isInitialConfig)
 
-    def _doneClicked(self):
+    def _doneButtonClicked(self):
         self._model.done()
         self._ui.dockWidget.setFloating(False)
         self._callback()
 
-    def _viewAllClicked(self):
+    def _stdViewsButtonClicked(self):
+        sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
+        if sceneviewer is not None:
+            result, eyePosition, lookatPosition, upVector = sceneviewer.getLookatParameters()
+            upVector = normalize(upVector)
+            viewVector = sub(lookatPosition, eyePosition)
+            viewDistance = magnitude(viewVector)
+            viewVector = normalize(viewVector)
+            viewX = dot(viewVector, [ 1.0, 0.0, 0.0 ])
+            viewY = dot(viewVector, [ 0.0, 1.0, 0.0 ])
+            viewZ = dot(viewVector, [ 0.0, 0.0, 1.0 ])
+            upX = dot(upVector, [ 1.0, 0.0, 0.0 ])
+            upY = dot(upVector, [ 0.0, 1.0, 0.0 ])
+            upZ = dot(upVector, [ 0.0, 0.0, 1.0 ])
+            if (viewZ < -0.999) and (upY > 0.999):
+                # XY -> XZ
+                viewVector = [ 0.0, 1.0, 0.0 ]
+                upVector = [ 0.0, 0.0, 1.0 ]
+            elif (viewY > 0.999) and (upZ > 0.999):
+                # XZ -> YZ
+                viewVector = [ -1.0, 0.0, 0.0 ]
+                upVector = [ 0.0, 0.0, 1.0 ]
+            else:
+                # XY
+                viewVector = [ 0.0, 0.0, -1.0 ]
+                upVector = [ 0.0, 1.0, 0.0 ]
+            eyePosition = sub(lookatPosition, mult(viewVector, viewDistance))
+            sceneviewer.setLookatParametersNonSkew(eyePosition, lookatPosition, upVector)
+
+    def _viewAllButtonClicked(self):
         self._ui.alignmentsceneviewerwidget.viewAll()
 
 # === display widgets ===
