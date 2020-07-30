@@ -153,6 +153,20 @@ class GeometricFitModel(object):
         graphics = self.getScene().findGraphicsByName(graphicsName)
         graphics.setVisibilityFlag(show)
 
+    def _setMultipleGraphicsVisibility(self, graphicsName, show):
+        '''
+        Ensure visibility of all graphics with graphicsName is set to boolean show.
+        '''
+        self._settings[graphicsName] = show
+        scene = self._region.getScene()
+        graphics = scene.findGraphicsByName(graphicsName)
+        while graphics.isValid():
+            graphics.setVisibilityFlag(show)
+            while True:
+                graphics = scene.getNextGraphics(graphics)
+                if (not graphics.isValid()) or (graphics.getName() == graphicsName):
+                    break
+
     def isDisplayAxes(self):
         return self._getVisibility("displayAxes")
 
@@ -255,13 +269,13 @@ class GeometricFitModel(object):
         return self._getVisibility("displayDataProjections")
 
     def setDisplayDataProjections(self, show):
-        self._setVisibility("displayDataProjections", show)
+        self._setMultipleGraphicsVisibility("displayDataProjections", show)
 
     def isDisplayDataProjectionPoints(self):
         return self._getVisibility("displayDataProjectionPoints")
 
     def setDisplayDataProjectionPoints(self, show):
-        self._setVisibility("displayDataProjectionPoints", show)
+        self._setMultipleGraphicsVisibility("displayDataProjectionPoints", show)
 
     def isDisplayNodeNumbers(self):
         return self._getVisibility("displayNodeNumbers")
@@ -488,11 +502,7 @@ class GeometricFitModel(object):
 
             # data points, projections and projection points
 
-            projectionMeshDimension = 2
             dataCoordinates = self._fitter.getDataCoordinatesField()
-            dataProjectionCoordinates = self._fitter.getDataProjectionCoordinatesField(projectionMeshDimension)
-            dataProjectionDelta = self._fitter.getDataProjectionDeltaField(projectionMeshDimension)
-            dataProjectionError = self._fitter.getDataProjectionErrorField(projectionMeshDimension)
             dataPoints = scene.createGraphicsPoints()
             dataPoints.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
             if dataCoordinates:
@@ -506,37 +516,46 @@ class GeometricFitModel(object):
             dataPoints.setName("displayDataPoints")
             dataPoints.setVisibilityFlag(self.isDisplayDataPoints())
 
-            dataProjections = scene.createGraphicsPoints()
-            dataProjections.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
-            if dataCoordinates:
-                dataProjections.setCoordinateField(dataCoordinates)
-            #dataProjections.setSubgroupField(self._activeDataPointGroupField)
-            pointAttr = dataProjections.getGraphicspointattributes()
-            pointAttr.setGlyphShapeType(Glyph.SHAPE_TYPE_LINE)
-            pointAttr.setBaseSize([0.0,1.0,1.0])
-            pointAttr.setScaleFactors([1.0,0.0,0.0])
-            if dataProjectionDelta:
-                pointAttr.setOrientationScaleField(dataProjectionDelta)
-            if dataProjectionError:
-                dataProjections.setDataField(dataProjectionError)
-            spectrummodule = scene.getSpectrummodule()
-            spectrum = spectrummodule.getDefaultSpectrum()
-            dataProjections.setSpectrum(spectrum)
-            dataProjections.setName("displayDataProjections")
-            dataProjections.setVisibilityFlag(self.isDisplayDataProjections())
+            for projectionMeshDimension in range(1, 3):
+                dataProjectionNodeGroup = self._fitter.getDataProjectionNodeGroupField(projectionMeshDimension)
+                if dataProjectionNodeGroup.getNodesetGroup().getSize() == 0:
+                    continue
+                dataProjectionCoordinates = self._fitter.getDataProjectionCoordinatesField(projectionMeshDimension)
+                dataProjectionDelta = self._fitter.getDataProjectionDeltaField(projectionMeshDimension)
+                dataProjectionError = self._fitter.getDataProjectionErrorField(projectionMeshDimension)
 
-            dataProjectionPoints = scene.createGraphicsPoints()
-            dataProjectionPoints.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
-            if dataProjectionCoordinates:
-                dataProjectionPoints.setCoordinateField(dataProjectionCoordinates)
-            pointattr = dataProjectionPoints.getGraphicspointattributes()
-            #pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_DIAMOND)
-            #pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
-            pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
-            dataProjectionPoints.setRenderPointSize(2.0);
-            dataProjectionPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
-            dataProjectionPoints.setName("displayDataProjectionPoints")
-            dataProjectionPoints.setVisibilityFlag(self.isDisplayDataProjectionPoints())
+                dataProjections = scene.createGraphicsPoints()
+                dataProjections.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
+                dataProjections.setSubgroupField(dataProjectionNodeGroup)
+                if dataCoordinates:
+                    dataProjections.setCoordinateField(dataCoordinates)
+                pointAttr = dataProjections.getGraphicspointattributes()
+                pointAttr.setGlyphShapeType(Glyph.SHAPE_TYPE_LINE)
+                pointAttr.setBaseSize([0.0,1.0,1.0])
+                pointAttr.setScaleFactors([1.0,0.0,0.0])
+                if dataProjectionDelta:
+                    pointAttr.setOrientationScaleField(dataProjectionDelta)
+                if dataProjectionError:
+                    dataProjections.setDataField(dataProjectionError)
+                spectrummodule = scene.getSpectrummodule()
+                spectrum = spectrummodule.getDefaultSpectrum()
+                dataProjections.setSpectrum(spectrum)
+                dataProjections.setName("displayDataProjections")
+                dataProjections.setVisibilityFlag(self.isDisplayDataProjections())
+
+                dataProjectionPoints = scene.createGraphicsPoints()
+                dataProjectionPoints.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
+                dataProjectionPoints.setSubgroupField(dataProjectionNodeGroup)
+                if dataProjectionCoordinates:
+                    dataProjectionPoints.setCoordinateField(dataProjectionCoordinates)
+                pointattr = dataProjectionPoints.getGraphicspointattributes()
+                #pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_DIAMOND)
+                #pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+                pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
+                dataProjectionPoints.setRenderPointSize(2.0);
+                dataProjectionPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
+                dataProjectionPoints.setName("displayDataProjectionPoints")
+                dataProjectionPoints.setVisibilityFlag(self.isDisplayDataProjectionPoints())
 
             nodePoints = scene.createGraphicsPoints()
             nodePoints.setFieldDomainType(Field.DOMAIN_TYPE_NODES)
