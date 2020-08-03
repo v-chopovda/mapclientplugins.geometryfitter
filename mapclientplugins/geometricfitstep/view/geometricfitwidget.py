@@ -528,6 +528,7 @@ class GeometricFitWidget(QtGui.QWidget):
 # === align widgets ===
 
     def _makeConnectionsAlign(self):
+        self._ui.alignGroups_checkBox.clicked.connect(self._alignGroupsClicked)
         self._ui.alignMarkers_checkBox.clicked.connect(self._alignMarkersClicked)
         self._ui.alignRotation_lineEdit.editingFinished.connect(self._alignRotationEntered)
         self._ui.alignScale_lineEdit.editingFinished.connect(self._alignScaleEntered)
@@ -544,10 +545,15 @@ class GeometricFitWidget(QtGui.QWidget):
         """
         align = self._getAlign()
         realFormat = "{:.4g}"
+        self._ui.alignGroups_checkBox.setCheckState(QtCore.Qt.Checked if align.isAlignGroups() else QtCore.Qt.Unchecked)
         self._ui.alignMarkers_checkBox.setCheckState(QtCore.Qt.Checked if align.isAlignMarkers() else QtCore.Qt.Unchecked)
         self._ui.alignRotation_lineEdit.setText(", ".join(realFormat.format(value) for value in align.getRotation()))
         self._ui.alignScale_lineEdit.setText(realFormat.format(align.getScale()))
         self._ui.alignTranslation_lineEdit.setText(", ".join(realFormat.format(value) for value in align.getTranslation()))
+
+    def _alignGroupsClicked(self):
+        state = self._ui.alignGroups_checkBox.checkState()
+        self._getAlign().setAlignGroups(state == QtCore.Qt.Checked)
 
     def _alignMarkersClicked(self):
         state = self._ui.alignMarkers_checkBox.checkState()
