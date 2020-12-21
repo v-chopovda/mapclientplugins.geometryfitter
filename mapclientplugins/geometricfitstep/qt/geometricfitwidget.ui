@@ -397,14 +397,14 @@
                  <property name="fieldGrowthPolicy">
                   <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
                  </property>
-                 <item row="1" column="0">
+                 <item row="2" column="0">
                   <widget class="QLabel" name="fitMarkerWeight_label">
                    <property name="text">
                     <string>Marker weight:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="1">
+                 <item row="2" column="1">
                   <widget class="QLineEdit" name="fitMarkerWeight_lineEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -412,16 +412,19 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Weighting of marker points with fixed mesh locations. Use 0.0 to omit.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
                   </widget>
                  </item>
-                 <item row="2" column="0">
+                 <item row="3" column="0">
                   <widget class="QLabel" name="fitStrainPenalty_label">
                    <property name="text">
                     <string>Strain penalty:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="1">
+                 <item row="3" column="1">
                   <widget class="QLineEdit" name="fitStrainPenalty_lineEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -431,14 +434,14 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="0">
+                 <item row="4" column="0">
                   <widget class="QLabel" name="fitCurvaturePenalty_label">
                    <property name="text">
                     <string>Curvature penalty:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="1">
+                 <item row="4" column="1">
                   <widget class="QLineEdit" name="fitCurvaturePenalty_lineEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -448,14 +451,14 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="0">
+                 <item row="5" column="0">
                   <widget class="QLabel" name="fitEdgeDiscontinuityPenalty_label">
                    <property name="text">
                     <string>Edge discontinuity penalty:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="1">
+                 <item row="5" column="1">
                   <widget class="QLineEdit" name="fitEdgeDiscontinuityPenalty_lineEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -465,14 +468,14 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="6" column="0">
+                 <item row="7" column="0">
                   <widget class="QLabel" name="fitIterations_label">
                    <property name="text">
                     <string>Iterations:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="6" column="1">
+                 <item row="7" column="1">
                   <widget class="QSpinBox" name="fitIterations_spinBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -488,14 +491,14 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="0">
+                 <item row="8" column="0">
                   <widget class="QLabel" name="fitMaximumSubIterations_label">
                    <property name="text">
                     <string>Maximum subiterations:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="1">
+                 <item row="8" column="1">
                   <widget class="QSpinBox" name="fitMaximumSubIterations_spinBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -511,7 +514,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="8" column="0">
+                 <item row="9" column="0">
                   <widget class="QCheckBox" name="fitUpdateReferenceState_checkBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -521,6 +524,20 @@
                    </property>
                    <property name="text">
                     <string>Update reference state</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="fitLineWeight_label">
+                   <property name="text">
+                    <string>Line weight:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="fitLineWeight_lineEdit">
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Weighting of data points which project onto line features.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                   </widget>
                  </item>

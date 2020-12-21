@@ -119,15 +119,15 @@ class GeometricFitModel(object):
         with open(self._getDisplaySettingsFileName(), "w") as f:
             f.write(json.dumps(self._settings, sort_keys=False, indent=4))
 
+    def getOutputModelFileNameStem(self):
+        return self._location
+
     def getOutputModelFileName(self):
         return self._location + ".exf"
 
     def done(self):
         self._saveSettings()
-        fitterSteps = self._fitter.getFitterSteps()
-        for fitterStep in fitterSteps:
-            if not fitterStep.hasRun():
-                fitterStep.run()
+        self._fitter.run(endStep=None, modelFileNameStem=self.getOutputModelFileNameStem())
         self._fitter.writeModel(self.getOutputModelFileName())
 
     def getIdentifier(self):
@@ -158,7 +158,7 @@ class GeometricFitModel(object):
         Ensure visibility of all graphics with graphicsName is set to boolean show.
         '''
         self._settings[graphicsName] = show
-        scene = self._region.getScene()
+        scene = self.getScene()
         graphics = scene.findGraphicsByName(graphicsName)
         while graphics.isValid():
             graphics.setVisibilityFlag(show)
@@ -533,6 +533,7 @@ class GeometricFitModel(object):
                 pointAttr.setGlyphShapeType(Glyph.SHAPE_TYPE_LINE)
                 pointAttr.setBaseSize([0.0,1.0,1.0])
                 pointAttr.setScaleFactors([1.0,0.0,0.0])
+                dataProjections.setRenderLineWidth(2.0 if (projectionMeshDimension == 1) else 1.0)
                 if dataProjectionDelta:
                     pointAttr.setOrientationScaleField(dataProjectionDelta)
                 if dataProjectionError:
