@@ -156,7 +156,7 @@ class GeometricFitWidget(QtGui.QWidget):
         """
         fitterSteps = self._fitter.getFitterSteps()
         endIndex = fitterSteps.index(endStep)
-        sceneChanged = self._fitter.run(endStep)
+        sceneChanged = self._fitter.run(endStep, self._model.getOutputModelFileNameStem())
         if sceneChanged:
             for index in range(endIndex + 1, len(fitterSteps)):
                 self._refreshStepItem(fitterSteps[index])
@@ -586,6 +586,7 @@ class GeometricFitWidget(QtGui.QWidget):
 # === fit widgets ===
 
     def _makeConnectionsFit(self):
+        self._ui.fitLineWeight_lineEdit.editingFinished.connect(self._fitLineWeightEntered)
         self._ui.fitMarkerWeight_lineEdit.editingFinished.connect(self._fitMarkerWeightEntered)
         self._ui.fitStrainPenalty_lineEdit.editingFinished.connect(self._fitStrainPenaltyEntered)
         self._ui.fitCurvaturePenalty_lineEdit.editingFinished.connect(self._fitCurvaturePenaltyEntered)
@@ -604,6 +605,7 @@ class GeometricFitWidget(QtGui.QWidget):
         """
         fit = self._getFit()
         realFormat = "{:.16}"
+        self._ui.fitLineWeight_lineEdit.setText(realFormat.format(fit.getLineWeight()))
         self._ui.fitMarkerWeight_lineEdit.setText(realFormat.format(fit.getMarkerWeight()))
         self._ui.fitStrainPenalty_lineEdit.setText(realFormat.format(fit.getStrainPenaltyWeight()))
         self._ui.fitCurvaturePenalty_lineEdit.setText(realFormat.format(fit.getCurvaturePenaltyWeight()))
@@ -611,6 +613,14 @@ class GeometricFitWidget(QtGui.QWidget):
         self._ui.fitIterations_spinBox.setValue(fit.getNumberOfIterations())
         self._ui.fitMaximumSubIterations_spinBox.setValue(fit.getMaximumSubIterations())
         self._ui.fitUpdateReferenceState_checkBox.setCheckState(QtCore.Qt.Checked if fit.isUpdateReferenceState() else QtCore.Qt.Unchecked)
+
+    def _fitLineWeightEntered(self):
+        value = QLineEdit_parseRealNonNegative(self._ui.fitLineWeight_lineEdit)
+        if value >= 0.0:
+            self._getFit().setLineWeight(value)
+        else:
+            print("Invalid line weight; must be non-negative")
+        self._updateFitWidgets()
 
     def _fitMarkerWeightEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.fitMarkerWeight_lineEdit)
