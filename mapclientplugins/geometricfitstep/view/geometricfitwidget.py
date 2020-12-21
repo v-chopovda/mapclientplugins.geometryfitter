@@ -619,7 +619,7 @@ class GeometricFitWidget(QtGui.QWidget):
         if value >= 0.0:
             self._getFit().setLineWeight(value)
         else:
-            print("Invalid marker weight; must be non-negative")
+            print("Invalid line weight; must be non-negative")
         self._updateFitWidgets()
 
     def _fitMarkerWeightEntered(self):
