@@ -3,7 +3,7 @@ Created on July 15, 2015
 
 @author: Richard Christie
 '''
-from PySide import QtCore
+from PySide2 import QtCore
 from math import sqrt
 from opencmiss.utils.maths import vectorops
 from opencmiss.zincwidgets.sceneviewerwidget import SceneviewerWidget

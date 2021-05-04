@@ -1,7 +1,7 @@
 """
 User interface for github.com/ABI-Software/scaffoldfitter
 """
-from PySide import QtGui, QtCore
+from PySide2 import QtCore, QtGui, QtWidgets
 
 from mapclientplugins.geometricfitstep.view.ui_geometricfitwidget import Ui_GeometricFitWidget
 from opencmiss.utils.maths.vectorops import dot, magnitude, mult, normalize, sub
@@ -38,7 +38,7 @@ def QLineEdit_parseRealNonNegative(lineedit):
         pass
     return -1.0
 
-class GeometricFitWidget(QtGui.QWidget):
+class GeometricFitWidget(QtWidgets.QWidget):
     """
     User interface for github.com/ABI-Software/scaffoldfitter
     """
