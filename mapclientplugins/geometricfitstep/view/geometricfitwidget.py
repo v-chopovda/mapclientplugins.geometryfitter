@@ -89,7 +89,6 @@ class GeometricFitWidget(QtWidgets.QWidget):
         Autorange spectrum and force redraw of graphics.
         """
         self._model.autorangeSpectrum()
-        self._ui.alignmentsceneviewerwidget.paintGL()
 
     def _makeConnections(self):
         self._makeConnectionsGeneral()
