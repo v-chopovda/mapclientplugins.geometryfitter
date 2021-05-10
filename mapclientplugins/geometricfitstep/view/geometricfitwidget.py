@@ -470,11 +470,13 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.configMarkerGroup_fieldChooser.setNullObjectName("-")
         self._ui.configMarkerGroup_fieldChooser.setConditional(fieldIsManagedGroup)
         self._ui.configMarkerGroup_fieldChooser.setField(self._fitter.getMarkerGroup())
+        self._ui.configDiagnosticLevel_spinBox.setValue(self._fitter.getDiagnosticLevel())
 
     def _makeConnectionsConfig(self):
         self._ui.configModelCoordinates_fieldChooser.currentIndexChanged.connect(self._configModelCoordinatesFieldChanged)
         self._ui.configDataCoordinates_fieldChooser.currentIndexChanged.connect(self._configDataCoordinatesFieldChanged)
         self._ui.configMarkerGroup_fieldChooser.currentIndexChanged.connect(self._configMarkerGroupChanged)
+        self._ui.configDiagnosticLevel_spinBox.valueChanged.connect(self._configDiagnosticLevelValueChanged)
         self._ui.configProjectionCentreGroups_checkBox.clicked.connect(self._configProjectionCentreGroupsClicked)
 
     def _getConfig(self):
@@ -512,6 +514,9 @@ class GeometricFitWidget(QtWidgets.QWidget):
         group = self._ui.configMarkerGroup_fieldChooser.getField()
         if group:
             self._fitter.setMarkerGroup(group)
+
+    def _configDiagnosticLevelValueChanged(self, value):
+        self._fitter.setDiagnosticLevel(value)
 
     def _configProjectionCentreGroupsClicked(self):
         state = self._ui.configProjectionCentreGroups_checkBox.checkState()

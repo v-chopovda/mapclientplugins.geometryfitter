@@ -165,6 +165,17 @@ class Ui_GeometricFitWidget(object):
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.configMarkerGroup_fieldChooser)
 
+        self.configDiagnosticLevel_spinBox = QSpinBox(self.configInitial_groupBox)
+        self.configDiagnosticLevel_spinBox.setObjectName(u"configDiagnosticLevel_spinBox")
+        self.configDiagnosticLevel_spinBox.setMaximum(2)
+
+        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.configDiagnosticLevel_spinBox)
+
+        self.configDiagnosticLevel_label = QLabel(self.configInitial_groupBox)
+        self.configDiagnosticLevel_label.setObjectName(u"configDiagnosticLevel_label")
+
+        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.configDiagnosticLevel_label)
+
 
         self.verticalLayout_4.addWidget(self.configInitial_groupBox)
 
@@ -706,6 +717,7 @@ class Ui_GeometricFitWidget(object):
         self.configModelCoordinates_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Model coordinates:", None))
         self.configDataCoordinates_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Data coordinates:", None))
         self.configMarkerGroup_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Marker group:", None))
+        self.configDiagnosticLevel_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Diagnostic level:", None))
         self.configProjection_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Projection", None))
         self.configProjectionCentreGroups_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Centre groups", None))
         self.align_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Align", None))
