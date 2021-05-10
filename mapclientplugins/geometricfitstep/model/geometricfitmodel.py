@@ -228,7 +228,6 @@ class GeometricFitModel(object):
         graphics = self.getScene().findGraphicsByName("displayNodeDerivatives" + nodeDerivativeLabel)
         graphics.setVisibilityFlag(show and self.isDisplayNodeDerivatives())
 
-
     def isDisplayMarkerDataPoints(self):
         return self._getVisibility("displayMarkerDataPoints")
 
@@ -648,6 +647,9 @@ class GeometricFitModel(object):
         spectrum.autorange(scene, Scenefilter())
 
 # === Align Utilities ===
+
+    def isStateAlign(self):
+        return False  # disabled as not implemented
 
     def rotateModel(self, axis, angle):
         mat1 = axis_angle_to_rotation_matrix(axis, angle)
