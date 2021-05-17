@@ -207,27 +207,27 @@ class Ui_GeometricFitWidget(object):
 
         self.configMakerGroup_groupBox.setWidget(1, QFormLayout.FieldRole, self.subConfigMarkerGroup_fieldChooser)
 
-        self.subConfigDataProportion_checkBox = QCheckBox(self.configProjection_groupBox)
-        self.subConfigDataProportion_checkBox.setObjectName(u"subConfigDataProportion_checkBox")
-        self.subConfigDataProportion_checkBox.setTristate(True)
+        self.configDataProportion_checkBox = QCheckBox(self.configProjection_groupBox)
+        self.configDataProportion_checkBox.setObjectName(u"configDataProportion_checkBox")
+        self.configDataProportion_checkBox.setTristate(True)
 
-        self.configMakerGroup_groupBox.setWidget(2, QFormLayout.LabelRole, self.subConfigDataProportion_checkBox)
+        self.configMakerGroup_groupBox.setWidget(2, QFormLayout.LabelRole, self.configDataProportion_checkBox)
 
-        self.subConfigDataProportion_lineEdit = QLineEdit(self.configProjection_groupBox)
-        self.subConfigDataProportion_lineEdit.setObjectName(u"subConfigDataProportion_lineEdit")
+        self.configDataProportion_lineEdit = QLineEdit(self.configProjection_groupBox)
+        self.configDataProportion_lineEdit.setObjectName(u"configDataProportion_lineEdit")
 
-        self.configMakerGroup_groupBox.setWidget(2, QFormLayout.FieldRole, self.subConfigDataProportion_lineEdit)
+        self.configMakerGroup_groupBox.setWidget(2, QFormLayout.FieldRole, self.configDataProportion_lineEdit)
 
-        self.subConfigDataWeight_checkBox = QCheckBox(self.configProjection_groupBox)
-        self.subConfigDataWeight_checkBox.setObjectName(u"subConfigDataWeight_checkBox")
-        self.subConfigDataWeight_checkBox.setTristate(True)
+        self.configDataWeight_checkBox = QCheckBox(self.configProjection_groupBox)
+        self.configDataWeight_checkBox.setObjectName(u"configDataWeight_checkBox")
+        self.configDataWeight_checkBox.setTristate(True)
 
-        self.configMakerGroup_groupBox.setWidget(3, QFormLayout.LabelRole, self.subConfigDataWeight_checkBox)
+        self.configMakerGroup_groupBox.setWidget(3, QFormLayout.LabelRole, self.configDataWeight_checkBox)
 
-        self.subConfigDataWeight_lineEdit = QLineEdit(self.configProjection_groupBox)
-        self.subConfigDataWeight_lineEdit.setObjectName(u"subConfigDataWeight_lineEdit")
+        self.configDataWeight_lineEdit = QLineEdit(self.configProjection_groupBox)
+        self.configDataWeight_lineEdit.setObjectName(u"configDataWeight_lineEdit")
 
-        self.configMakerGroup_groupBox.setWidget(3, QFormLayout.FieldRole, self.subConfigDataWeight_lineEdit)
+        self.configMakerGroup_groupBox.setWidget(3, QFormLayout.FieldRole, self.configDataWeight_lineEdit)
 
 
         self.verticalLayout_5.addLayout(self.configMakerGroup_groupBox)
@@ -761,8 +761,8 @@ class Ui_GeometricFitWidget(object):
         self.configProjection_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Projection", None))
         self.configProjectionCentreGroups_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Centre groups", None))
         self.subConfigMarkerGroup_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Marker group:", None))
-        self.subConfigDataProportion_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Data Proportion", None))
-        self.subConfigDataWeight_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Data Weight", None))
+        self.configDataProportion_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Data Proportion", None))
+        self.configDataWeight_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Data Weight", None))
         self.align_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Align", None))
         self.alignGroups_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Align groups", None))
         self.alignMarkers_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Align markers", None))

@@ -483,8 +483,10 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.configMarkerGroup_fieldChooser.currentIndexChanged.connect(self._configMarkerGroupChanged)
         self._ui.configDiagnosticLevel_spinBox.valueChanged.connect(self._configDiagnosticLevelValueChanged)
         self._ui.configProjectionCentreGroups_checkBox.clicked.connect(self._configProjectionCentreGroupsClicked)
-        self._ui.subConfigDataProportion_checkBox.clicked.connect(self._subConfigDataProportionClicked)
-        self._ui.subConfigDataWeight_checkBox.clicked.connect(self._subConfigDataWeightClicked)
+        self._ui.configDataProportion_checkBox.clicked.connect(self._configDataProportionClicked)
+        self._ui.configDataWeight_checkBox.clicked.connect(self._configDataWeightClicked)
+        self._ui.configDataProportion_lineEdit.editingFinished.connect(self._configDataProportionEntered)
+        self._ui.configDataWeight_lineEdit.editingFinished.connect(self._configDataWeightEntered)
 
     def _getConfig(self):
         config = self._currentFitterStep
@@ -497,6 +499,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
         """
         config = self._getConfig()
         self._ui.configProjectionCentreGroups_checkBox.setCheckState(QtCore.Qt.Checked if config.isProjectionCentreGroups() else QtCore.Qt.Unchecked)
+        #To-do: bind config data to view
 
     def _configModelCoordinatesFieldChanged(self, index):
         """
@@ -536,16 +539,34 @@ class GeometricFitWidget(QtWidgets.QWidget):
                 self._refreshStepItem(config)
                 self._refreshGraphics()
     
-    #To-do: Add setSubConfigData in _fitter
-    def _subConfigDataProportionClicked(self):
-        checkState = self._ui.subConfigDataProportion_checkBox.checkState()
+    #To-do: Add setConfigData in _fitter
+    def _configDataProportionClicked(self):
+        checkState = self._ui.configDataProportion_checkBox.checkState()
         triState = 0 if (checkState == QtCore.Qt.Unchecked) else 1 if (checkState == QtCore.Qt.PartiallyChecked) else 2
-        self._fitter.setSubConfigDataProportion(triState)
+        self._fitter.setConfigDataProportion(triState)
 
-    def _subConfigDataWeightClicked(self):
-        checkState = self._ui.subConfigDataWeight_checkBox.checkState()
+    def _configDataWeightClicked(self):
+        checkState = self._ui.configDataWeight_checkBox.checkState()
         triState = 0 if (checkState == QtCore.Qt.Unchecked) else 1 if (checkState == QtCore.Qt.PartiallyChecked) else 2
-        self._fitter.setSubConfigDataWeight(triState)
+        self._fitter.setConfigDataWeight(triState)
+
+    def _configDataProportionEntered(self):
+        value = QLineEdit_parseRealNonNegative(self._ui.configDataProportion_lineEdit)
+        if value > 0.0:
+            self._getConfig().setDataProportion(value)
+        else:
+            print("Invalid model Data Proportion entered")
+        self._updateAlignWidgets()
+
+    def _configDataWeightEntered(self):
+        value = QLineEdit_parseRealNonNegative(self._ui.configDataWeight_lineEdit)
+        if value > 0.0:
+            self._getConfig().setDataWeight(value)
+        else:
+            print("Invalid model Data Weight entered")
+        self._updateAlignWidgets()
+
+
 
 # === align widgets ===
 
