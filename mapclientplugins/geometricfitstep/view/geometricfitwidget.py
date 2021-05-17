@@ -471,6 +471,11 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.configMarkerGroup_fieldChooser.setConditional(fieldIsManagedGroup)
         self._ui.configMarkerGroup_fieldChooser.setField(self._fitter.getMarkerGroup())
         self._ui.configDiagnosticLevel_spinBox.setValue(self._fitter.getDiagnosticLevel())
+        #To-do: bind subConfig to MarkerGroup
+        self._ui.subConfigMarkerGroup_fieldChooser.setRegion(self._region)
+        self._ui.subConfigMarkerGroup_fieldChooser.setNullObjectName("-")
+        self._ui.subConfigMarkerGroup_fieldChooser.setConditional(fieldIsManagedGroup)
+        self._ui.subConfigMarkerGroup_fieldChooser.setField(self._fitter.getMarkerGroup())
 
     def _makeConnectionsConfig(self):
         self._ui.configModelCoordinates_fieldChooser.currentIndexChanged.connect(self._configModelCoordinatesFieldChanged)
@@ -478,6 +483,8 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.configMarkerGroup_fieldChooser.currentIndexChanged.connect(self._configMarkerGroupChanged)
         self._ui.configDiagnosticLevel_spinBox.valueChanged.connect(self._configDiagnosticLevelValueChanged)
         self._ui.configProjectionCentreGroups_checkBox.clicked.connect(self._configProjectionCentreGroupsClicked)
+        self._ui.subConfigDataProportion_checkBox.clicked.connect(self._subConfigDataProportionClicked)
+        self._ui.subConfigDataWeight_checkBox.clicked.connect(self._subConfigDataWeightClicked)
 
     def _getConfig(self):
         config = self._currentFitterStep
@@ -528,6 +535,17 @@ class GeometricFitWidget(QtWidgets.QWidget):
                 config.run()
                 self._refreshStepItem(config)
                 self._refreshGraphics()
+    
+    #To-do: Add setSubConfigData in _fitter
+    def _subConfigDataProportionClicked(self):
+        checkState = self._ui.subConfigDataProportion_checkBox.checkState()
+        triState = 0 if (checkState == QtCore.Qt.Unchecked) else 1 if (checkState == QtCore.Qt.PartiallyChecked) else 2
+        self._fitter.setSubConfigDataProportion(triState)
+
+    def _subConfigDataWeightClicked(self):
+        checkState = self._ui.subConfigDataWeight_checkBox.checkState()
+        triState = 0 if (checkState == QtCore.Qt.Unchecked) else 1 if (checkState == QtCore.Qt.PartiallyChecked) else 2
+        self._fitter.setSubConfigDataWeight(triState)
 
 # === align widgets ===
 

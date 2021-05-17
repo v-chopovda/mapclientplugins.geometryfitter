@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1718</width>
-    <height>1105</height>
+    <height>1101</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -160,8 +160,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>373</width>
-               <height>653</height>
+               <width>352</width>
+               <height>679</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -228,25 +228,8 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="2" column="0">
-                     <widget class="QLabel" name="configMarkerGroup_label">
-                      <property name="text">
-                       <string>Marker group:</string>
-                      </property>
-                     </widget>
-                    </item>
                     <item row="1" column="1">
                      <widget class="FieldChooserWidget" name="configDataCoordinates_fieldChooser">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="1">
-                     <widget class="FieldChooserWidget" name="configMarkerGroup_fieldChooser">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                         <horstretch>0</horstretch>
@@ -266,6 +249,23 @@
                      <widget class="QLabel" name="configDiagnosticLevel_label">
                       <property name="text">
                        <string>Diagnostic level:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QLabel" name="configMarkerGroup_label">
+                      <property name="text">
+                       <string>Marker group:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="FieldChooserWidget" name="configMarkerGroup_fieldChooser">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
                       </property>
                      </widget>
                     </item>
@@ -296,6 +296,56 @@
                        <string>Centre groups</string>
                       </property>
                      </widget>
+                    </item>
+                    <item>
+                     <layout class="QFormLayout" name="configMakerGroup_groupBox">
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item row="1" column="0">
+                       <widget class="QLabel" name="subConfigMarkerGroup_label">
+                        <property name="text">
+                         <string>Marker group:</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="1">
+                       <widget class="FieldChooserWidget" name="subConfigMarkerGroup_fieldChooser">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QCheckBox" name="subConfigDataProportion_checkBox">
+                        <property name="text">
+                         <string>Data Proportion</string>
+                        </property>
+                        <property name="tristate">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="1">
+                       <widget class="QLineEdit" name="subConfigDataProportion_lineEdit"/>
+                      </item>
+                      <item row="3" column="0">
+                       <widget class="QCheckBox" name="subConfigDataWeight_checkBox">
+                        <property name="text">
+                         <string>Data Weight</string>
+                        </property>
+                        <property name="tristate">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="3" column="1">
+                       <widget class="QLineEdit" name="subConfigDataWeight_lineEdit"/>
+                      </item>
+                     </layout>
                     </item>
                    </layout>
                   </widget>
@@ -331,6 +381,26 @@
                  <property name="fieldGrowthPolicy">
                   <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
                  </property>
+                 <item row="1" column="0">
+                  <widget class="QCheckBox" name="alignGroups_checkBox">
+                   <property name="text">
+                    <string>Align groups</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QCheckBox" name="alignMarkers_checkBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>Align markers</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="4" column="0">
                   <widget class="QLabel" name="alignRotation_label">
                    <property name="text">
@@ -379,26 +449,6 @@
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QCheckBox" name="alignGroups_checkBox">
-                   <property name="text">
-                    <string>Align groups</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QCheckBox" name="alignMarkers_checkBox">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="text">
-                    <string>Align markers</string>
                    </property>
                   </widget>
                  </item>
