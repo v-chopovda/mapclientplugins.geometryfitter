@@ -6,6 +6,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 from mapclientplugins.geometricfitstep.view.ui_geometricfitwidget import Ui_GeometricFitWidget
 from opencmiss.utils.maths.vectorops import dot, magnitude, mult, normalize, sub
 from opencmiss.utils.zinc.field import fieldIsManagedCoordinates, fieldIsManagedGroup
+from opencmiss.zinc.field import Field
 from opencmiss.zinc.scene import Scene
 from scaffoldfitter.fitterstepalign import FitterStepAlign
 from scaffoldfitter.fitterstepconfig import FitterStepConfig
@@ -471,11 +472,14 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.configMarkerGroup_fieldChooser.setConditional(fieldIsManagedGroup)
         self._ui.configMarkerGroup_fieldChooser.setField(self._fitter.getMarkerGroup())
         self._ui.configDiagnosticLevel_spinBox.setValue(self._fitter.getDiagnosticLevel())
-        #To-do: bind subConfig to MarkerGroup
-        self._ui.subConfigMarkerGroup_fieldChooser.setRegion(self._region)
-        self._ui.subConfigMarkerGroup_fieldChooser.setNullObjectName("-")
-        self._ui.subConfigMarkerGroup_fieldChooser.setConditional(fieldIsManagedGroup)
-        self._ui.subConfigMarkerGroup_fieldChooser.setField(self._fitter.getMarkerGroup())
+        self._ui.configSettingGroup_fieldChooser.setRegion(self._region)
+        self._ui.configSettingGroup_fieldChooser.setNullObjectName("-")
+        self._ui.configSettingGroup_fieldChooser.setConditional(fieldIsManagedGroup)
+        self._ui.configSettingGroup_fieldChooser.setField(Field())
+        self._ui.configDataWeight_checkBox.setVisible(False)
+        self._ui.configDataWeight_lineEdit.setVisible(False)
+        self._ui.configDataProportion_checkBox.setDisabled(True)
+        self._ui.configDataProportion_lineEdit.setDisabled(True)
 
     def _makeConnectionsConfig(self):
         self._ui.configModelCoordinates_fieldChooser.currentIndexChanged.connect(self._configModelCoordinatesFieldChanged)
@@ -483,9 +487,11 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.configMarkerGroup_fieldChooser.currentIndexChanged.connect(self._configMarkerGroupChanged)
         self._ui.configDiagnosticLevel_spinBox.valueChanged.connect(self._configDiagnosticLevelValueChanged)
         self._ui.configProjectionCentreGroups_checkBox.clicked.connect(self._configProjectionCentreGroupsClicked)
+        #To-do: Setting Group
+        self._ui.configSettingGroup_fieldChooser.currentIndexChanged.connect(self._configSettingGroupChanged)
         self._ui.configDataProportion_checkBox.clicked.connect(self._configDataProportionClicked)
-        self._ui.configDataWeight_checkBox.clicked.connect(self._configDataWeightClicked)
         self._ui.configDataProportion_lineEdit.editingFinished.connect(self._configDataProportionEntered)
+        self._ui.configDataWeight_checkBox.clicked.connect(self._configDataWeightClicked)
         self._ui.configDataWeight_lineEdit.editingFinished.connect(self._configDataWeightEntered)
 
     def _getConfig(self):
@@ -540,23 +546,56 @@ class GeometricFitWidget(QtWidgets.QWidget):
                 self._refreshGraphics()
     
     #To-do: Add setConfigData in _fitter
+    def _configSettingGroupChanged(self, index):
+        """
+        Callback for change in marker group field chooser widget.
+        """
+        realFormat = "{:.4g}"
+        lineEditDisable = True
+        checkBoxDisable = True
+        checkBoxTristate = False
+        dataProportionStr = ""
+        checkBoxState = QtCore.Qt.Unchecked
+        config = self._getConfig()
+        group = self._ui.configSettingGroup_fieldChooser.getField()
+        if group:
+            checkBoxDisable = False
+            proportion, isInherit = config.getGroupDataProportion(group.getName())
+            if proportion:
+                dataProportionStr = realFormat.format(proportion)
+                if isInherit:
+                    checkBoxState = QtCore.Qt.PartiallyChecked
+                    checkBoxTristate = True
+                else:
+                    checkBoxState = QtCore.Qt.Checked
+                    lineEditDisable = False          
+        self._ui.configDataProportion_checkBox.setDisabled(checkBoxDisable)
+        self._ui.configDataProportion_checkBox.setCheckState(checkBoxState)
+        self._ui.configDataProportion_checkBox.setTristate(checkBoxTristate)
+        self._ui.configDataProportion_lineEdit.setDisabled(lineEditDisable)
+        self._ui.configDataProportion_lineEdit.setText(dataProportionStr)
+
     def _configDataProportionClicked(self):
         checkState = self._ui.configDataProportion_checkBox.checkState()
         triState = 0 if (checkState == QtCore.Qt.Unchecked) else 1 if (checkState == QtCore.Qt.PartiallyChecked) else 2
-        self._fitter.setConfigDataProportion(triState)
+        if triState == 2:
+            self._ui.configDataProportion_lineEdit.setDisabled(False)
+        else:
+            self._ui.configDataProportion_lineEdit.setDisabled(True)
+
+    def _configDataProportionEntered(self):
+        value = QLineEdit_parseRealNonNegative(self._ui.configDataProportion_lineEdit)
+        group = self._ui.configSettingGroup_fieldChooser.getField().getName()
+        if value > 0.0:
+            self._getConfig().setGroupDataProportion(group, value)
+        else:
+            print("Invalid model Data Proportion entered")
+        self._updateConfigWidgets()
 
     def _configDataWeightClicked(self):
         checkState = self._ui.configDataWeight_checkBox.checkState()
         triState = 0 if (checkState == QtCore.Qt.Unchecked) else 1 if (checkState == QtCore.Qt.PartiallyChecked) else 2
         self._fitter.setConfigDataWeight(triState)
-
-    def _configDataProportionEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.configDataProportion_lineEdit)
-        if value > 0.0:
-            self._getConfig().setDataProportion(value)
-        else:
-            print("Invalid model Data Proportion entered")
-        self._updateAlignWidgets()
 
     def _configDataWeightEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.configDataWeight_lineEdit)
@@ -564,7 +603,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
             self._getConfig().setDataWeight(value)
         else:
             print("Invalid model Data Weight entered")
-        self._updateAlignWidgets()
+        self._updateConfigWidgets()
 
 
 
