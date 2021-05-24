@@ -297,6 +297,9 @@
                       </property>
                      </widget>
                     </item>
+                   </layout>
+                  </widget>
+                 </item>
                     <item>
                     <widget class="QGroupBox" name="configSetting_groupBox">
                     <property name="sizePolicy">
@@ -306,7 +309,7 @@
                         </sizepolicy>
                     </property>
                     <property name="title">
-                        <string>Setting</string>
+                        <string>Group settings</string>
                     </property>
                         <layout class="QFormLayout" name="configSettingGroup_Layout">
                         <property name="bottomMargin">
@@ -315,7 +318,7 @@
                         <item row="1" column="0">
                         <widget class="QLabel" name="configSettingGroup_label">
                             <property name="text">
-                            <string>Setting group:</string>
+                            <string>Group:</string>
                             </property>
                         </widget>
                         </item>
@@ -358,9 +361,6 @@
                         </layout>
                     </widget>
                     </item>
-                   </layout>
-                  </widget>
-                 </item>
                  <item>
                   <spacer name="config_verticalSpacer">
                    <property name="orientation">

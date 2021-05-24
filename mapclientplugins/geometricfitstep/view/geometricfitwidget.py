@@ -487,7 +487,6 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.configMarkerGroup_fieldChooser.currentIndexChanged.connect(self._configMarkerGroupChanged)
         self._ui.configDiagnosticLevel_spinBox.valueChanged.connect(self._configDiagnosticLevelValueChanged)
         self._ui.configProjectionCentreGroups_checkBox.clicked.connect(self._configProjectionCentreGroupsClicked)
-        #To-do: Setting Group
         self._ui.configSettingGroup_fieldChooser.currentIndexChanged.connect(self._configSettingGroupChanged)
         self._ui.configDataProportion_checkBox.clicked.connect(self._configDataProportionClicked)
         self._ui.configDataProportion_lineEdit.editingFinished.connect(self._configDataProportionEntered)
@@ -505,7 +504,6 @@ class GeometricFitWidget(QtWidgets.QWidget):
         """
         config = self._getConfig()
         self._ui.configProjectionCentreGroups_checkBox.setCheckState(QtCore.Qt.Checked if config.isProjectionCentreGroups() else QtCore.Qt.Unchecked)
-        #To-do: bind config data to view
         self._updateDataProportion()
 
     def _configModelCoordinatesFieldChanged(self, index):
@@ -563,8 +561,10 @@ class GeometricFitWidget(QtWidgets.QWidget):
         group = self._ui.configSettingGroup_fieldChooser.getField()
         if group:
             checkBoxDisable = False
-            proportion, isLocallySet = config.getGroupDataProportion(group.getName())
-            #print("group:", group.getName(), "proportion", proportion, isLocallySet)
+            groupName = group.getName()
+            proportion, isLocallySet = config.getGroupDataProportion(groupName)
+            prevProportion = self._getPreviousProportion(groupName)
+            print("group:", group.getName(), "proportion", proportion, isLocallySet)
             if proportion:
                 dataProportionStr = realFormat.format(proportion)
                 if isLocallySet:
@@ -573,24 +573,40 @@ class GeometricFitWidget(QtWidgets.QWidget):
                 else:      
                     checkBoxState = QtCore.Qt.PartiallyChecked
                     checkBoxTristate = True
-            #elif isLocallySet:
-                #checkBoxTristate = True
+            elif prevProportion:
+                checkBoxTristate = True
+                dataProportionStr = realFormat.format(prevProportion)
         self._ui.configDataProportion_checkBox.setDisabled(checkBoxDisable)
         self._ui.configDataProportion_checkBox.setCheckState(checkBoxState)
         self._ui.configDataProportion_checkBox.setTristate(checkBoxTristate)
         self._ui.configDataProportion_lineEdit.setDisabled(lineEditDisable)
         self._ui.configDataProportion_lineEdit.setText(dataProportionStr)
     
+    def _getPreviousProportion(self, group):
+        """
+        Get data proportion value from previous config 
+        """
+        fitterSteps = self._fitter.getFitterSteps()
+        prevProportion = None
+        for step in fitterSteps:
+            if not isinstance(step, FitterStepConfig):
+                continue
+            proportion, isLocallySet = step.getGroupDataProportion(group)
+            if proportion:
+                prevProportion = proportion
+        return prevProportion
+
     def _configDataProportionClicked(self):
         checkState = self._ui.configDataProportion_checkBox.checkState()
         triState = 0 if (checkState == QtCore.Qt.Unchecked) else 1 if (checkState == QtCore.Qt.PartiallyChecked) else 2
         group = self._ui.configSettingGroup_fieldChooser.getField().getName()
-        if triState == 2:
-            self._ui.configDataProportion_lineEdit.setDisabled(False)
-        else:
-            self._ui.configDataProportion_lineEdit.setDisabled(True)
+        self._ui.configDataProportion_lineEdit.setDisabled(True)
         if triState == 0:
-            self._getConfig().setGroupDataProportion(group, None)  
+            self._getConfig().setGroupDataProportion(group, None)
+        elif triState == 1:
+            self._getConfig().clearGroupDataProportion(group)
+        else:
+            self._ui.configDataProportion_lineEdit.setDisabled(False)
 
     def _configDataProportionEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.configDataProportion_lineEdit)

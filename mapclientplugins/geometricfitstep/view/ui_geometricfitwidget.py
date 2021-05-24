@@ -192,7 +192,10 @@ class Ui_GeometricFitWidget(object):
 
         self.verticalLayout_5.addWidget(self.configProjectionCentreGroups_checkBox)
 
-        self.configSetting_groupBox = QGroupBox(self.configProjection_groupBox)
+
+        self.verticalLayout_4.addWidget(self.configProjection_groupBox)
+
+        self.configSetting_groupBox = QGroupBox(self.config_groupBox)
         self.configSetting_groupBox.setObjectName(u"configSetting_groupBox")
         sizePolicy3.setHeightForWidth(self.configSetting_groupBox.sizePolicy().hasHeightForWidth())
         self.configSetting_groupBox.setSizePolicy(sizePolicy3)
@@ -234,10 +237,7 @@ class Ui_GeometricFitWidget(object):
         self.configSettingGroup_Layout.setWidget(3, QFormLayout.FieldRole, self.configDataWeight_lineEdit)
 
 
-        self.verticalLayout_5.addWidget(self.configSetting_groupBox)
-
-
-        self.verticalLayout_4.addWidget(self.configProjection_groupBox)
+        self.verticalLayout_4.addWidget(self.configSetting_groupBox)
 
         self.config_verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -764,8 +764,8 @@ class Ui_GeometricFitWidget(object):
         self.configMarkerGroup_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Marker group:", None))
         self.configProjection_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Projection", None))
         self.configProjectionCentreGroups_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Centre groups", None))
-        self.configSetting_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Setting", None))
-        self.configSettingGroup_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Setting group:", None))
+        self.configSetting_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Group settings", None))
+        self.configSettingGroup_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Group:", None))
         self.configDataProportion_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Data Proportion", None))
         self.configDataWeight_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Data Weight", None))
         self.align_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Align", None))
