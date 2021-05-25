@@ -476,10 +476,10 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.configSettingGroup_fieldChooser.setNullObjectName("-")
         self._ui.configSettingGroup_fieldChooser.setConditional(fieldIsManagedGroup)
         self._ui.configSettingGroup_fieldChooser.setField(Field())
-        self._ui.configDataWeight_checkBox.setDisabled(True)
-        self._ui.configDataWeight_lineEdit.setDisabled(True)
         self._ui.configDataProportion_checkBox.setDisabled(True)
         self._ui.configDataProportion_lineEdit.setDisabled(True)
+        self._ui.configDataWeight_checkBox.setDisabled(True)
+        self._ui.configDataWeight_lineEdit.setDisabled(True)
 
     def _makeConnectionsConfig(self):
         self._ui.configModelCoordinates_fieldChooser.currentIndexChanged.connect(self._configModelCoordinatesFieldChanged)
@@ -575,8 +575,8 @@ class GeometricFitWidget(QtWidgets.QWidget):
                 checkBoxState = QtCore.Qt.Checked
                 lineEditDisable = False
         self._ui.configDataProportion_checkBox.setDisabled(checkBoxDisable)
-        self._ui.configDataProportion_checkBox.setCheckState(checkBoxState)
         self._ui.configDataProportion_checkBox.setTristate(checkBoxTristate)
+        self._ui.configDataProportion_checkBox.setCheckState(checkBoxState)        
         self._ui.configDataProportion_lineEdit.setDisabled(lineEditDisable)
         self._ui.configDataProportion_lineEdit.setText(dataProportionStr)
 
@@ -600,7 +600,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
             self._getConfig().setGroupDataProportion(group, value)
         else:
             print("Invalid model Data Proportion entered")
-        self._updateConfigWidgets()
+        self._updateDataProportion()
 
     def _updateDataWeight(self):
         realFormat = "{:.4g}"
@@ -625,10 +625,10 @@ class GeometricFitWidget(QtWidgets.QWidget):
                 checkBoxState = QtCore.Qt.Checked
                 lineEditDisable = False
         self._ui.configDataWeight_checkBox.setDisabled(checkBoxDisable)
-        self._ui.configDataWeight_checkBox.setCheckState(checkBoxState)
         self._ui.configDataWeight_checkBox.setTristate(checkBoxTristate)
+        self._ui.configDataWeight_checkBox.setCheckState(checkBoxState)
         self._ui.configDataWeight_lineEdit.setDisabled(lineEditDisable)
-        self._ui.configDataWeight_lineEdit.setText(dataProportionStr)
+        self._ui.configDataWeight_lineEdit.setText(dataWeightStr)
 
     def _configDataWeightClicked(self):
         checkState = self._ui.configDataWeight_checkBox.checkState()
@@ -650,7 +650,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
             self._getConfig().setGroupDataWeight(group, value)
         else:
             print("Invalid model Data Weight entered")
-        self._updateConfigWidgets()
+        self._updateDataWeight()
 
 
 
