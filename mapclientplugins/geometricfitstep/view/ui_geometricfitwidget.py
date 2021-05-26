@@ -20,7 +20,7 @@ class Ui_GeometricFitWidget(object):
     def setupUi(self, GeometricFitWidget):
         if not GeometricFitWidget.objectName():
             GeometricFitWidget.setObjectName(u"GeometricFitWidget")
-        GeometricFitWidget.resize(1718, 1105)
+        GeometricFitWidget.resize(1718, 1101)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -106,7 +106,7 @@ class Ui_GeometricFitWidget(object):
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollAreaWidgetContents = QWidget()
         self.stepedit_scrollAreaWidgetContents.setObjectName(u"stepedit_scrollAreaWidgetContents")
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 373, 653))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 679))
         self.verticalLayout_3 = QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -146,24 +146,12 @@ class Ui_GeometricFitWidget(object):
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.configDataCoordinates_label)
 
-        self.configMarkerGroup_label = QLabel(self.configInitial_groupBox)
-        self.configMarkerGroup_label.setObjectName(u"configMarkerGroup_label")
-
-        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.configMarkerGroup_label)
-
         self.configDataCoordinates_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
         self.configDataCoordinates_fieldChooser.setObjectName(u"configDataCoordinates_fieldChooser")
         sizePolicy4.setHeightForWidth(self.configDataCoordinates_fieldChooser.sizePolicy().hasHeightForWidth())
         self.configDataCoordinates_fieldChooser.setSizePolicy(sizePolicy4)
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.configDataCoordinates_fieldChooser)
-
-        self.configMarkerGroup_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
-        self.configMarkerGroup_fieldChooser.setObjectName(u"configMarkerGroup_fieldChooser")
-        sizePolicy4.setHeightForWidth(self.configMarkerGroup_fieldChooser.sizePolicy().hasHeightForWidth())
-        self.configMarkerGroup_fieldChooser.setSizePolicy(sizePolicy4)
-
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.configMarkerGroup_fieldChooser)
 
         self.configDiagnosticLevel_spinBox = QSpinBox(self.configInitial_groupBox)
         self.configDiagnosticLevel_spinBox.setObjectName(u"configDiagnosticLevel_spinBox")
@@ -175,6 +163,18 @@ class Ui_GeometricFitWidget(object):
         self.configDiagnosticLevel_label.setObjectName(u"configDiagnosticLevel_label")
 
         self.formLayout.setWidget(3, QFormLayout.LabelRole, self.configDiagnosticLevel_label)
+
+        self.configMarkerGroup_label = QLabel(self.configInitial_groupBox)
+        self.configMarkerGroup_label.setObjectName(u"configMarkerGroup_label")
+
+        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.configMarkerGroup_label)
+
+        self.configMarkerGroup_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
+        self.configMarkerGroup_fieldChooser.setObjectName(u"configMarkerGroup_fieldChooser")
+        sizePolicy4.setHeightForWidth(self.configMarkerGroup_fieldChooser.sizePolicy().hasHeightForWidth())
+        self.configMarkerGroup_fieldChooser.setSizePolicy(sizePolicy4)
+
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.configMarkerGroup_fieldChooser)
 
 
         self.verticalLayout_4.addWidget(self.configInitial_groupBox)
@@ -195,6 +195,50 @@ class Ui_GeometricFitWidget(object):
 
         self.verticalLayout_4.addWidget(self.configProjection_groupBox)
 
+        self.configSetting_groupBox = QGroupBox(self.config_groupBox)
+        self.configSetting_groupBox.setObjectName(u"configSetting_groupBox")
+        sizePolicy3.setHeightForWidth(self.configSetting_groupBox.sizePolicy().hasHeightForWidth())
+        self.configSetting_groupBox.setSizePolicy(sizePolicy3)
+        self.configSettingGroup_Layout = QFormLayout(self.configSetting_groupBox)
+        self.configSettingGroup_Layout.setObjectName(u"configSettingGroup_Layout")
+        self.configSettingGroup_Layout.setContentsMargins(-1, -1, -1, 0)
+        self.configSettingGroup_label = QLabel(self.configSetting_groupBox)
+        self.configSettingGroup_label.setObjectName(u"configSettingGroup_label")
+
+        self.configSettingGroup_Layout.setWidget(1, QFormLayout.LabelRole, self.configSettingGroup_label)
+
+        self.configSettingGroup_fieldChooser = FieldChooserWidget(self.configSetting_groupBox)
+        self.configSettingGroup_fieldChooser.setObjectName(u"configSettingGroup_fieldChooser")
+        sizePolicy4.setHeightForWidth(self.configSettingGroup_fieldChooser.sizePolicy().hasHeightForWidth())
+        self.configSettingGroup_fieldChooser.setSizePolicy(sizePolicy4)
+
+        self.configSettingGroup_Layout.setWidget(1, QFormLayout.FieldRole, self.configSettingGroup_fieldChooser)
+
+        self.configDataProportion_checkBox = QCheckBox(self.configSetting_groupBox)
+        self.configDataProportion_checkBox.setObjectName(u"configDataProportion_checkBox")
+        self.configDataProportion_checkBox.setTristate(True)
+
+        self.configSettingGroup_Layout.setWidget(2, QFormLayout.LabelRole, self.configDataProportion_checkBox)
+
+        self.configDataProportion_lineEdit = QLineEdit(self.configSetting_groupBox)
+        self.configDataProportion_lineEdit.setObjectName(u"configDataProportion_lineEdit")
+
+        self.configSettingGroup_Layout.setWidget(2, QFormLayout.FieldRole, self.configDataProportion_lineEdit)
+
+        self.configDataWeight_checkBox = QCheckBox(self.configSetting_groupBox)
+        self.configDataWeight_checkBox.setObjectName(u"configDataWeight_checkBox")
+        self.configDataWeight_checkBox.setTristate(True)
+
+        self.configSettingGroup_Layout.setWidget(3, QFormLayout.LabelRole, self.configDataWeight_checkBox)
+
+        self.configDataWeight_lineEdit = QLineEdit(self.configSetting_groupBox)
+        self.configDataWeight_lineEdit.setObjectName(u"configDataWeight_lineEdit")
+
+        self.configSettingGroup_Layout.setWidget(3, QFormLayout.FieldRole, self.configDataWeight_lineEdit)
+
+
+        self.verticalLayout_4.addWidget(self.configSetting_groupBox)
+
         self.config_verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_4.addItem(self.config_verticalSpacer)
@@ -209,6 +253,18 @@ class Ui_GeometricFitWidget(object):
         self.formLayout_2 = QFormLayout(self.align_groupBox)
         self.formLayout_2.setObjectName(u"formLayout_2")
         self.formLayout_2.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
+        self.alignGroups_checkBox = QCheckBox(self.align_groupBox)
+        self.alignGroups_checkBox.setObjectName(u"alignGroups_checkBox")
+
+        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.alignGroups_checkBox)
+
+        self.alignMarkers_checkBox = QCheckBox(self.align_groupBox)
+        self.alignMarkers_checkBox.setObjectName(u"alignMarkers_checkBox")
+        sizePolicy.setHeightForWidth(self.alignMarkers_checkBox.sizePolicy().hasHeightForWidth())
+        self.alignMarkers_checkBox.setSizePolicy(sizePolicy)
+
+        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.alignMarkers_checkBox)
+
         self.alignRotation_label = QLabel(self.align_groupBox)
         self.alignRotation_label.setObjectName(u"alignRotation_label")
 
@@ -244,18 +300,6 @@ class Ui_GeometricFitWidget(object):
         self.alignTranslation_lineEdit.setSizePolicy(sizePolicy4)
 
         self.formLayout_2.setWidget(6, QFormLayout.FieldRole, self.alignTranslation_lineEdit)
-
-        self.alignGroups_checkBox = QCheckBox(self.align_groupBox)
-        self.alignGroups_checkBox.setObjectName(u"alignGroups_checkBox")
-
-        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.alignGroups_checkBox)
-
-        self.alignMarkers_checkBox = QCheckBox(self.align_groupBox)
-        self.alignMarkers_checkBox.setObjectName(u"alignMarkers_checkBox")
-        sizePolicy.setHeightForWidth(self.alignMarkers_checkBox.sizePolicy().hasHeightForWidth())
-        self.alignMarkers_checkBox.setSizePolicy(sizePolicy)
-
-        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.alignMarkers_checkBox)
 
 
         self.verticalLayout_3.addWidget(self.align_groupBox)
@@ -716,16 +760,20 @@ class Ui_GeometricFitWidget(object):
         self.configInitial_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Initial", None))
         self.configModelCoordinates_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Model coordinates:", None))
         self.configDataCoordinates_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Data coordinates:", None))
-        self.configMarkerGroup_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Marker group:", None))
         self.configDiagnosticLevel_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Diagnostic level:", None))
+        self.configMarkerGroup_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Marker group:", None))
         self.configProjection_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Projection", None))
         self.configProjectionCentreGroups_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Centre groups", None))
+        self.configSetting_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Group settings", None))
+        self.configSettingGroup_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Group:", None))
+        self.configDataProportion_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Data Proportion", None))
+        self.configDataWeight_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Data Weight", None))
         self.align_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Align", None))
+        self.alignGroups_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Align groups", None))
+        self.alignMarkers_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Align markers", None))
         self.alignRotation_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Rotation:", None))
         self.alignScale_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Scale:", None))
         self.alignTranslation_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Translation:", None))
-        self.alignGroups_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Align groups", None))
-        self.alignMarkers_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Align markers", None))
         self.fit_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Fit", None))
         self.fitMarkerWeight_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Marker weight:", None))
 #if QT_CONFIG(tooltip)
