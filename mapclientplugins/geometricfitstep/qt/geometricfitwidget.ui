@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1718</width>
-    <height>1105</height>
+    <height>1101</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -85,7 +85,16 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_10">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -150,16 +159,25 @@
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>-387</y>
-               <width>671</width>
-               <height>1030</height>
+               <y>0</y>
+               <width>352</width>
+               <height>679</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <property name="spacing">
                <number>0</number>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -210,13 +228,6 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="2" column="0">
-                     <widget class="QLabel" name="configMarkerGroup_label">
-                      <property name="text">
-                       <string>Marker group:</string>
-                      </property>
-                     </widget>
-                    </item>
                     <item row="1" column="1">
                      <widget class="FieldChooserWidget" name="configDataCoordinates_fieldChooser">
                       <property name="sizePolicy">
@@ -224,6 +235,27 @@
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="1">
+                     <widget class="QSpinBox" name="configDiagnosticLevel_spinBox">
+                      <property name="maximum">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="0">
+                     <widget class="QLabel" name="configDiagnosticLevel_label">
+                      <property name="text">
+                       <string>Diagnostic level:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QLabel" name="configMarkerGroup_label">
+                      <property name="text">
+                       <string>Marker group:</string>
                       </property>
                      </widget>
                     </item>
@@ -268,6 +300,67 @@
                    </layout>
                   </widget>
                  </item>
+                    <item>
+                    <widget class="QGroupBox" name="configSetting_groupBox">
+                    <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="title">
+                        <string>Group settings</string>
+                    </property>
+                        <layout class="QFormLayout" name="configSettingGroup_Layout">
+                        <property name="bottomMargin">
+                        <number>0</number>
+                        </property>
+                        <item row="1" column="0">
+                        <widget class="QLabel" name="configSettingGroup_label">
+                            <property name="text">
+                            <string>Group:</string>
+                            </property>
+                        </widget>
+                        </item>
+                        <item row="1" column="1">
+                        <widget class="FieldChooserWidget" name="configSettingGroup_fieldChooser">
+                            <property name="sizePolicy">
+                            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                            </sizepolicy>
+                            </property>
+                        </widget>
+                        </item>
+                        <item row="2" column="0">
+                        <widget class="QCheckBox" name="configDataProportion_checkBox">
+                            <property name="text">
+                            <string>Data Proportion</string>
+                            </property>
+                            <property name="tristate">
+                            <bool>true</bool>
+                            </property>
+                        </widget>
+                        </item>
+                        <item row="2" column="1">
+                        <widget class="QLineEdit" name="configDataProportion_lineEdit"/>
+                        </item>
+                        <item row="3" column="0">
+                        <widget class="QCheckBox" name="configDataWeight_checkBox">
+                            <property name="text">
+                            <string>Data Weight</string>
+                            </property>
+                            <property name="tristate">
+                            <bool>true</bool>
+                            </property>
+                        </widget>
+                        </item>
+                        <item row="3" column="1">
+                        <widget class="QLineEdit" name="configDataWeight_lineEdit"/>
+                        </item>
+                        </layout>
+                    </widget>
+                    </item>
                  <item>
                   <spacer name="config_verticalSpacer">
                    <property name="orientation">
@@ -299,6 +392,26 @@
                  <property name="fieldGrowthPolicy">
                   <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
                  </property>
+                 <item row="1" column="0">
+                  <widget class="QCheckBox" name="alignGroups_checkBox">
+                   <property name="text">
+                    <string>Align groups</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QCheckBox" name="alignMarkers_checkBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>Align markers</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="4" column="0">
                   <widget class="QLabel" name="alignRotation_label">
                    <property name="text">
@@ -347,26 +460,6 @@
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QCheckBox" name="alignGroups_checkBox">
-                   <property name="text">
-                    <string>Align groups</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QCheckBox" name="alignMarkers_checkBox">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="text">
-                    <string>Align markers</string>
                    </property>
                   </widget>
                  </item>
@@ -572,7 +665,16 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -607,7 +709,16 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item row="0" column="1">
@@ -657,7 +768,16 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_9">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -706,7 +826,16 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -767,7 +896,16 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_7">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -886,7 +1024,16 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -934,7 +1081,16 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -982,7 +1138,16 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -1059,7 +1224,16 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <property name="margin">
+          <property name="leftMargin">
+           <number>3</number>
+          </property>
+          <property name="topMargin">
+           <number>3</number>
+          </property>
+          <property name="rightMargin">
+           <number>3</number>
+          </property>
+          <property name="bottomMargin">
            <number>3</number>
           </property>
           <item>
@@ -1112,13 +1286,13 @@
   <customwidget>
    <class>AlignmentSceneviewerWidget</class>
    <extends>QWidget</extends>
-   <header>alignmentsceneviewerwidget.h</header>
+   <header>opencmiss/zincwidgets/alignmentsceneviewerwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>FieldChooserWidget</class>
    <extends>QComboBox</extends>
-   <header>fieldchooserwidget.h</header>
+   <header>opencmiss/zincwidgets/fieldchooserwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

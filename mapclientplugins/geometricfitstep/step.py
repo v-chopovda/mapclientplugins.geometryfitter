@@ -4,7 +4,7 @@ MAP Client Plugin Step
 """
 import json
 
-from PySide2 import QtGui
+from PySide2 import QtGui, QtWidgets
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.geometricfitstep.configuredialog import ConfigureDialog
@@ -89,7 +89,7 @@ class GeometricFitStep(WorkflowStepMountPoint):
         then set:
             self._configured = True
         """
-        dlg = ConfigureDialog()
+        dlg = ConfigureDialog(QtWidgets.QApplication.activeWindow().current_widget())
         dlg.identifierOccursCount = self._identifierOccursCount
         dlg.setConfig(self._config)
         dlg.validate()
