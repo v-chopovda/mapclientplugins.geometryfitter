@@ -300,67 +300,6 @@
                    </layout>
                   </widget>
                  </item>
-                    <item>
-                    <widget class="QGroupBox" name="configSetting_groupBox">
-                    <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="title">
-                        <string>Group settings</string>
-                    </property>
-                        <layout class="QFormLayout" name="configSettingGroup_Layout">
-                        <property name="bottomMargin">
-                        <number>0</number>
-                        </property>
-                        <item row="1" column="0">
-                        <widget class="QLabel" name="configSettingGroup_label">
-                            <property name="text">
-                            <string>Group:</string>
-                            </property>
-                        </widget>
-                        </item>
-                        <item row="1" column="1">
-                        <widget class="FieldChooserWidget" name="configSettingGroup_fieldChooser">
-                            <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                            </sizepolicy>
-                            </property>
-                        </widget>
-                        </item>
-                        <item row="2" column="0">
-                        <widget class="QCheckBox" name="configDataProportion_checkBox">
-                            <property name="text">
-                            <string>Data Proportion</string>
-                            </property>
-                            <property name="tristate">
-                            <bool>true</bool>
-                            </property>
-                        </widget>
-                        </item>
-                        <item row="2" column="1">
-                        <widget class="QLineEdit" name="configDataProportion_lineEdit"/>
-                        </item>
-                        <item row="3" column="0">
-                        <widget class="QCheckBox" name="configDataWeight_checkBox">
-                            <property name="text">
-                            <string>Data Weight</string>
-                            </property>
-                            <property name="tristate">
-                            <bool>true</bool>
-                            </property>
-                        </widget>
-                        </item>
-                        <item row="3" column="1">
-                        <widget class="QLineEdit" name="configDataWeight_lineEdit"/>
-                        </item>
-                        </layout>
-                    </widget>
-                    </item>
                  <item>
                   <spacer name="config_verticalSpacer">
                    <property name="orientation">
@@ -637,6 +576,93 @@
                 </layout>
                </widget>
               </item>
+              <item>
+                <widget class="QGroupBox" name="configSetting_groupBox">
+                <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                    </sizepolicy>
+                </property>
+                <property name="title">
+                    <string>Group settings</string>
+                </property>
+                    <layout class="QFormLayout" name="configSettingGroup_Layout">
+                    <property name="bottomMargin">
+                    <number>0</number>
+                    </property>
+                    <item row="1" column="0">
+                    <widget class="QLabel" name="configSettingGroup_label">
+                        <property name="text">
+                        <string>Group:</string>
+                        </property>
+                    </widget>
+                    </item>
+                    <item row="1" column="1">
+                    <widget class="FieldChooserWidget" name="configSettingGroup_fieldChooser">
+                        <property name="sizePolicy">
+                        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                        </sizepolicy>
+                        </property>
+                    </widget>
+                    </item>
+                    <item row="2" column="0">
+                    <widget class="QCheckBox" name="configDataProportion_checkBox">
+                        <property name="text">
+                        <string>Data Proportion</string>
+                        </property>
+                        <property name="tristate">
+                        <bool>true</bool>
+                        </property>
+                    </widget>
+                    </item>
+                    <item row="2" column="1">
+                    <widget class="QLineEdit" name="configDataProportion_lineEdit"/>
+                    </item>
+                    <item row="3" column="0">
+                    <widget class="QCheckBox" name="configDataWeight_checkBox">
+                        <property name="text">
+                        <string>Data Weight</string>
+                        </property>
+                        <property name="tristate">
+                        <bool>true</bool>
+                        </property>
+                    </widget>
+                    </item>
+                    <item row="3" column="1">
+                    <widget class="QLineEdit" name="configDataWeight_lineEdit"/>
+                    </item>
+                    <item row="4" column="0">
+                     <widget class="QCheckBox" name="configStrainPenalty_checkBox">
+                      <property name="text">
+                       <string>Strain Penalty</string>
+                      </property>
+                      <property name="tristate">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="1">
+                     <widget class="QLineEdit" name="configStrainPenalty_lineEdit"/>
+                    </item>
+                    <item row="5" column="0">
+                     <widget class="QCheckBox" name="configCurvaturePenalty_checkBox">
+                      <property name="text">
+                       <string>Curvature Penalty</string>
+                      </property>
+                      <property name="tristate">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="5" column="1">
+                     <widget class="QLineEdit" name="configCurvaturePenalty_lineEdit"/>
+                    </item>
+                    </layout>
+                </widget>
+                </item>
              </layout>
             </widget>
            </widget>
