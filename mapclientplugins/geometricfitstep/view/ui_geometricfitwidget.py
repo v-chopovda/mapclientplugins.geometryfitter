@@ -94,6 +94,10 @@ class Ui_GeometricFitWidget(object):
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.steps_listView.sizePolicy().hasHeightForWidth())
         self.steps_listView.setSizePolicy(sizePolicy2)
+        self.steps_listView.setAcceptDrops(True)
+        self.steps_listView.setDragEnabled(True)
+        self.steps_listView.setDragDropMode(QAbstractItemView.InternalMove)
+        self.steps_listView.setDefaultDropAction(Qt.MoveAction)
 
         self.verticalLayout_2.addWidget(self.steps_listView)
 
@@ -106,7 +110,7 @@ class Ui_GeometricFitWidget(object):
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollAreaWidgetContents = QWidget()
         self.stepedit_scrollAreaWidgetContents.setObjectName(u"stepedit_scrollAreaWidgetContents")
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 679))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 701))
         self.verticalLayout_3 = QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")

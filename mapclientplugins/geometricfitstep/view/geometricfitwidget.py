@@ -187,7 +187,9 @@ class GeometricFitWidget(QtWidgets.QWidget):
         """
         model = modelIndex.model()
         item = model.itemFromIndex(modelIndex)
-        step = item.data()
+        index = item.data()
+        fitterSteps = self._fitter.getFitterSteps()
+        step = fitterSteps[index]
         if step != self._currentFitterStep:
            self._currentFitterStep = step
            self._updateFitterStepWidgets()
@@ -197,7 +199,6 @@ class GeometricFitWidget(QtWidgets.QWidget):
             if isChecked:
                 endStep = step
             else:
-                fitterSteps = self._fitter.getFitterSteps()
                 index = fitterSteps.index(step)
                 endStep = fitterSteps[index - 1]
             self.runToStep(endStep)
@@ -210,7 +211,8 @@ class GeometricFitWidget(QtWidgets.QWidget):
         selectedIndex = None
         firstStep = True
         fitterSteps = self._fitter.getFitterSteps()
-        for step in fitterSteps:
+        for i in range(len(fitterSteps)):
+            step = fitterSteps[i]
             name = None
             if isinstance(step, FitterStepAlign):
                 name = "Align"
@@ -221,21 +223,57 @@ class GeometricFitWidget(QtWidgets.QWidget):
             else:
                 assert False, "GeometricFitWidget.  Unknown FitterStep type"
             item = QtGui.QStandardItem(name)
-            item.setData(step)
+            item.setData(i)
             item.setEditable(False)
+            item.setDropEnabled(False)
             if firstStep:
                 item.setCheckable(False)
                 firstStep = False
+                item.setDragEnabled(False)
             else:
                 item.setCheckable(True)
                 item.setCheckState(QtCore.Qt.Checked if step.hasRun() else QtCore.Qt.Unchecked)
+                item.setDragEnabled(True)
             self._stepsItems.appendRow(item)
             if step == self._currentFitterStep:
-                selectedIndex = self._stepsItems.indexFromItem(item)
+                selectedIndex = self._stepsItems.indexFromItem(item) 
         self._ui.steps_listView.setModel(self._stepsItems)
         self._ui.steps_listView.setCurrentIndex(selectedIndex)
+        self._stepsItems.itemChanged.connect(self._onStepItemChanged)
+        self._stepsItems.rowsRemoved.connect(self._onStepListRowsRemoved)
         self._ui.steps_listView.show()
         self._updateFitterStepWidgets()
+
+    def _onStepItemChanged(self,item):
+        """
+        For QStandardItemModel ItemChanged Signal, catch the drag and drop event.
+        Update the order of steps in fitterSteps.
+        """ 
+        model = self._stepsItems
+        prevRow = item.data()
+        newRow = item.index().row()
+        print( prevRow, " to ", newRow)
+        if newRow != prevRow:
+            fitterSteps = self._fitter.getFitterSteps()
+            if newRow != 0 and prevRow !=0:
+                if prevRow < newRow:
+                    fitterSteps.insert(newRow , fitterSteps[prevRow])
+                    fitterSteps.pop(prevRow)
+                else:
+                    fitterSteps.insert(newRow, fitterSteps.pop(prevRow))
+            else:
+                model.takeRow(0)
+                model.insertRow(prevRow,item)
+
+    def _onStepListRowsRemoved(self):
+        """
+        Update model item data after Drag and Drop
+        """
+        ind = 0 
+        while self._stepsItems.item(ind):
+            print(ind," items after removed", self._stepsItems.item(ind).data(),self._stepsItems.item(ind))
+            self._stepsItems.item(ind).setData(ind) 
+            ind += 1
 
     def _refreshStepItem(self, step):
         """
