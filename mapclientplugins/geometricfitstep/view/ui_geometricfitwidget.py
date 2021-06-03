@@ -106,7 +106,7 @@ class Ui_GeometricFitWidget(object):
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollAreaWidgetContents = QWidget()
         self.stepedit_scrollAreaWidgetContents.setObjectName(u"stepedit_scrollAreaWidgetContents")
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 679))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, -184, 352, 615))
         self.verticalLayout_3 = QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -178,22 +178,6 @@ class Ui_GeometricFitWidget(object):
 
 
         self.verticalLayout_4.addWidget(self.configInitial_groupBox)
-
-        self.configProjection_groupBox = QGroupBox(self.config_groupBox)
-        self.configProjection_groupBox.setObjectName(u"configProjection_groupBox")
-        sizePolicy3.setHeightForWidth(self.configProjection_groupBox.sizePolicy().hasHeightForWidth())
-        self.configProjection_groupBox.setSizePolicy(sizePolicy3)
-        self.verticalLayout_5 = QVBoxLayout(self.configProjection_groupBox)
-        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.configProjectionCentreGroups_checkBox = QCheckBox(self.configProjection_groupBox)
-        self.configProjectionCentreGroups_checkBox.setObjectName(u"configProjectionCentreGroups_checkBox")
-        sizePolicy.setHeightForWidth(self.configProjectionCentreGroups_checkBox.sizePolicy().hasHeightForWidth())
-        self.configProjectionCentreGroups_checkBox.setSizePolicy(sizePolicy)
-
-        self.verticalLayout_5.addWidget(self.configProjectionCentreGroups_checkBox)
-
-
-        self.verticalLayout_4.addWidget(self.configProjection_groupBox)
 
         self.config_verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -270,58 +254,22 @@ class Ui_GeometricFitWidget(object):
         self.formLayout_3 = QFormLayout(self.fit_groupBox)
         self.formLayout_3.setObjectName(u"formLayout_3")
         self.formLayout_3.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
-        self.fitMarkerWeight_label = QLabel(self.fit_groupBox)
-        self.fitMarkerWeight_label.setObjectName(u"fitMarkerWeight_label")
-
-        self.formLayout_3.setWidget(2, QFormLayout.LabelRole, self.fitMarkerWeight_label)
-
-        self.fitMarkerWeight_lineEdit = QLineEdit(self.fit_groupBox)
-        self.fitMarkerWeight_lineEdit.setObjectName(u"fitMarkerWeight_lineEdit")
-        sizePolicy4.setHeightForWidth(self.fitMarkerWeight_lineEdit.sizePolicy().hasHeightForWidth())
-        self.fitMarkerWeight_lineEdit.setSizePolicy(sizePolicy4)
-
-        self.formLayout_3.setWidget(2, QFormLayout.FieldRole, self.fitMarkerWeight_lineEdit)
-
-        self.fitStrainPenalty_label = QLabel(self.fit_groupBox)
-        self.fitStrainPenalty_label.setObjectName(u"fitStrainPenalty_label")
-
-        self.formLayout_3.setWidget(3, QFormLayout.LabelRole, self.fitStrainPenalty_label)
-
-        self.fitStrainPenalty_lineEdit = QLineEdit(self.fit_groupBox)
-        self.fitStrainPenalty_lineEdit.setObjectName(u"fitStrainPenalty_lineEdit")
-        sizePolicy4.setHeightForWidth(self.fitStrainPenalty_lineEdit.sizePolicy().hasHeightForWidth())
-        self.fitStrainPenalty_lineEdit.setSizePolicy(sizePolicy4)
-
-        self.formLayout_3.setWidget(3, QFormLayout.FieldRole, self.fitStrainPenalty_lineEdit)
-
-        self.fitCurvaturePenalty_label = QLabel(self.fit_groupBox)
-        self.fitCurvaturePenalty_label.setObjectName(u"fitCurvaturePenalty_label")
-
-        self.formLayout_3.setWidget(4, QFormLayout.LabelRole, self.fitCurvaturePenalty_label)
-
-        self.fitCurvaturePenalty_lineEdit = QLineEdit(self.fit_groupBox)
-        self.fitCurvaturePenalty_lineEdit.setObjectName(u"fitCurvaturePenalty_lineEdit")
-        sizePolicy4.setHeightForWidth(self.fitCurvaturePenalty_lineEdit.sizePolicy().hasHeightForWidth())
-        self.fitCurvaturePenalty_lineEdit.setSizePolicy(sizePolicy4)
-
-        self.formLayout_3.setWidget(4, QFormLayout.FieldRole, self.fitCurvaturePenalty_lineEdit)
-
         self.fitEdgeDiscontinuityPenalty_label = QLabel(self.fit_groupBox)
         self.fitEdgeDiscontinuityPenalty_label.setObjectName(u"fitEdgeDiscontinuityPenalty_label")
 
-        self.formLayout_3.setWidget(5, QFormLayout.LabelRole, self.fitEdgeDiscontinuityPenalty_label)
+        self.formLayout_3.setWidget(1, QFormLayout.LabelRole, self.fitEdgeDiscontinuityPenalty_label)
 
         self.fitEdgeDiscontinuityPenalty_lineEdit = QLineEdit(self.fit_groupBox)
         self.fitEdgeDiscontinuityPenalty_lineEdit.setObjectName(u"fitEdgeDiscontinuityPenalty_lineEdit")
         sizePolicy4.setHeightForWidth(self.fitEdgeDiscontinuityPenalty_lineEdit.sizePolicy().hasHeightForWidth())
         self.fitEdgeDiscontinuityPenalty_lineEdit.setSizePolicy(sizePolicy4)
 
-        self.formLayout_3.setWidget(5, QFormLayout.FieldRole, self.fitEdgeDiscontinuityPenalty_lineEdit)
+        self.formLayout_3.setWidget(1, QFormLayout.FieldRole, self.fitEdgeDiscontinuityPenalty_lineEdit)
 
         self.fitIterations_label = QLabel(self.fit_groupBox)
         self.fitIterations_label.setObjectName(u"fitIterations_label")
 
-        self.formLayout_3.setWidget(7, QFormLayout.LabelRole, self.fitIterations_label)
+        self.formLayout_3.setWidget(3, QFormLayout.LabelRole, self.fitIterations_label)
 
         self.fitIterations_spinBox = QSpinBox(self.fit_groupBox)
         self.fitIterations_spinBox.setObjectName(u"fitIterations_spinBox")
@@ -330,12 +278,12 @@ class Ui_GeometricFitWidget(object):
         self.fitIterations_spinBox.setMinimum(1)
         self.fitIterations_spinBox.setMaximum(1000)
 
-        self.formLayout_3.setWidget(7, QFormLayout.FieldRole, self.fitIterations_spinBox)
+        self.formLayout_3.setWidget(3, QFormLayout.FieldRole, self.fitIterations_spinBox)
 
         self.fitMaximumSubIterations_label = QLabel(self.fit_groupBox)
         self.fitMaximumSubIterations_label.setObjectName(u"fitMaximumSubIterations_label")
 
-        self.formLayout_3.setWidget(8, QFormLayout.LabelRole, self.fitMaximumSubIterations_label)
+        self.formLayout_3.setWidget(4, QFormLayout.LabelRole, self.fitMaximumSubIterations_label)
 
         self.fitMaximumSubIterations_spinBox = QSpinBox(self.fit_groupBox)
         self.fitMaximumSubIterations_spinBox.setObjectName(u"fitMaximumSubIterations_spinBox")
@@ -344,93 +292,89 @@ class Ui_GeometricFitWidget(object):
         self.fitMaximumSubIterations_spinBox.setMinimum(1)
         self.fitMaximumSubIterations_spinBox.setMaximum(1000)
 
-        self.formLayout_3.setWidget(8, QFormLayout.FieldRole, self.fitMaximumSubIterations_spinBox)
+        self.formLayout_3.setWidget(4, QFormLayout.FieldRole, self.fitMaximumSubIterations_spinBox)
 
         self.fitUpdateReferenceState_checkBox = QCheckBox(self.fit_groupBox)
         self.fitUpdateReferenceState_checkBox.setObjectName(u"fitUpdateReferenceState_checkBox")
         sizePolicy.setHeightForWidth(self.fitUpdateReferenceState_checkBox.sizePolicy().hasHeightForWidth())
         self.fitUpdateReferenceState_checkBox.setSizePolicy(sizePolicy)
 
-        self.formLayout_3.setWidget(9, QFormLayout.LabelRole, self.fitUpdateReferenceState_checkBox)
-
-        self.fitLineWeight_label = QLabel(self.fit_groupBox)
-        self.fitLineWeight_label.setObjectName(u"fitLineWeight_label")
-
-        self.formLayout_3.setWidget(1, QFormLayout.LabelRole, self.fitLineWeight_label)
-
-        self.fitLineWeight_lineEdit = QLineEdit(self.fit_groupBox)
-        self.fitLineWeight_lineEdit.setObjectName(u"fitLineWeight_lineEdit")
-
-        self.formLayout_3.setWidget(1, QFormLayout.FieldRole, self.fitLineWeight_lineEdit)
+        self.formLayout_3.setWidget(5, QFormLayout.LabelRole, self.fitUpdateReferenceState_checkBox)
 
 
         self.verticalLayout_3.addWidget(self.fit_groupBox)
 
-        self.configSetting_groupBox = QGroupBox(self.stepedit_scrollAreaWidgetContents)
-        self.configSetting_groupBox.setObjectName(u"configSetting_groupBox")
-        sizePolicy3.setHeightForWidth(self.configSetting_groupBox.sizePolicy().hasHeightForWidth())
-        self.configSetting_groupBox.setSizePolicy(sizePolicy3)
-        self.configSettingGroup_Layout = QFormLayout(self.configSetting_groupBox)
+        self.groupSetting_groupBox = QGroupBox(self.stepedit_scrollAreaWidgetContents)
+        self.groupSetting_groupBox.setObjectName(u"groupSetting_groupBox")
+        sizePolicy3.setHeightForWidth(self.groupSetting_groupBox.sizePolicy().hasHeightForWidth())
+        self.groupSetting_groupBox.setSizePolicy(sizePolicy3)
+        self.configSettingGroup_Layout = QFormLayout(self.groupSetting_groupBox)
         self.configSettingGroup_Layout.setObjectName(u"configSettingGroup_Layout")
         self.configSettingGroup_Layout.setContentsMargins(-1, -1, -1, 0)
-        self.configSettingGroup_label = QLabel(self.configSetting_groupBox)
+        self.configSettingGroup_label = QLabel(self.groupSetting_groupBox)
         self.configSettingGroup_label.setObjectName(u"configSettingGroup_label")
 
         self.configSettingGroup_Layout.setWidget(1, QFormLayout.LabelRole, self.configSettingGroup_label)
 
-        self.configSettingGroup_fieldChooser = FieldChooserWidget(self.configSetting_groupBox)
+        self.configSettingGroup_fieldChooser = FieldChooserWidget(self.groupSetting_groupBox)
         self.configSettingGroup_fieldChooser.setObjectName(u"configSettingGroup_fieldChooser")
         sizePolicy4.setHeightForWidth(self.configSettingGroup_fieldChooser.sizePolicy().hasHeightForWidth())
         self.configSettingGroup_fieldChooser.setSizePolicy(sizePolicy4)
 
         self.configSettingGroup_Layout.setWidget(1, QFormLayout.FieldRole, self.configSettingGroup_fieldChooser)
 
-        self.configDataProportion_checkBox = QCheckBox(self.configSetting_groupBox)
+        self.configCentralProjection_checkBox = QCheckBox(self.groupSetting_groupBox)
+        self.configCentralProjection_checkBox.setObjectName(u"configCentralProjection_checkBox")
+
+        self.configSettingGroup_Layout.setWidget(2, QFormLayout.LabelRole, self.configCentralProjection_checkBox)
+
+        self.configProjectionCentreGroups_checkBox = QCheckBox(self.groupSetting_groupBox)
+        self.configProjectionCentreGroups_checkBox.setObjectName(u"configProjectionCentreGroups_checkBox")
+
+        self.configSettingGroup_Layout.setWidget(2, QFormLayout.FieldRole, self.configProjectionCentreGroups_checkBox)
+
+        self.configDataProportion_checkBox = QCheckBox(self.groupSetting_groupBox)
         self.configDataProportion_checkBox.setObjectName(u"configDataProportion_checkBox")
-        self.configDataProportion_checkBox.setTristate(True)
 
-        self.configSettingGroup_Layout.setWidget(2, QFormLayout.LabelRole, self.configDataProportion_checkBox)
+        self.configSettingGroup_Layout.setWidget(3, QFormLayout.LabelRole, self.configDataProportion_checkBox)
 
-        self.configDataProportion_lineEdit = QLineEdit(self.configSetting_groupBox)
+        self.configDataProportion_lineEdit = QLineEdit(self.groupSetting_groupBox)
         self.configDataProportion_lineEdit.setObjectName(u"configDataProportion_lineEdit")
 
-        self.configSettingGroup_Layout.setWidget(2, QFormLayout.FieldRole, self.configDataProportion_lineEdit)
+        self.configSettingGroup_Layout.setWidget(3, QFormLayout.FieldRole, self.configDataProportion_lineEdit)
 
-        self.configDataWeight_checkBox = QCheckBox(self.configSetting_groupBox)
+        self.configDataWeight_checkBox = QCheckBox(self.groupSetting_groupBox)
         self.configDataWeight_checkBox.setObjectName(u"configDataWeight_checkBox")
-        self.configDataWeight_checkBox.setTristate(True)
 
-        self.configSettingGroup_Layout.setWidget(3, QFormLayout.LabelRole, self.configDataWeight_checkBox)
+        self.configSettingGroup_Layout.setWidget(4, QFormLayout.LabelRole, self.configDataWeight_checkBox)
 
-        self.configDataWeight_lineEdit = QLineEdit(self.configSetting_groupBox)
+        self.configDataWeight_lineEdit = QLineEdit(self.groupSetting_groupBox)
         self.configDataWeight_lineEdit.setObjectName(u"configDataWeight_lineEdit")
 
-        self.configSettingGroup_Layout.setWidget(3, QFormLayout.FieldRole, self.configDataWeight_lineEdit)
+        self.configSettingGroup_Layout.setWidget(4, QFormLayout.FieldRole, self.configDataWeight_lineEdit)
 
-        self.configStrainPenalty_checkBox = QCheckBox(self.configSetting_groupBox)
+        self.configStrainPenalty_checkBox = QCheckBox(self.groupSetting_groupBox)
         self.configStrainPenalty_checkBox.setObjectName(u"configStrainPenalty_checkBox")
-        self.configStrainPenalty_checkBox.setTristate(True)
 
-        self.configSettingGroup_Layout.setWidget(4, QFormLayout.LabelRole, self.configStrainPenalty_checkBox)
+        self.configSettingGroup_Layout.setWidget(5, QFormLayout.LabelRole, self.configStrainPenalty_checkBox)
 
-        self.configStrainPenalty_lineEdit = QLineEdit(self.configSetting_groupBox)
+        self.configStrainPenalty_lineEdit = QLineEdit(self.groupSetting_groupBox)
         self.configStrainPenalty_lineEdit.setObjectName(u"configStrainPenalty_lineEdit")
 
-        self.configSettingGroup_Layout.setWidget(4, QFormLayout.FieldRole, self.configStrainPenalty_lineEdit)
+        self.configSettingGroup_Layout.setWidget(5, QFormLayout.FieldRole, self.configStrainPenalty_lineEdit)
 
-        self.configCurvaturePenalty_checkBox = QCheckBox(self.configSetting_groupBox)
+        self.configCurvaturePenalty_checkBox = QCheckBox(self.groupSetting_groupBox)
         self.configCurvaturePenalty_checkBox.setObjectName(u"configCurvaturePenalty_checkBox")
-        self.configCurvaturePenalty_checkBox.setTristate(True)
 
-        self.configSettingGroup_Layout.setWidget(5, QFormLayout.LabelRole, self.configCurvaturePenalty_checkBox)
+        self.configSettingGroup_Layout.setWidget(6, QFormLayout.LabelRole, self.configCurvaturePenalty_checkBox)
 
-        self.configCurvaturePenalty_lineEdit = QLineEdit(self.configSetting_groupBox)
+        self.configCurvaturePenalty_lineEdit = QLineEdit(self.groupSetting_groupBox)
         self.configCurvaturePenalty_lineEdit.setObjectName(u"configCurvaturePenalty_lineEdit")
 
-        self.configSettingGroup_Layout.setWidget(5, QFormLayout.FieldRole, self.configCurvaturePenalty_lineEdit)
+        self.configSettingGroup_Layout.setWidget(6, QFormLayout.FieldRole, self.configCurvaturePenalty_lineEdit)
 
 
-        self.verticalLayout_3.addWidget(self.configSetting_groupBox)
+        self.verticalLayout_3.addWidget(self.groupSetting_groupBox)
 
         self.stepedit_scrollArea.setWidget(self.stepedit_scrollAreaWidgetContents)
 
@@ -784,8 +728,6 @@ class Ui_GeometricFitWidget(object):
         self.configDataCoordinates_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Data coordinates:", None))
         self.configDiagnosticLevel_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Diagnostic level:", None))
         self.configMarkerGroup_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Marker group:", None))
-        self.configProjection_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Projection", None))
-        self.configProjectionCentreGroups_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Centre groups", None))
         self.align_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Align", None))
         self.alignGroups_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Align groups", None))
         self.alignMarkers_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Align markers", None))
@@ -793,23 +735,18 @@ class Ui_GeometricFitWidget(object):
         self.alignScale_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Scale:", None))
         self.alignTranslation_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Translation:", None))
         self.fit_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Fit", None))
-        self.fitMarkerWeight_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Marker weight:", None))
-#if QT_CONFIG(tooltip)
-        self.fitMarkerWeight_lineEdit.setToolTip(QCoreApplication.translate("GeometricFitWidget", u"<html><head/><body><p>Weighting of marker points with fixed mesh locations. Use 0.0 to omit.</p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.fitStrainPenalty_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Strain penalty:", None))
-        self.fitCurvaturePenalty_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Curvature penalty:", None))
         self.fitEdgeDiscontinuityPenalty_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Edge discontinuity penalty:", None))
         self.fitIterations_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Iterations:", None))
         self.fitMaximumSubIterations_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Maximum subiterations:", None))
         self.fitUpdateReferenceState_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Update reference state", None))
-        self.fitLineWeight_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Line weight:", None))
-#if QT_CONFIG(tooltip)
-        self.fitLineWeight_lineEdit.setToolTip(QCoreApplication.translate("GeometricFitWidget", u"<html><head/><body><p>Weighting of data points which project onto line features.</p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.configSetting_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Group settings", None))
+        self.groupSetting_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Group settings", None))
         self.configSettingGroup_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Group:", None))
+        self.configCentralProjection_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Central Projection", None))
+        self.configProjectionCentreGroups_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Set", None))
         self.configDataProportion_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Data Proportion", None))
+#if QT_CONFIG(tooltip)
+        self.configDataProportion_lineEdit.setToolTip(QCoreApplication.translate("GeometricFitWidget", u"Value from 0.0 to 1.0", None))
+#endif // QT_CONFIG(tooltip)
         self.configDataWeight_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Data Weight", None))
         self.configStrainPenalty_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Strain Penalty", None))
         self.configCurvaturePenalty_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Curvature Penalty", None))

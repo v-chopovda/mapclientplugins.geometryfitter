@@ -159,9 +159,9 @@
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>0</y>
+               <y>-184</y>
                <width>352</width>
-               <height>679</height>
+               <height>615</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -266,34 +266,6 @@
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QGroupBox" name="configProjection_groupBox">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="title">
-                    <string>Projection</string>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_5">
-                    <item>
-                     <widget class="QCheckBox" name="configProjectionCentreGroups_checkBox">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="text">
-                       <string>Centre groups</string>
                       </property>
                      </widget>
                     </item>
@@ -429,68 +401,14 @@
                  <property name="fieldGrowthPolicy">
                   <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
                  </property>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="fitMarkerWeight_label">
-                   <property name="text">
-                    <string>Marker weight:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QLineEdit" name="fitMarkerWeight_lineEdit">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="toolTip">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Weighting of marker points with fixed mesh locations. Use 0.0 to omit.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QLabel" name="fitStrainPenalty_label">
-                   <property name="text">
-                    <string>Strain penalty:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="1">
-                  <widget class="QLineEdit" name="fitStrainPenalty_lineEdit">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="0">
-                  <widget class="QLabel" name="fitCurvaturePenalty_label">
-                   <property name="text">
-                    <string>Curvature penalty:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="1">
-                  <widget class="QLineEdit" name="fitCurvaturePenalty_lineEdit">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="0">
+                 <item row="1" column="0">
                   <widget class="QLabel" name="fitEdgeDiscontinuityPenalty_label">
                    <property name="text">
                     <string>Edge discontinuity penalty:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="5" column="1">
+                 <item row="1" column="1">
                   <widget class="QLineEdit" name="fitEdgeDiscontinuityPenalty_lineEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -500,14 +418,14 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="0">
+                 <item row="3" column="0">
                   <widget class="QLabel" name="fitIterations_label">
                    <property name="text">
                     <string>Iterations:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="1">
+                 <item row="3" column="1">
                   <widget class="QSpinBox" name="fitIterations_spinBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -523,14 +441,14 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="8" column="0">
+                 <item row="4" column="0">
                   <widget class="QLabel" name="fitMaximumSubIterations_label">
                    <property name="text">
                     <string>Maximum subiterations:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="8" column="1">
+                 <item row="4" column="1">
                   <widget class="QSpinBox" name="fitMaximumSubIterations_spinBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -546,7 +464,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="9" column="0">
+                 <item row="5" column="0">
                   <widget class="QCheckBox" name="fitUpdateReferenceState_checkBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -559,110 +477,102 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="fitLineWeight_label">
-                   <property name="text">
-                    <string>Line weight:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QLineEdit" name="fitLineWeight_lineEdit">
-                   <property name="toolTip">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Weighting of data points which project onto line features.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                   </property>
-                  </widget>
-                 </item>
                 </layout>
                </widget>
               </item>
               <item>
-                <widget class="QGroupBox" name="configSetting_groupBox">
+               <widget class="QGroupBox" name="groupSetting_groupBox">
                 <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                    </sizepolicy>
+                 <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
                 <property name="title">
-                    <string>Group settings</string>
+                 <string>Group settings</string>
                 </property>
-                    <layout class="QFormLayout" name="configSettingGroup_Layout">
-                    <property name="bottomMargin">
-                    <number>0</number>
-                    </property>
-                    <item row="1" column="0">
-                    <widget class="QLabel" name="configSettingGroup_label">
-                        <property name="text">
-                        <string>Group:</string>
-                        </property>
-                    </widget>
-                    </item>
-                    <item row="1" column="1">
-                    <widget class="FieldChooserWidget" name="configSettingGroup_fieldChooser">
-                        <property name="sizePolicy">
-                        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                        </sizepolicy>
-                        </property>
-                    </widget>
-                    </item>
-                    <item row="2" column="0">
-                    <widget class="QCheckBox" name="configDataProportion_checkBox">
-                        <property name="text">
-                        <string>Data Proportion</string>
-                        </property>
-                        <property name="tristate">
-                        <bool>true</bool>
-                        </property>
-                    </widget>
-                    </item>
-                    <item row="2" column="1">
-                    <widget class="QLineEdit" name="configDataProportion_lineEdit"/>
-                    </item>
-                    <item row="3" column="0">
-                    <widget class="QCheckBox" name="configDataWeight_checkBox">
-                        <property name="text">
-                        <string>Data Weight</string>
-                        </property>
-                        <property name="tristate">
-                        <bool>true</bool>
-                        </property>
-                    </widget>
-                    </item>
-                    <item row="3" column="1">
-                    <widget class="QLineEdit" name="configDataWeight_lineEdit"/>
-                    </item>
-                    <item row="4" column="0">
-                     <widget class="QCheckBox" name="configStrainPenalty_checkBox">
-                      <property name="text">
-                       <string>Strain Penalty</string>
-                      </property>
-                      <property name="tristate">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="1">
-                     <widget class="QLineEdit" name="configStrainPenalty_lineEdit"/>
-                    </item>
-                    <item row="5" column="0">
-                     <widget class="QCheckBox" name="configCurvaturePenalty_checkBox">
-                      <property name="text">
-                       <string>Curvature Penalty</string>
-                      </property>
-                      <property name="tristate">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="5" column="1">
-                     <widget class="QLineEdit" name="configCurvaturePenalty_lineEdit"/>
-                    </item>
-                    </layout>
-                </widget>
-                </item>
+                <layout class="QFormLayout" name="configSettingGroup_Layout">
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="configSettingGroup_label">
+                   <property name="text">
+                    <string>Group:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="FieldChooserWidget" name="configSettingGroup_fieldChooser">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QCheckBox" name="configCentralProjection_checkBox">
+                   <property name="text">
+                    <string>Central Projection</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QCheckBox" name="configProjectionCentreGroups_checkBox">
+                   <property name="text">
+                    <string>Set</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QCheckBox" name="configDataProportion_checkBox">
+                   <property name="text">
+                    <string>Data Proportion</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QLineEdit" name="configDataProportion_lineEdit">
+                   <property name="toolTip">
+                    <string>Value from 0.0 to 1.0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QCheckBox" name="configDataWeight_checkBox">
+                   <property name="text">
+                    <string>Data Weight</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="1">
+                  <widget class="QLineEdit" name="configDataWeight_lineEdit"/>
+                 </item>
+                 <item row="5" column="0">
+                  <widget class="QCheckBox" name="configStrainPenalty_checkBox">
+                   <property name="text">
+                    <string>Strain Penalty</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="1">
+                  <widget class="QLineEdit" name="configStrainPenalty_lineEdit"/>
+                 </item>
+                 <item row="6" column="0">
+                  <widget class="QCheckBox" name="configCurvaturePenalty_checkBox">
+                   <property name="text">
+                    <string>Curvature Penalty</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="1">
+                  <widget class="QLineEdit" name="configCurvaturePenalty_lineEdit"/>
+                 </item>
+                </layout>
+               </widget>
+              </item>
              </layout>
             </widget>
            </widget>
