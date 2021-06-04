@@ -60,6 +60,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.alignmentsceneviewerwidget.graphicsInitialized.connect(self._graphicsInitialized)
         self._callback = None
         self._setupConfigWidgets()
+        self._setupGroupSettingWidgets()
         self._updateGeneralWidgets()
         self._updateDisplayWidgets()
         self._makeConnections()
@@ -94,6 +95,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
     def _makeConnections(self):
         self._makeConnectionsGeneral()
         self._makeConnectionsDisplay()
+        self._makeConnectionsGroup()
         self._makeConnectionsConfig()
         self._makeConnectionsAlign()
         self._makeConnectionsFit()
@@ -268,16 +270,6 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.config_groupBox.setVisible(isConfig)
         self._ui.fit_groupBox.setVisible(isFit)
         self._ui.groupSetting_groupBox.setVisible(not isAlign)
-        self._ui.configCentralProjection_checkBox.setVisible(isConfig)
-        self._ui.configProjectionCentreGroups_checkBox.setVisible(isConfig)
-        self._ui.configDataProportion_checkBox.setVisible(isConfig)
-        self._ui.configDataProportion_lineEdit.setVisible(isConfig)
-        self._ui.configDataWeight_checkBox.setVisible(isFit)
-        self._ui.configDataWeight_lineEdit.setVisible(isFit)
-        self._ui.configStrainPenalty_checkBox.setVisible(isFit)
-        self._ui.configStrainPenalty_lineEdit.setVisible(isFit)
-        self._ui.configCurvaturePenalty_checkBox.setVisible(isFit)
-        self._ui.configCurvaturePenalty_lineEdit.setVisible(isFit)
         self._ui.stepsDelete_pushButton.setEnabled(not isInitialConfig)
 
     def _doneButtonClicked(self):
@@ -464,6 +456,233 @@ class GeometricFitWidget(QtWidgets.QWidget):
     def _displaySurfacesWireframeClicked(self):
         self._model.setDisplaySurfacesWireframe(self._ui.displaySurfacesWireframe_checkBox.isChecked())
 
+# === group setting widgets ===
+
+    def _setupGroupSettingWidgets(self):
+        """
+        Set up group setting widgets and display values from fitter object.
+        """
+        self._ui.configSettingGroup_fieldChooser.setRegion(self._region)
+        self._ui.configSettingGroup_fieldChooser.setNullObjectName("-")
+        self._ui.configSettingGroup_fieldChooser.setConditional(fieldIsManagedGroup)
+        self._ui.configSettingGroup_fieldChooser.setField(Field())
+
+    def _makeConnectionsGroup(self):
+        self._ui.configSettingGroup_fieldChooser.currentIndexChanged.connect(self._configSettingGroupChanged)
+        self._ui.configCentralProjection_checkBox.clicked.connect(self._configCentralProjectionClicked)
+        self._ui.configSetCentralProjection_checkBox.clicked.connect(self._configSetCentralProjectionClicked)
+        self._ui.configDataProportion_checkBox.clicked.connect(self._configDataProportionClicked)
+        self._ui.configDataProportion_lineEdit.editingFinished.connect(self._configDataProportionEntered)
+        self._ui.configDataWeight_checkBox.clicked.connect(self._configDataWeightClicked)
+        self._ui.configDataWeight_lineEdit.editingFinished.connect(self._configDataWeightEntered)
+        self._ui.configStrainPenalty_checkBox.clicked.connect(self._configStrainPenaltyClicked)
+        self._ui.configStrainPenalty_lineEdit.editingFinished.connect(self._configStrainPenaltyEntered)
+        self._ui.configCurvaturePenalty_checkBox.clicked.connect(self._configCurvaturePenaltyClicked)
+        self._ui.configCurvaturePenalty_lineEdit.editingFinished.connect(self._configCurvaturePenaltyEntered)
+
+    def _updateGroupSettingWidgets(self):
+        """
+        Update and display group setting widgets for currentFitterStep
+        """
+        #isAlign = isinstance(self._currentFitterStep, FitterStepAlign)
+        isConfig = isinstance(self._currentFitterStep, FitterStepConfig)
+        isFit = isinstance(self._currentFitterStep, FitterStepFit)
+        if isConfig:
+            self._updateCentralProjection()
+            self._updateDataProportion()
+        elif isFit:
+            self._updateDataWeight()
+            self._updateStrainPenalty()
+            self._updateCurvaturePenalty()
+        self._ui.configCentralProjection_checkBox.setVisible(isConfig)
+        self._ui.configSetCentralProjection_checkBox.setVisible(isConfig)
+        self._ui.configDataProportion_checkBox.setVisible(isConfig)
+        self._ui.configDataProportion_lineEdit.setVisible(isConfig)
+        self._ui.configDataWeight_checkBox.setVisible(isFit)
+        self._ui.configDataWeight_lineEdit.setVisible(isFit)
+        self._ui.configStrainPenalty_checkBox.setVisible(isFit)
+        self._ui.configStrainPenalty_lineEdit.setVisible(isFit)
+        self._ui.configCurvaturePenalty_checkBox.setVisible(isFit)
+        self._ui.configCurvaturePenalty_lineEdit.setVisible(isFit)
+
+    def _configSettingGroupChanged(self, index):
+        """
+        Callback for change in setting group field chooser widget.
+        """
+        self._updateGroupSettingWidgets()
+
+    def _getGroup(self):
+        group = self._ui.configSettingGroup_fieldChooser.getField()
+        if group:
+            group = group.getName()
+        return group
+
+    def _getGroupSettingDisplayState(self, func):
+        group = self._getGroup()
+        data, isLocallySet, inheritable = func(group)
+        realFormat = "{:.4g}"
+        lineEditDisable = True
+        checkBoxTristate = False
+        checkBoxState = QtCore.Qt.Unchecked
+        if not isinstance(data, bool):
+            data = realFormat.format(data)
+        if inheritable:
+            checkBoxTristate = True
+            if isLocallySet is not None:
+                checkBoxState = QtCore.Qt.PartiallyChecked
+        if isLocallySet:
+            checkBoxState = QtCore.Qt.Checked
+            lineEditDisable = False
+        return checkBoxTristate,checkBoxState,lineEditDisable,data
+
+    def _updateCentralProjection(self):
+        checkBoxTristate,checkBoxState,lineEditDisable,isCentralProjection = self._getGroupSettingDisplayState(self._getConfig().getGroupCentralProjection)
+        self._ui.configCentralProjection_checkBox.setTristate(checkBoxTristate)
+        self._ui.configCentralProjection_checkBox.setCheckState(checkBoxState)        
+        self._ui.configSetCentralProjection_checkBox.setDisabled(lineEditDisable)
+        self._ui.configSetCentralProjection_checkBox.setCheckState(QtCore.Qt.Checked if isCentralProjection else QtCore.Qt.Unchecked)
+
+    def _configCentralProjectionClicked(self):
+        checkState = self._ui.configCentralProjection_checkBox.checkState()
+        group = self._getGroup()
+        self._ui.configSetCentralProjection_checkBox.setDisabled(True)
+        if checkState == QtCore.Qt.Unchecked:
+            self._getConfig().setGroupCentralProjection(group, None)
+        elif checkState == QtCore.Qt.PartiallyChecked:
+            self._getConfig().clearGroupCentralProjection(group)
+        else:
+            self._ui.configSetCentralProjection_checkBox.setDisabled(False)
+            self._configSetCentralProjectionClicked()
+        self._updateCentralProjection()
+
+    def _configSetCentralProjectionClicked(self):
+        state = self._ui.configSetCentralProjection_checkBox.checkState()
+        config = self._getConfig()
+        group = self._getGroup()
+        if config.setGroupCentralProjection(group,state == QtCore.Qt.Checked):
+            fitterSteps = self._fitter.getFitterSteps()
+            index = fitterSteps.index(config)
+            if config.hasRun() and (((index + 1) == len(fitterSteps)) or (not fitterSteps[index + 1].hasRun())):
+                config.run()
+                self._refreshStepItem(config)
+                self._refreshGraphics()
+
+    def _updateDataProportion(self):
+        checkBoxTristate,checkBoxState,lineEditDisable,dataProportionStr = self._getGroupSettingDisplayState(self._getConfig().getGroupDataProportion)
+        self._ui.configDataProportion_checkBox.setTristate(checkBoxTristate)
+        self._ui.configDataProportion_checkBox.setCheckState(checkBoxState)        
+        self._ui.configDataProportion_lineEdit.setDisabled(lineEditDisable)
+        self._ui.configDataProportion_lineEdit.setText(dataProportionStr)
+
+    def _configDataProportionClicked(self):
+        checkState = self._ui.configDataProportion_checkBox.checkState()
+        group = self._getGroup()
+        self._ui.configDataProportion_lineEdit.setDisabled(True)
+        if checkState == QtCore.Qt.Unchecked:
+            self._getConfig().setGroupDataProportion(group, None)
+        elif checkState == QtCore.Qt.PartiallyChecked:
+            self._getConfig().clearGroupDataProportion(group)
+        else:
+            self._ui.configDataProportion_lineEdit.setDisabled(False)
+            self._configDataProportionEntered()
+        self._updateDataProportion()
+
+    def _configDataProportionEntered(self):
+        value = QLineEdit_parseRealNonNegative(self._ui.configDataProportion_lineEdit)
+        group = self._getGroup()
+        if value > 0.0:
+            self._getConfig().setGroupDataProportion(group, value)
+        else:
+            print("Invalid model Data Proportion entered")
+        self._updateDataProportion()
+
+    def _updateDataWeight(self):
+        checkBoxTristate,checkBoxState,lineEditDisable,dataWeightStr = self._getGroupSettingDisplayState(self._getFit().getGroupDataWeight)
+        self._ui.configDataWeight_checkBox.setTristate(checkBoxTristate)
+        self._ui.configDataWeight_checkBox.setCheckState(checkBoxState)
+        self._ui.configDataWeight_lineEdit.setDisabled(lineEditDisable)
+        self._ui.configDataWeight_lineEdit.setText(dataWeightStr)
+
+    def _configDataWeightClicked(self):
+        checkState = self._ui.configDataWeight_checkBox.checkState()
+        group = self._getGroup()
+        self._ui.configDataProportion_lineEdit.setDisabled(True)
+        if checkState == QtCore.Qt.Unchecked:
+            self._getFit().setGroupDataWeight(group, None)
+        elif checkState == QtCore.Qt.PartiallyChecked:
+            self._getFit().clearGroupDataWeight(group)
+        else:
+            self._ui.configDataWeight_lineEdit.setDisabled(False)
+            self._configDataWeightEntered()
+        self._updateDataWeight()
+
+    def _configDataWeightEntered(self):
+        value = QLineEdit_parseRealNonNegative(self._ui.configDataWeight_lineEdit)
+        group = self._getGroup()
+        if value > 0.0:
+            self._getFit().setGroupDataWeight(group, value)
+        else:
+            print("Invalid model Data Weight entered")
+        self._updateDataWeight()
+
+    def _updateStrainPenalty(self):
+        checkBoxTristate,checkBoxState,lineEditDisable,dataStr = self._getGroupSettingDisplayState(self._getFit().getGroupStrainPenalty)
+        self._ui.configStrainPenalty_checkBox.setTristate(checkBoxTristate)
+        self._ui.configStrainPenalty_checkBox.setCheckState(checkBoxState)        
+        self._ui.configStrainPenalty_lineEdit.setDisabled(lineEditDisable)
+        self._ui.configStrainPenalty_lineEdit.setText(dataStr)
+
+    def _configStrainPenaltyClicked(self):
+        checkState = self._ui.configStrainPenalty_checkBox.checkState()
+        group = self._getGroup()
+        self._ui.configStrainPenalty_lineEdit.setDisabled(True)
+        if checkState == QtCore.Qt.Unchecked:
+            self._getConfig().setGroupStrainPenalty(group, None)
+        elif checkState == QtCore.Qt.PartiallyChecked:
+            self._getConfig().clearGroupStrainPenalty(group)
+        else:
+            self._ui.configStrainPenalty_lineEdit.setDisabled(False)
+            self._configStrainPenaltyEntered()
+        self._updateStrainPenalty()
+
+    def _configStrainPenaltyEntered(self):
+        value = QLineEdit_parseRealNonNegative(self._ui.configStrainPenalty_lineEdit)
+        group = self._getGroup()
+        if value > 0.0:
+            self._getConfig().setGroupStrainPenalty(group, value)
+        else:
+            print("Invalid model Data Proportion entered")
+        self._updateStrainPenalty()
+
+    def _updateCurvaturePenalty(self):
+        checkBoxTristate,checkBoxState,lineEditDisable,dataStr = self._getGroupSettingDisplayState(self._getFit().getGroupCurvaturePenalty)
+        self._ui.configCurvaturePenalty_checkBox.setTristate(checkBoxTristate)
+        self._ui.configCurvaturePenalty_checkBox.setCheckState(checkBoxState)
+        self._ui.configCurvaturePenalty_lineEdit.setDisabled(lineEditDisable)
+        self._ui.configCurvaturePenalty_lineEdit.setText(dataStr)
+
+    def _configCurvaturePenaltyClicked(self):
+        checkState = self._ui.configCurvaturePenalty_checkBox.checkState()
+        group = self._getGroup()
+        self._ui.configCurvaturePenalty_lineEdit.setDisabled(True)
+        if checkState == QtCore.Qt.Unchecked:
+            self._getFit().setGroupCurvaturePenalty(group, None)
+        elif checkState == QtCore.Qt.PartiallyChecked:
+            self._getFit().clearGroupCurvaturePenalty(group)
+        else:
+            self._ui.configCurvaturePenalty_lineEdit.setDisabled(False)
+            self._configCurvaturePenaltyEntered()
+        self._updateCurvaturePenalty()
+
+    def _configCurvaturePenaltyEntered(self):
+        value = QLineEdit_parseRealNonNegative(self._ui.configCurvaturePenalty_lineEdit)
+        group = self._getGroup()
+        if value > 0.0:
+            self._getFit().setGroupCurvaturePenalty(group, value)
+        else:
+            print("Invalid model Data Weight entered")
+        self._updateCurvaturePenalty()
+
 # === config widgets ===
 
     def _setupConfigWidgets(self):
@@ -483,22 +702,12 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.configMarkerGroup_fieldChooser.setConditional(fieldIsManagedGroup)
         self._ui.configMarkerGroup_fieldChooser.setField(self._fitter.getMarkerGroup())
         self._ui.configDiagnosticLevel_spinBox.setValue(self._fitter.getDiagnosticLevel())
-        self._ui.configSettingGroup_fieldChooser.setRegion(self._region)
-        self._ui.configSettingGroup_fieldChooser.setNullObjectName("-")
-        self._ui.configSettingGroup_fieldChooser.setConditional(fieldIsManagedGroup)
-        self._ui.configSettingGroup_fieldChooser.setField(Field())
 
     def _makeConnectionsConfig(self):
         self._ui.configModelCoordinates_fieldChooser.currentIndexChanged.connect(self._configModelCoordinatesFieldChanged)
         self._ui.configDataCoordinates_fieldChooser.currentIndexChanged.connect(self._configDataCoordinatesFieldChanged)
         self._ui.configMarkerGroup_fieldChooser.currentIndexChanged.connect(self._configMarkerGroupChanged)
         self._ui.configDiagnosticLevel_spinBox.valueChanged.connect(self._configDiagnosticLevelValueChanged)
-        self._ui.configProjectionCentreGroups_checkBox.clicked.connect(self._configProjectionCentreGroupsClicked)
-        self._ui.configSettingGroup_fieldChooser.currentIndexChanged.connect(self._configSettingGroupChanged)
-        self._ui.configDataProportion_checkBox.clicked.connect(self._configDataProportionClicked)
-        self._ui.configDataProportion_lineEdit.editingFinished.connect(self._configDataProportionEntered)
-        self._ui.configDataWeight_checkBox.clicked.connect(self._configDataWeightClicked)
-        self._ui.configDataWeight_lineEdit.editingFinished.connect(self._configDataWeightEntered)
 
     def _getConfig(self):
         config = self._currentFitterStep
@@ -509,11 +718,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
         """
         Update config widgets to display settings for Fitter.
         """
-        config = self._getConfig()
-        self._ui.configProjectionCentreGroups_checkBox.setCheckState(QtCore.Qt.Checked if config.isProjectionCentreGroups() else QtCore.Qt.Unchecked)
-        self._updateDataProportion()
-        if self._ui.configDataWeight_checkBox.isVisible():
-            self._updateDataWeight()
+        self._updateGroupSettingWidgets()
 
     def _configModelCoordinatesFieldChanged(self, index):
         """
@@ -542,107 +747,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
     def _configDiagnosticLevelValueChanged(self, value):
         self._fitter.setDiagnosticLevel(value)
 
-    def _configProjectionCentreGroupsClicked(self):
-        state = self._ui.configProjectionCentreGroups_checkBox.checkState()
-        config = self._getConfig()
-        if config.setProjectionCentreGroups(state == QtCore.Qt.Checked):
-            fitterSteps = self._fitter.getFitterSteps()
-            index = fitterSteps.index(config)
-            if config.hasRun() and (((index + 1) == len(fitterSteps)) or (not fitterSteps[index + 1].hasRun())):
-                config.run()
-                self._refreshStepItem(config)
-                self._refreshGraphics()
     
-    def _configSettingGroupChanged(self, index):
-        """
-        Callback for change in setting group field chooser widget.
-        """
-        self._updateConfigWidgets()
-
-    def _getGroupSettingDisplayState(self, func):
-        group = self._ui.configSettingGroup_fieldChooser.getField()
-        if group:
-            groupName = group.getName()
-        else:
-            #groupName = self._getConfig().getDefaultGroupName()
-            groupName = None
-        data, isLocallySet, inheritable = func(groupName)
-        realFormat = "{:.4g}"
-        lineEditDisable = True
-        checkBoxTristate = False
-        checkBoxState = QtCore.Qt.Unchecked
-        dataStr = realFormat.format(data)
-        if inheritable:
-            checkBoxTristate = True
-            if isLocallySet is not None:
-                checkBoxState = QtCore.Qt.PartiallyChecked
-        if isLocallySet:
-            checkBoxState = QtCore.Qt.Checked
-            lineEditDisable = False
-        return checkBoxTristate,checkBoxState,lineEditDisable,dataStr
-
-    def _updateDataProportion(self):
-        checkBoxTristate,checkBoxState,lineEditDisable,dataProportionStr = self._getGroupSettingDisplayState(self._getConfig().getGroupDataProportion)
-        self._ui.configDataProportion_checkBox.setTristate(checkBoxTristate)
-        self._ui.configDataProportion_checkBox.setCheckState(checkBoxState)        
-        self._ui.configDataProportion_lineEdit.setDisabled(lineEditDisable)
-        self._ui.configDataProportion_lineEdit.setText(dataProportionStr)
-
-    def _configDataProportionClicked(self):
-        checkState = self._ui.configDataProportion_checkBox.checkState()
-        group = self._ui.configSettingGroup_fieldChooser.getField()
-        if group:
-            group = group.getName()
-        self._ui.configDataProportion_lineEdit.setDisabled(True)
-        if checkState == QtCore.Qt.Unchecked:
-            self._getConfig().setGroupDataProportion(group, None)
-        elif checkState == QtCore.Qt.PartiallyChecked:
-            self._getConfig().clearGroupDataProportion(group)
-        else:
-            self._ui.configDataProportion_lineEdit.setDisabled(False)
-            self._configDataProportionEntered()
-        self._updateDataProportion()
-
-    def _configDataProportionEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.configDataProportion_lineEdit)
-        group = self._ui.configSettingGroup_fieldChooser.getField().getName()
-        if value > 0.0:
-            self._getConfig().setGroupDataProportion(group, value)
-        else:
-            print("Invalid model Data Proportion entered")
-        self._updateDataProportion()
-
-    def _updateDataWeight(self):
-        checkBoxTristate,checkBoxState,lineEditDisable,dataWeightStr = self._getGroupSettingDisplayState(self._getFit().getGroupDataWeight)
-        self._ui.configDataWeight_checkBox.setTristate(checkBoxTristate)
-        self._ui.configDataWeight_checkBox.setCheckState(checkBoxState)
-        self._ui.configDataWeight_lineEdit.setDisabled(lineEditDisable)
-        self._ui.configDataWeight_lineEdit.setText(dataWeightStr)
-
-    def _configDataWeightClicked(self):
-        checkState = self._ui.configDataWeight_checkBox.checkState()
-        group = self._ui.configSettingGroup_fieldChooser.getField().getName()
-        self._ui.configDataWeight_lineEdit.setDisabled(True)
-        if checkState == QtCore.Qt.Unchecked:
-            self._getConfig().setGroupDataWeight(group, None)
-        elif checkState == QtCore.Qt.PartiallyChecked:
-            self._getConfig().clearGroupDataWeight(group)
-        else:
-            self._ui.configDataWeight_lineEdit.setDisabled(False)
-            self._configDataWeightEntered()
-        self._updateDataWeight()
-
-    def _configDataWeightEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.configDataWeight_lineEdit)
-        group = self._ui.configSettingGroup_fieldChooser.getField().getName()
-        if value > 0.0:
-            self._getConfig().setGroupDataWeight(group, value)
-        else:
-            print("Invalid model Data Weight entered")
-        self._updateDataWeight()
-
-
-
 # === align widgets ===
 
     def _makeConnectionsAlign(self):
@@ -704,11 +809,6 @@ class GeometricFitWidget(QtWidgets.QWidget):
 # === fit widgets ===
 
     def _makeConnectionsFit(self):
-        #self._ui.fitLineWeight_lineEdit.editingFinished.connect(self._fitLineWeightEntered)
-        #self._ui.fitMarkerWeight_lineEdit.editingFinished.connect(self._fitMarkerWeightEntered)
-        #self._ui.fitStrainPenalty_lineEdit.editingFinished.connect(self._fitStrainPenaltyEntered)
-        #self._ui.fitCurvaturePenalty_lineEdit.editingFinished.connect(self._fitCurvaturePenaltyEntered)
-        self._ui.fitEdgeDiscontinuityPenalty_lineEdit.editingFinished.connect(self._fitEdgeDiscontinuityPenaltyEntered)
         self._ui.fitIterations_spinBox.valueChanged.connect(self._fitIterationsValueChanged)
         self._ui.fitMaximumSubIterations_spinBox.valueChanged.connect(self._fitMaximumSubIterationsValueChanged)
         self._ui.fitUpdateReferenceState_checkBox.clicked.connect(self._fitUpdateReferenceStateClicked)
@@ -723,14 +823,10 @@ class GeometricFitWidget(QtWidgets.QWidget):
         """
         fit = self._getFit()
         realFormat = "{:.16}"
-        #self._ui.fitLineWeight_lineEdit.setText(realFormat.format(fit.getLineWeight()))
-        #self._ui.fitMarkerWeight_lineEdit.setText(realFormat.format(fit.getMarkerWeight()))
-        #self._ui.fitStrainPenalty_lineEdit.setText(realFormat.format(fit.getStrainPenaltyWeight()))
-        #self._ui.fitCurvaturePenalty_lineEdit.setText(realFormat.format(fit.getCurvaturePenaltyWeight()))
-        self._ui.fitEdgeDiscontinuityPenalty_lineEdit.setText(realFormat.format(fit.getEdgeDiscontinuityPenaltyWeight()))
         self._ui.fitIterations_spinBox.setValue(fit.getNumberOfIterations())
         self._ui.fitMaximumSubIterations_spinBox.setValue(fit.getMaximumSubIterations())
         self._ui.fitUpdateReferenceState_checkBox.setCheckState(QtCore.Qt.Checked if fit.isUpdateReferenceState() else QtCore.Qt.Unchecked)
+        self._updateGroupSettingWidgets()
 
     def _fitLineWeightEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.fitLineWeight_lineEdit)

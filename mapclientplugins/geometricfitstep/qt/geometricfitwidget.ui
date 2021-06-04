@@ -159,9 +159,9 @@
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>-184</y>
+               <y>-238</y>
                <width>352</width>
-               <height>615</height>
+               <height>585</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -402,30 +402,13 @@
                   <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
                  </property>
                  <item row="1" column="0">
-                  <widget class="QLabel" name="fitEdgeDiscontinuityPenalty_label">
-                   <property name="text">
-                    <string>Edge discontinuity penalty:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QLineEdit" name="fitEdgeDiscontinuityPenalty_lineEdit">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
                   <widget class="QLabel" name="fitIterations_label">
                    <property name="text">
                     <string>Iterations:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="1">
+                 <item row="1" column="1">
                   <widget class="QSpinBox" name="fitIterations_spinBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -441,14 +424,14 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="0">
+                 <item row="2" column="0">
                   <widget class="QLabel" name="fitMaximumSubIterations_label">
                    <property name="text">
                     <string>Maximum subiterations:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="1">
+                 <item row="2" column="1">
                   <widget class="QSpinBox" name="fitMaximumSubIterations_spinBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -464,7 +447,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="5" column="0">
+                 <item row="3" column="0">
                   <widget class="QCheckBox" name="fitUpdateReferenceState_checkBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -520,7 +503,7 @@
                   </widget>
                  </item>
                  <item row="2" column="1">
-                  <widget class="QCheckBox" name="configProjectionCentreGroups_checkBox">
+                  <widget class="QCheckBox" name="configSetCentralProjection_checkBox">
                    <property name="text">
                     <string>Set</string>
                    </property>

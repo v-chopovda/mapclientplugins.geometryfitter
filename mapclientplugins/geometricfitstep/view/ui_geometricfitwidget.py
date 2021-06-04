@@ -106,7 +106,7 @@ class Ui_GeometricFitWidget(object):
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollAreaWidgetContents = QWidget()
         self.stepedit_scrollAreaWidgetContents.setObjectName(u"stepedit_scrollAreaWidgetContents")
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, -184, 352, 615))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, -238, 352, 585))
         self.verticalLayout_3 = QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -254,22 +254,10 @@ class Ui_GeometricFitWidget(object):
         self.formLayout_3 = QFormLayout(self.fit_groupBox)
         self.formLayout_3.setObjectName(u"formLayout_3")
         self.formLayout_3.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
-        self.fitEdgeDiscontinuityPenalty_label = QLabel(self.fit_groupBox)
-        self.fitEdgeDiscontinuityPenalty_label.setObjectName(u"fitEdgeDiscontinuityPenalty_label")
-
-        self.formLayout_3.setWidget(1, QFormLayout.LabelRole, self.fitEdgeDiscontinuityPenalty_label)
-
-        self.fitEdgeDiscontinuityPenalty_lineEdit = QLineEdit(self.fit_groupBox)
-        self.fitEdgeDiscontinuityPenalty_lineEdit.setObjectName(u"fitEdgeDiscontinuityPenalty_lineEdit")
-        sizePolicy4.setHeightForWidth(self.fitEdgeDiscontinuityPenalty_lineEdit.sizePolicy().hasHeightForWidth())
-        self.fitEdgeDiscontinuityPenalty_lineEdit.setSizePolicy(sizePolicy4)
-
-        self.formLayout_3.setWidget(1, QFormLayout.FieldRole, self.fitEdgeDiscontinuityPenalty_lineEdit)
-
         self.fitIterations_label = QLabel(self.fit_groupBox)
         self.fitIterations_label.setObjectName(u"fitIterations_label")
 
-        self.formLayout_3.setWidget(3, QFormLayout.LabelRole, self.fitIterations_label)
+        self.formLayout_3.setWidget(1, QFormLayout.LabelRole, self.fitIterations_label)
 
         self.fitIterations_spinBox = QSpinBox(self.fit_groupBox)
         self.fitIterations_spinBox.setObjectName(u"fitIterations_spinBox")
@@ -278,12 +266,12 @@ class Ui_GeometricFitWidget(object):
         self.fitIterations_spinBox.setMinimum(1)
         self.fitIterations_spinBox.setMaximum(1000)
 
-        self.formLayout_3.setWidget(3, QFormLayout.FieldRole, self.fitIterations_spinBox)
+        self.formLayout_3.setWidget(1, QFormLayout.FieldRole, self.fitIterations_spinBox)
 
         self.fitMaximumSubIterations_label = QLabel(self.fit_groupBox)
         self.fitMaximumSubIterations_label.setObjectName(u"fitMaximumSubIterations_label")
 
-        self.formLayout_3.setWidget(4, QFormLayout.LabelRole, self.fitMaximumSubIterations_label)
+        self.formLayout_3.setWidget(2, QFormLayout.LabelRole, self.fitMaximumSubIterations_label)
 
         self.fitMaximumSubIterations_spinBox = QSpinBox(self.fit_groupBox)
         self.fitMaximumSubIterations_spinBox.setObjectName(u"fitMaximumSubIterations_spinBox")
@@ -292,14 +280,14 @@ class Ui_GeometricFitWidget(object):
         self.fitMaximumSubIterations_spinBox.setMinimum(1)
         self.fitMaximumSubIterations_spinBox.setMaximum(1000)
 
-        self.formLayout_3.setWidget(4, QFormLayout.FieldRole, self.fitMaximumSubIterations_spinBox)
+        self.formLayout_3.setWidget(2, QFormLayout.FieldRole, self.fitMaximumSubIterations_spinBox)
 
         self.fitUpdateReferenceState_checkBox = QCheckBox(self.fit_groupBox)
         self.fitUpdateReferenceState_checkBox.setObjectName(u"fitUpdateReferenceState_checkBox")
         sizePolicy.setHeightForWidth(self.fitUpdateReferenceState_checkBox.sizePolicy().hasHeightForWidth())
         self.fitUpdateReferenceState_checkBox.setSizePolicy(sizePolicy)
 
-        self.formLayout_3.setWidget(5, QFormLayout.LabelRole, self.fitUpdateReferenceState_checkBox)
+        self.formLayout_3.setWidget(3, QFormLayout.LabelRole, self.fitUpdateReferenceState_checkBox)
 
 
         self.verticalLayout_3.addWidget(self.fit_groupBox)
@@ -328,10 +316,10 @@ class Ui_GeometricFitWidget(object):
 
         self.configSettingGroup_Layout.setWidget(2, QFormLayout.LabelRole, self.configCentralProjection_checkBox)
 
-        self.configProjectionCentreGroups_checkBox = QCheckBox(self.groupSetting_groupBox)
-        self.configProjectionCentreGroups_checkBox.setObjectName(u"configProjectionCentreGroups_checkBox")
+        self.configSetCentralProjection_checkBox = QCheckBox(self.groupSetting_groupBox)
+        self.configSetCentralProjection_checkBox.setObjectName(u"configSetCentralProjection_checkBox")
 
-        self.configSettingGroup_Layout.setWidget(2, QFormLayout.FieldRole, self.configProjectionCentreGroups_checkBox)
+        self.configSettingGroup_Layout.setWidget(2, QFormLayout.FieldRole, self.configSetCentralProjection_checkBox)
 
         self.configDataProportion_checkBox = QCheckBox(self.groupSetting_groupBox)
         self.configDataProportion_checkBox.setObjectName(u"configDataProportion_checkBox")
@@ -735,14 +723,13 @@ class Ui_GeometricFitWidget(object):
         self.alignScale_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Scale:", None))
         self.alignTranslation_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Translation:", None))
         self.fit_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Fit", None))
-        self.fitEdgeDiscontinuityPenalty_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Edge discontinuity penalty:", None))
         self.fitIterations_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Iterations:", None))
         self.fitMaximumSubIterations_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Maximum subiterations:", None))
         self.fitUpdateReferenceState_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Update reference state", None))
         self.groupSetting_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Group settings", None))
         self.configSettingGroup_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Group:", None))
         self.configCentralProjection_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Central Projection", None))
-        self.configProjectionCentreGroups_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Set", None))
+        self.configSetCentralProjection_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Set", None))
         self.configDataProportion_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Data Proportion", None))
 #if QT_CONFIG(tooltip)
         self.configDataProportion_lineEdit.setToolTip(QCoreApplication.translate("GeometricFitWidget", u"Value from 0.0 to 1.0", None))
