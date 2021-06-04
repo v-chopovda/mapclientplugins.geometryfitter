@@ -27,6 +27,32 @@ def QLineEdit_parseVector3(lineedit):
         pass
     return None
 
+def QLineEdit_parseVector9(lineedit):
+    """
+    Return 9 component real vector as list from comma separated text in QLineEdit widget
+    or None if invalid.
+    """
+    try:
+        text = lineedit.text()
+        values = [ float(value) for value in text.split(",") ]
+        return values
+    except:
+        pass
+    return None
+
+def QLineEdit_parseVector27(lineedit):
+    """
+    Return 27 component real vector as list from comma separated text in QLineEdit widget
+    or None if invalid.
+    """
+    try:
+        text = lineedit.text()
+        values = [ float(value) for value in text.split(",") ]
+        return values
+    except:
+        pass
+    return None
+
 def QLineEdit_parseRealNonNegative(lineedit):
     """
     Return non-negative real value from line edit text, or negative if failed.
@@ -262,12 +288,12 @@ class GeometricFitWidget(QtWidgets.QWidget):
         if isAlign:
             self._updateAlignWidgets()
         elif isConfig:
-            self._ui.configInitial_groupBox.setVisible(isInitialConfig)
             self._updateConfigWidgets()
         elif isFit:
             self._updateFitWidgets()
+        self._ui.configInitial_groupBox.setVisible(isInitialConfig)
+        self._ui.config_groupBox.setVisible(False)
         self._ui.align_groupBox.setVisible(isAlign)
-        self._ui.config_groupBox.setVisible(isConfig)
         self._ui.fit_groupBox.setVisible(isFit)
         self._ui.groupSetting_groupBox.setVisible(not isAlign)
         self._ui.stepsDelete_pushButton.setEnabled(not isInitialConfig)
@@ -524,7 +550,11 @@ class GeometricFitWidget(QtWidgets.QWidget):
         lineEditDisable = True
         checkBoxTristate = False
         checkBoxState = QtCore.Qt.Unchecked
-        if not isinstance(data, bool):
+        if isinstance(data, bool):
+            pass
+        elif isinstance(data, list):
+            data = ','.join(str(e) for e in data)
+        else:
             data = realFormat.format(data)
         if inheritable:
             checkBoxTristate = True
@@ -545,13 +575,11 @@ class GeometricFitWidget(QtWidgets.QWidget):
     def _configCentralProjectionClicked(self):
         checkState = self._ui.configCentralProjection_checkBox.checkState()
         group = self._getGroup()
-        self._ui.configSetCentralProjection_checkBox.setDisabled(True)
         if checkState == QtCore.Qt.Unchecked:
             self._getConfig().setGroupCentralProjection(group, None)
         elif checkState == QtCore.Qt.PartiallyChecked:
             self._getConfig().clearGroupCentralProjection(group)
         else:
-            self._ui.configSetCentralProjection_checkBox.setDisabled(False)
             self._configSetCentralProjectionClicked()
         self._updateCentralProjection()
 
@@ -577,13 +605,11 @@ class GeometricFitWidget(QtWidgets.QWidget):
     def _configDataProportionClicked(self):
         checkState = self._ui.configDataProportion_checkBox.checkState()
         group = self._getGroup()
-        self._ui.configDataProportion_lineEdit.setDisabled(True)
         if checkState == QtCore.Qt.Unchecked:
             self._getConfig().setGroupDataProportion(group, None)
         elif checkState == QtCore.Qt.PartiallyChecked:
             self._getConfig().clearGroupDataProportion(group)
         else:
-            self._ui.configDataProportion_lineEdit.setDisabled(False)
             self._configDataProportionEntered()
         self._updateDataProportion()
 
@@ -606,13 +632,11 @@ class GeometricFitWidget(QtWidgets.QWidget):
     def _configDataWeightClicked(self):
         checkState = self._ui.configDataWeight_checkBox.checkState()
         group = self._getGroup()
-        self._ui.configDataProportion_lineEdit.setDisabled(True)
         if checkState == QtCore.Qt.Unchecked:
             self._getFit().setGroupDataWeight(group, None)
         elif checkState == QtCore.Qt.PartiallyChecked:
             self._getFit().clearGroupDataWeight(group)
         else:
-            self._ui.configDataWeight_lineEdit.setDisabled(False)
             self._configDataWeightEntered()
         self._updateDataWeight()
 
@@ -635,23 +659,19 @@ class GeometricFitWidget(QtWidgets.QWidget):
     def _configStrainPenaltyClicked(self):
         checkState = self._ui.configStrainPenalty_checkBox.checkState()
         group = self._getGroup()
-        self._ui.configStrainPenalty_lineEdit.setDisabled(True)
         if checkState == QtCore.Qt.Unchecked:
-            self._getConfig().setGroupStrainPenalty(group, None)
+            self._getFit().setGroupStrainPenalty(group, None)
         elif checkState == QtCore.Qt.PartiallyChecked:
-            self._getConfig().clearGroupStrainPenalty(group)
+            self._getFit().clearGroupStrainPenalty(group)
         else:
-            self._ui.configStrainPenalty_lineEdit.setDisabled(False)
             self._configStrainPenaltyEntered()
         self._updateStrainPenalty()
 
     def _configStrainPenaltyEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.configStrainPenalty_lineEdit)
+        value = QLineEdit_parseVector9(self._ui.configStrainPenalty_lineEdit)
         group = self._getGroup()
-        if value > 0.0:
-            self._getConfig().setGroupStrainPenalty(group, value)
-        else:
-            print("Invalid model Data Proportion entered")
+        print(group,value)
+        self._getFit().setGroupStrainPenalty(group, value)
         self._updateStrainPenalty()
 
     def _updateCurvaturePenalty(self):
@@ -664,23 +684,18 @@ class GeometricFitWidget(QtWidgets.QWidget):
     def _configCurvaturePenaltyClicked(self):
         checkState = self._ui.configCurvaturePenalty_checkBox.checkState()
         group = self._getGroup()
-        self._ui.configCurvaturePenalty_lineEdit.setDisabled(True)
         if checkState == QtCore.Qt.Unchecked:
             self._getFit().setGroupCurvaturePenalty(group, None)
         elif checkState == QtCore.Qt.PartiallyChecked:
             self._getFit().clearGroupCurvaturePenalty(group)
         else:
-            self._ui.configCurvaturePenalty_lineEdit.setDisabled(False)
             self._configCurvaturePenaltyEntered()
         self._updateCurvaturePenalty()
 
     def _configCurvaturePenaltyEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.configCurvaturePenalty_lineEdit)
+        value = QLineEdit_parseVector27(self._ui.configCurvaturePenalty_lineEdit)
         group = self._getGroup()
-        if value > 0.0:
-            self._getFit().setGroupCurvaturePenalty(group, value)
-        else:
-            print("Invalid model Data Weight entered")
+        self._getFit().setGroupCurvaturePenalty(group, value)
         self._updateCurvaturePenalty()
 
 # === config widgets ===

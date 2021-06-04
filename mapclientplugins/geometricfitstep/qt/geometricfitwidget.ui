@@ -159,9 +159,9 @@
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>-238</y>
+               <y>0</y>
                <width>352</width>
-               <height>585</height>
+               <height>579</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -181,6 +181,86 @@
                <number>0</number>
               </property>
               <item>
+               <widget class="QGroupBox" name="configInitial_groupBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="title">
+                 <string>Initial</string>
+                </property>
+                <layout class="QFormLayout" name="formLayout">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="configModelCoordinates_label">
+                   <property name="text">
+                    <string>Model coordinates:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="FieldChooserWidget" name="configModelCoordinates_fieldChooser">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="configDataCoordinates_label">
+                   <property name="text">
+                    <string>Data coordinates:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="FieldChooserWidget" name="configDataCoordinates_fieldChooser">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QSpinBox" name="configDiagnosticLevel_spinBox">
+                   <property name="maximum">
+                    <number>2</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="configDiagnosticLevel_label">
+                   <property name="text">
+                    <string>Diagnostic level:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="configMarkerGroup_label">
+                   <property name="text">
+                    <string>Marker group:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="FieldChooserWidget" name="configMarkerGroup_fieldChooser">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
                <widget class="QGroupBox" name="config_groupBox">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -192,86 +272,6 @@
                  <string>Config</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_4">
-                 <item>
-                  <widget class="QGroupBox" name="configInitial_groupBox">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="title">
-                    <string>Initial</string>
-                   </property>
-                   <layout class="QFormLayout" name="formLayout">
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="configModelCoordinates_label">
-                      <property name="text">
-                       <string>Model coordinates:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="1">
-                     <widget class="FieldChooserWidget" name="configModelCoordinates_fieldChooser">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="configDataCoordinates_label">
-                      <property name="text">
-                       <string>Data coordinates:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="FieldChooserWidget" name="configDataCoordinates_fieldChooser">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="1">
-                     <widget class="QSpinBox" name="configDiagnosticLevel_spinBox">
-                      <property name="maximum">
-                       <number>2</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="0">
-                     <widget class="QLabel" name="configDiagnosticLevel_label">
-                      <property name="text">
-                       <string>Diagnostic level:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QLabel" name="configMarkerGroup_label">
-                      <property name="text">
-                       <string>Marker group:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="1">
-                     <widget class="FieldChooserWidget" name="configMarkerGroup_fieldChooser">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
                  <item>
                   <spacer name="config_verticalSpacer">
                    <property name="orientation">
