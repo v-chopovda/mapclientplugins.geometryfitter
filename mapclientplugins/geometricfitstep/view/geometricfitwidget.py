@@ -532,8 +532,8 @@ class GeometricFitWidget(QtWidgets.QWidget):
         return groupName
 
     def _getGroupSettingDisplayState(self, func):
-        group = self._getGroupSettingsGroupName()
-        data, isLocallySet, inheritable = func(group)
+        groupName = self._getGroupSettingsGroupName()
+        data, isLocallySet, inheritable = func(groupName)
         realFormat = "{:.4g}"
         lineEditDisable = True
         checkBoxTristate = False
@@ -541,7 +541,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
         if isinstance(data, float):
             data = realFormat.format(data)
         elif isinstance(data, list):
-            data = ','.join(str(e) for e in data)
+            data = ", ".join(realFormat.format(e) for e in data)
         else:
             assert isinstance(data, bool)
         if inheritable:
@@ -562,11 +562,11 @@ class GeometricFitWidget(QtWidgets.QWidget):
 
     def _groupConfigCentralProjectionClicked(self):
         checkState = self._ui.groupConfigCentralProjection_checkBox.checkState()
-        group = self._getGroupSettingsGroupName()
+        groupName = self._getGroupSettingsGroupName()
         if checkState == QtCore.Qt.Unchecked:
-            self._getConfig().setGroupCentralProjection(group, None)
+            self._getConfig().setGroupCentralProjection(groupName, None)
         elif checkState == QtCore.Qt.PartiallyChecked:
-            self._getConfig().clearGroupCentralProjection(group)
+            self._getConfig().clearGroupCentralProjection(groupName)
         else:
             self._groupConfigSetCentralProjectionClicked()
         self._updateGroupConfigCentralProjection()
@@ -574,8 +574,8 @@ class GeometricFitWidget(QtWidgets.QWidget):
     def _groupConfigSetCentralProjectionClicked(self):
         state = self._ui.groupConfigSetCentralProjection_checkBox.checkState()
         config = self._getConfig()
-        group = self._getGroupSettingsGroupName()
-        if config.setGroupCentralProjection(group,state == QtCore.Qt.Checked):
+        groupName = self._getGroupSettingsGroupName()
+        if config.setGroupCentralProjection(groupName,state == QtCore.Qt.Checked):
             fitterSteps = self._fitter.getFitterSteps()
             index = fitterSteps.index(config)
             if config.hasRun() and (((index + 1) == len(fitterSteps)) or (not fitterSteps[index + 1].hasRun())):
@@ -592,20 +592,20 @@ class GeometricFitWidget(QtWidgets.QWidget):
 
     def _groupConfigDataProportionClicked(self):
         checkState = self._ui.groupConfigDataProportion_checkBox.checkState()
-        group = self._getGroupSettingsGroupName()
+        groupName = self._getGroupSettingsGroupName()
         if checkState == QtCore.Qt.Unchecked:
-            self._getConfig().setGroupDataProportion(group, None)
+            self._getConfig().setGroupDataProportion(groupName, None)
         elif checkState == QtCore.Qt.PartiallyChecked:
-            self._getConfig().clearGroupDataProportion(group)
+            self._getConfig().clearGroupDataProportion(groupName)
         else:
             self._groupConfigDataProportionEntered()
         self._updateGroupConfigDataProportion()
 
     def _groupConfigDataProportionEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.groupConfigDataProportion_lineEdit)
-        group = self._getGroupSettingsGroupName()
+        groupName = self._getGroupSettingsGroupName()
         if value > 0.0:
-            self._getConfig().setGroupDataProportion(group, value)
+            self._getConfig().setGroupDataProportion(groupName, value)
         else:
             print("Invalid model Data Proportion entered")
         self._updateGroupConfigDataProportion()
@@ -619,20 +619,20 @@ class GeometricFitWidget(QtWidgets.QWidget):
 
     def _groupFitDataWeightClicked(self):
         checkState = self._ui.groupFitDataWeight_checkBox.checkState()
-        group = self._getGroupSettingsGroupName()
+        groupName = self._getGroupSettingsGroupName()
         if checkState == QtCore.Qt.Unchecked:
-            self._getFit().setGroupDataWeight(group, None)
+            self._getFit().setGroupDataWeight(groupName, None)
         elif checkState == QtCore.Qt.PartiallyChecked:
-            self._getFit().clearGroupDataWeight(group)
+            self._getFit().clearGroupDataWeight(groupName)
         else:
             self._groupFitDataWeightEntered()
         self._updateGroupFitDataWeight()
 
     def _groupFitDataWeightEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.groupFitDataWeight_lineEdit)
-        group = self._getGroupSettingsGroupName()
+        groupName = self._getGroupSettingsGroupName()
         if value > 0.0:
-            self._getFit().setGroupDataWeight(group, value)
+            self._getFit().setGroupDataWeight(groupName, value)
         else:
             print("Invalid model Data Weight entered")
         self._updateGroupFitDataWeight()
@@ -646,20 +646,19 @@ class GeometricFitWidget(QtWidgets.QWidget):
 
     def _groupFitStrainPenaltyClicked(self):
         checkState = self._ui.groupFitStrainPenalty_checkBox.checkState()
-        group = self._getGroupSettingsGroupName()
+        groupName = self._getGroupSettingsGroupName()
         if checkState == QtCore.Qt.Unchecked:
-            self._getFit().setGroupStrainPenalty(group, None)
+            self._getFit().setGroupStrainPenalty(groupName, None)
         elif checkState == QtCore.Qt.PartiallyChecked:
-            self._getFit().clearGroupStrainPenalty(group)
+            self._getFit().clearGroupStrainPenalty(groupName)
         else:
             self._configStrainPenaltyEntered()
         self._updateGroupFitStrainPenalty()
 
     def _groupFitStrainPenaltyEntered(self):
         value = QLineEdit_parseVectors(self._ui.groupFitStrainPenalty_lineEdit)
-        group = self._getGroupSettingsGroupName()
-        print(group,value)
-        self._getFit().setGroupStrainPenalty(group, value)
+        groupName = self._getGroupSettingsGroupName()
+        self._getFit().setGroupStrainPenalty(groupName, value)
         self._updateGroupFitStrainPenalty()
 
     def _updateGroupFitCurvaturePenalty(self):
@@ -671,19 +670,19 @@ class GeometricFitWidget(QtWidgets.QWidget):
 
     def _groupFitCurvaturePenaltyClicked(self):
         checkState = self._ui.groupFitCurvaturePenalty_checkBox.checkState()
-        group = self._getGroupSettingsGroupName()
+        groupName = self._getGroupSettingsGroupName()
         if checkState == QtCore.Qt.Unchecked:
-            self._getFit().setGroupCurvaturePenalty(group, None)
+            self._getFit().setGroupCurvaturePenalty(groupName, None)
         elif checkState == QtCore.Qt.PartiallyChecked:
-            self._getFit().clearGroupCurvaturePenalty(group)
+            self._getFit().clearGroupCurvaturePenalty(groupName)
         else:
             self._groupFitCurvaturePenaltyEntered()
         self._updateGroupFitCurvaturePenalty()
 
     def _groupFitCurvaturePenaltyEntered(self):
         value = QLineEdit_parseVectors(self._ui.groupFitCurvaturePenalty_lineEdit)
-        group = self._getGroupSettingsGroupName()
-        self._getFit().setGroupCurvaturePenalty(group, value)
+        groupName = self._getGroupSettingsGroupName()
+        self._getFit().setGroupCurvaturePenalty(groupName, value)
         self._updateGroupFitCurvaturePenalty()
 
 # === config widgets ===
