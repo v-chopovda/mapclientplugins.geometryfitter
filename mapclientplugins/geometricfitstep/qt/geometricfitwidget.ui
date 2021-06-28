@@ -464,7 +464,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QGroupBox" name="groupSetting_groupBox">
+               <widget class="QGroupBox" name="groupSettings_groupBox">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
                   <horstretch>0</horstretch>
@@ -474,19 +474,19 @@
                 <property name="title">
                  <string>Group settings</string>
                 </property>
-                <layout class="QFormLayout" name="configSettingGroup_Layout">
+                <layout class="QFormLayout" name="groupSettings_Layout">
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
                  <item row="1" column="0">
-                  <widget class="QLabel" name="configSettingGroup_label">
+                  <widget class="QLabel" name="groupSettings_label">
                    <property name="text">
                     <string>Group:</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="1">
-                  <widget class="FieldChooserWidget" name="configSettingGroup_fieldChooser">
+                  <widget class="FieldChooserWidget" name="groupSettings_fieldChooser">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -496,62 +496,62 @@
                   </widget>
                  </item>
                  <item row="2" column="0">
-                  <widget class="QCheckBox" name="configCentralProjection_checkBox">
+                  <widget class="QCheckBox" name="groupConfigCentralProjection_checkBox">
                    <property name="text">
                     <string>Central Projection</string>
                    </property>
                   </widget>
                  </item>
                  <item row="2" column="1">
-                  <widget class="QCheckBox" name="configSetCentralProjection_checkBox">
+                  <widget class="QCheckBox" name="groupConfigSetCentralProjection_checkBox">
                    <property name="text">
                     <string>Set</string>
                    </property>
                   </widget>
                  </item>
                  <item row="3" column="0">
-                  <widget class="QCheckBox" name="configDataProportion_checkBox">
+                  <widget class="QCheckBox" name="groupConfigDataProportion_checkBox">
                    <property name="text">
                     <string>Data Proportion</string>
                    </property>
                   </widget>
                  </item>
                  <item row="3" column="1">
-                  <widget class="QLineEdit" name="configDataProportion_lineEdit">
+                  <widget class="QLineEdit" name="groupConfigDataProportion_lineEdit">
                    <property name="toolTip">
                     <string>Value from 0.0 to 1.0</string>
                    </property>
                   </widget>
                  </item>
                  <item row="4" column="0">
-                  <widget class="QCheckBox" name="configDataWeight_checkBox">
+                  <widget class="QCheckBox" name="groupFitDataWeight_checkBox">
                    <property name="text">
                     <string>Data Weight</string>
                    </property>
                   </widget>
                  </item>
                  <item row="4" column="1">
-                  <widget class="QLineEdit" name="configDataWeight_lineEdit"/>
+                  <widget class="QLineEdit" name="groupFitDataWeight_lineEdit"/>
                  </item>
                  <item row="5" column="0">
-                  <widget class="QCheckBox" name="configStrainPenalty_checkBox">
+                  <widget class="QCheckBox" name="groupFitStrainPenalty_checkBox">
                    <property name="text">
                     <string>Strain Penalty</string>
                    </property>
                   </widget>
                  </item>
                  <item row="5" column="1">
-                  <widget class="QLineEdit" name="configStrainPenalty_lineEdit"/>
+                  <widget class="QLineEdit" name="groupFitStrainPenalty_lineEdit"/>
                  </item>
                  <item row="6" column="0">
-                  <widget class="QCheckBox" name="configCurvaturePenalty_checkBox">
+                  <widget class="QCheckBox" name="groupFitCurvaturePenalty_checkBox">
                    <property name="text">
                     <string>Curvature Penalty</string>
                    </property>
                   </widget>
                  </item>
                  <item row="6" column="1">
-                  <widget class="QLineEdit" name="configCurvaturePenalty_lineEdit"/>
+                  <widget class="QLineEdit" name="groupFitCurvaturePenalty_lineEdit"/>
                  </item>
                 </layout>
                </widget>
