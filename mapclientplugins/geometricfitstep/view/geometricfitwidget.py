@@ -652,7 +652,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
         elif checkState == QtCore.Qt.PartiallyChecked:
             self._getFit().clearGroupStrainPenalty(groupName)
         else:
-            self._configStrainPenaltyEntered()
+            self._groupFitStrainPenaltyEntered()
         self._updateGroupFitStrainPenalty()
 
     def _groupFitStrainPenaltyEntered(self):
