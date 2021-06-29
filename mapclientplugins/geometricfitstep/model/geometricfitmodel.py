@@ -349,13 +349,14 @@ class GeometricFitModel(object):
         fieldmodule = self.getFieldmodule()
         with ChangeManager(fieldmodule):
             scene = self.getScene()
-            selectionGroup = get_scene_selection_group(scene)
+            # can't use SUBELEMENT_HANDLING_MODE_FULL as some groups have been tweaked to omit some faces
+            selectionGroup = get_scene_selection_group(scene, subelementHandlingMode=FieldGroup.SUBELEMENT_HANDLING_MODE_NONE)
             if group:
                 if selectionGroup:
                     selectionGroup.clear()
                 else:
-                    selectionGroup = create_scene_selection_group(scene)
-                group_add_group_elements(selectionGroup, group)
+                    selectionGroup = create_scene_selection_group(scene, subelementHandlingMode=FieldGroup.SUBELEMENT_HANDLING_MODE_NONE)
+                group_add_group_elements(selectionGroup, group, highest_dimension_only=False)
                 for fieldDomainType in (Field.DOMAIN_TYPE_NODES, Field.DOMAIN_TYPE_DATAPOINTS):
                     group_add_group_nodes(selectionGroup, group, fieldmodule.findNodesetByFieldDomainType(fieldDomainType))
             else:
