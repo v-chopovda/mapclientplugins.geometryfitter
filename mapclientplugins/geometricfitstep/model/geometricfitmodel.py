@@ -6,7 +6,7 @@ import json
 from opencmiss.utils.maths.vectorops import add, axis_angle_to_rotation_matrix, euler_to_rotation_matrix, matrix_mult, rotation_matrix_to_euler
 from opencmiss.utils.zinc.finiteelement import evaluateFieldNodesetRange
 from opencmiss.utils.zinc.general import ChangeManager
-from opencmiss.zinc.field import Field, FieldFindMeshLocation
+from opencmiss.zinc.field import Field, FieldFindMeshLocation, FieldGroup
 from opencmiss.zinc.glyph import Glyph
 from opencmiss.zinc.graphics import Graphics
 from opencmiss.zinc.material import Material
@@ -16,6 +16,7 @@ from opencmiss.zinc.scenefilter import Scenefilter
 from opencmiss.zinc.result import RESULT_OK
 from scaffoldfitter.fitter import Fitter
 from scaffoldfitter.fitterjson import decodeJSONFitterSteps
+from mapclientplugins.geometricfitstep.utils.zinc_utils import get_scene_selection_group, create_scene_selection_group, group_add_group_elements, group_add_group_nodes
 
 
 nodeDerivativeLabels = [ "D1", "D2", "D3", "D12", "D13", "D23", "D123" ]
@@ -141,6 +142,9 @@ class GeometricFitModel(object):
 
     def getRegion(self):
         return self._fitter.getRegion()
+
+    def getFieldmodule(self):
+        return self._fitter.getFieldmodule()
 
     def getScene(self):
         return self._fitter.getRegion().getScene()
@@ -337,8 +341,43 @@ class GeometricFitModel(object):
             return False
         return self.isDisplayLines() and self.isDisplaySurfaces() and not self.isDisplaySurfacesTranslucent()
 
+    def setSelectHighlightGroup(self, group : FieldGroup):
+        """
+        Select and highlight objects in the group.
+        :param group: FieldGroup to select, or None to clear selection.
+        """
+        fieldmodule = self.getFieldmodule()
+        with ChangeManager(fieldmodule):
+            scene = self.getScene()
+            selectionGroup = get_scene_selection_group(scene)
+            if group:
+                if selectionGroup:
+                    selectionGroup.clear()
+                else:
+                    selectionGroup = create_scene_selection_group(scene)
+                group_add_group_elements(selectionGroup, group)
+                for fieldDomainType in (Field.DOMAIN_TYPE_NODES, Field.DOMAIN_TYPE_DATAPOINTS):
+                    group_add_group_nodes(selectionGroup, group, fieldmodule.findNodesetByFieldDomainType(fieldDomainType))
+            else:
+                if selectionGroup:
+                    selectionGroup.clear()
+                    scene.setSelectionField(Field())
+
+    def setSelectHighlightGroupByName(self, groupName):
+        """
+        Select and highlight objects in the group by name.
+        :param groupName: Name of group to select, or None to clear selection.
+        """
+        fieldmodule = self.getFieldmodule()
+        group = None
+        if groupName:
+            group = fieldmodule.findFieldByName(groupName).castGroup()
+            if not group.isValid():
+                group = None
+        self.setSelectHighlightGroup(group)
+
     def createGraphics(self):
-        fieldmodule = self._fitter.getFieldmodule()
+        fieldmodule = self.getFieldmodule()
         mesh = self._fitter.getHighestDimensionMesh()
         meshDimension = mesh.getDimension()
         modelCoordinates = self._fitter.getModelCoordinatesField()
@@ -510,7 +549,7 @@ class GeometricFitModel(object):
             #pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_DIAMOND)
             #pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
             pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
-            dataPoints.setRenderPointSize(2.0);
+            dataPoints.setRenderPointSize(3.0)
             dataPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
             dataPoints.setName("displayDataPoints")
             dataPoints.setVisibilityFlag(self.isDisplayDataPoints())
@@ -552,7 +591,7 @@ class GeometricFitModel(object):
                 #pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_DIAMOND)
                 #pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
                 pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
-                dataProjectionPoints.setRenderPointSize(2.0);
+                dataProjectionPoints.setRenderPointSize(3.0)
                 dataProjectionPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
                 dataProjectionPoints.setName("displayDataProjectionPoints")
                 dataProjectionPoints.setVisibilityFlag(self.isDisplayDataProjectionPoints())

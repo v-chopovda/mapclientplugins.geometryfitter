@@ -98,6 +98,9 @@ class GeometricFitWidget(QtWidgets.QWidget):
             self._model.createGraphics()
             sceneviewer.setScene(self._model.getScene())
             self._refreshGraphics()
+            groupName = self._getGroupSettingsGroupName()
+            if groupName:
+                self._model.setSelectHighlightGroupByName(groupName)
 
     def _refreshGraphics(self):
         """
@@ -481,7 +484,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.groupSettings_fieldChooser.setField(Field())
 
     def _makeConnectionsGroup(self):
-        self._ui.groupSettings_fieldChooser.currentIndexChanged.connect(self._groupSettingChanged)
+        self._ui.groupSettings_fieldChooser.currentIndexChanged.connect(self._groupSettingsGroupChanged)
         self._ui.groupConfigCentralProjection_checkBox.clicked.connect(self._groupConfigCentralProjectionClicked)
         self._ui.groupConfigSetCentralProjection_checkBox.clicked.connect(self._groupConfigSetCentralProjectionClicked)
         self._ui.groupConfigDataProportion_checkBox.clicked.connect(self._groupConfigDataProportionClicked)
@@ -518,10 +521,12 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.groupFitCurvaturePenalty_checkBox.setVisible(isFit)
         self._ui.groupFitCurvaturePenalty_lineEdit.setVisible(isFit)
 
-    def _groupSettingChanged(self, index):
+    def _groupSettingsGroupChanged(self, index):
         """
-        Callback for change in setting group field chooser widget.
+        Callback for change in group settings field chooser widget.
         """
+        groupName = self._getGroupSettingsGroupName()
+        self._model.setSelectHighlightGroupByName(groupName)
         self._updateGroupSettingWidgets()
 
     def _getGroupSettingsGroupName(self):
@@ -729,6 +734,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
         field = self._ui.configModelCoordinates_fieldChooser.getField()
         if field:
             self._fitter.setModelCoordinatesField(field)
+            self._model.createGraphics()
 
     def _configDataCoordinatesFieldChanged(self, index):
         """
@@ -737,6 +743,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
         field = self._ui.configDataCoordinates_fieldChooser.getField()
         if field:
             self._fitter.setDataCoordinatesField(field)
+            self._model.createGraphics()
 
     def _configMarkerGroupChanged(self, index):
         """
@@ -745,11 +752,11 @@ class GeometricFitWidget(QtWidgets.QWidget):
         group = self._ui.configMarkerGroup_fieldChooser.getField()
         if group:
             self._fitter.setMarkerGroup(group)
+            self._model.createGraphics()
 
     def _configDiagnosticLevelValueChanged(self, value):
         self._fitter.setDiagnosticLevel(value)
 
-    
 # === align widgets ===
 
     def _makeConnectionsAlign(self):
