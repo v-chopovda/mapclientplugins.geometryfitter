@@ -20,7 +20,7 @@ class Ui_GeometricFitWidget(object):
     def setupUi(self, GeometricFitWidget):
         if not GeometricFitWidget.objectName():
             GeometricFitWidget.setObjectName(u"GeometricFitWidget")
-        GeometricFitWidget.resize(1718, 1101)
+        GeometricFitWidget.resize(1718, 1365)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -62,8 +62,8 @@ class Ui_GeometricFitWidget(object):
         self.stepsAddDelete_frame.setFrameShape(QFrame.StyledPanel)
         self.stepsAddDelete_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_10 = QHBoxLayout(self.stepsAddDelete_frame)
-        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.stepsAddAlign_pushButton = QPushButton(self.stepsAddDelete_frame)
         self.stepsAddAlign_pushButton.setObjectName(u"stepsAddAlign_pushButton")
 
@@ -106,11 +106,11 @@ class Ui_GeometricFitWidget(object):
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollAreaWidgetContents = QWidget()
         self.stepedit_scrollAreaWidgetContents.setObjectName(u"stepedit_scrollAreaWidgetContents")
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 579))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, -100, 845, 1377))
         self.verticalLayout_3 = QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setSpacing(0)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.configInitial_groupBox = QGroupBox(self.stepedit_scrollAreaWidgetContents)
         self.configInitial_groupBox.setObjectName(u"configInitial_groupBox")
         sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
@@ -138,37 +138,47 @@ class Ui_GeometricFitWidget(object):
         self.configDataCoordinates_label = QLabel(self.configInitial_groupBox)
         self.configDataCoordinates_label.setObjectName(u"configDataCoordinates_label")
 
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.configDataCoordinates_label)
+        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.configDataCoordinates_label)
 
         self.configDataCoordinates_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
         self.configDataCoordinates_fieldChooser.setObjectName(u"configDataCoordinates_fieldChooser")
         sizePolicy4.setHeightForWidth(self.configDataCoordinates_fieldChooser.sizePolicy().hasHeightForWidth())
         self.configDataCoordinates_fieldChooser.setSizePolicy(sizePolicy4)
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.configDataCoordinates_fieldChooser)
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.configDataCoordinates_fieldChooser)
 
         self.configDiagnosticLevel_spinBox = QSpinBox(self.configInitial_groupBox)
         self.configDiagnosticLevel_spinBox.setObjectName(u"configDiagnosticLevel_spinBox")
         self.configDiagnosticLevel_spinBox.setMaximum(2)
 
-        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.configDiagnosticLevel_spinBox)
+        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.configDiagnosticLevel_spinBox)
 
         self.configDiagnosticLevel_label = QLabel(self.configInitial_groupBox)
         self.configDiagnosticLevel_label.setObjectName(u"configDiagnosticLevel_label")
 
-        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.configDiagnosticLevel_label)
+        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.configDiagnosticLevel_label)
 
         self.configMarkerGroup_label = QLabel(self.configInitial_groupBox)
         self.configMarkerGroup_label.setObjectName(u"configMarkerGroup_label")
 
-        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.configMarkerGroup_label)
+        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.configMarkerGroup_label)
 
         self.configMarkerGroup_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
         self.configMarkerGroup_fieldChooser.setObjectName(u"configMarkerGroup_fieldChooser")
         sizePolicy4.setHeightForWidth(self.configMarkerGroup_fieldChooser.sizePolicy().hasHeightForWidth())
         self.configMarkerGroup_fieldChooser.setSizePolicy(sizePolicy4)
 
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.configMarkerGroup_fieldChooser)
+        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.configMarkerGroup_fieldChooser)
+
+        self.configFibreOrientation_label = QLabel(self.configInitial_groupBox)
+        self.configFibreOrientation_label.setObjectName(u"configFibreOrientation_label")
+
+        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.configFibreOrientation_label)
+
+        self.configFibreOrientation_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
+        self.configFibreOrientation_fieldChooser.setObjectName(u"configFibreOrientation_fieldChooser")
+
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.configFibreOrientation_fieldChooser)
 
 
         self.verticalLayout_3.addWidget(self.configInitial_groupBox)
@@ -382,8 +392,8 @@ class Ui_GeometricFitWidget(object):
         self.displayMisc_frame.setFrameShape(QFrame.StyledPanel)
         self.displayMisc_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_8 = QHBoxLayout(self.displayMisc_frame)
-        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
         self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
         self.displayAxes_checkBox = QCheckBox(self.displayMisc_frame)
         self.displayAxes_checkBox.setObjectName(u"displayAxes_checkBox")
 
@@ -401,8 +411,8 @@ class Ui_GeometricFitWidget(object):
         self.displayMarker_frame.setFrameShape(QFrame.StyledPanel)
         self.displayMarker_frame.setFrameShadow(QFrame.Raised)
         self.gridLayout = QGridLayout(self.displayMarker_frame)
-        self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout.setObjectName(u"gridLayout")
         self.displayMarkerDataNames_checkBox = QCheckBox(self.displayMarker_frame)
         self.displayMarkerDataNames_checkBox.setObjectName(u"displayMarkerDataNames_checkBox")
 
@@ -436,8 +446,8 @@ class Ui_GeometricFitWidget(object):
         self.displayData_frame.setFrameShape(QFrame.StyledPanel)
         self.displayData_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_9 = QHBoxLayout(self.displayData_frame)
-        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
         self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
         self.displayDataPoints_checkBox = QCheckBox(self.displayData_frame)
         self.displayDataPoints_checkBox.setObjectName(u"displayDataPoints_checkBox")
 
@@ -465,8 +475,8 @@ class Ui_GeometricFitWidget(object):
         self.displayNodes_frame.setFrameShape(QFrame.StyledPanel)
         self.displayNodes_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_6 = QHBoxLayout(self.displayNodes_frame)
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.displayNodePoints_checkBox = QCheckBox(self.displayNodes_frame)
         self.displayNodePoints_checkBox.setObjectName(u"displayNodePoints_checkBox")
 
@@ -501,8 +511,8 @@ class Ui_GeometricFitWidget(object):
         self.displayNodeDerivativeLabels_frame.setFrameShape(QFrame.StyledPanel)
         self.displayNodeDerivativeLabels_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_7 = QHBoxLayout(self.displayNodeDerivativeLabels_frame)
-        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.displayNodeDerivativeLabels_horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_7.addItem(self.displayNodeDerivativeLabels_horizontalSpacer)
@@ -564,8 +574,8 @@ class Ui_GeometricFitWidget(object):
         self.displayElements_frame.setFrameShape(QFrame.StyledPanel)
         self.displayElements_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_4 = QHBoxLayout(self.displayElements_frame)
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.displayElementNumbers_checkBox = QCheckBox(self.displayElements_frame)
         self.displayElementNumbers_checkBox.setObjectName(u"displayElementNumbers_checkBox")
 
@@ -590,8 +600,8 @@ class Ui_GeometricFitWidget(object):
         self.displayLines_frame.setFrameShape(QFrame.StyledPanel)
         self.displayLines_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_5 = QHBoxLayout(self.displayLines_frame)
-        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.displayLines_checkBox = QCheckBox(self.displayLines_frame)
         self.displayLines_checkBox.setObjectName(u"displayLines_checkBox")
 
@@ -616,8 +626,8 @@ class Ui_GeometricFitWidget(object):
         self.displaySurfaces_frame.setFrameShape(QFrame.StyledPanel)
         self.displaySurfaces_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_3 = QHBoxLayout(self.displaySurfaces_frame)
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.displaySurfaces_checkBox = QCheckBox(self.displaySurfaces_frame)
         self.displaySurfaces_checkBox.setObjectName(u"displaySurfaces_checkBox")
 
@@ -659,8 +669,8 @@ class Ui_GeometricFitWidget(object):
         self.bottom_frame.setFrameShape(QFrame.StyledPanel)
         self.bottom_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_2 = QHBoxLayout(self.bottom_frame)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(3, 3, 3, 3)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.viewAll_pushButton = QPushButton(self.bottom_frame)
         self.viewAll_pushButton.setObjectName(u"viewAll_pushButton")
 
@@ -715,6 +725,10 @@ class Ui_GeometricFitWidget(object):
         self.configDataCoordinates_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Data coordinates:", None))
         self.configDiagnosticLevel_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Diagnostic level:", None))
         self.configMarkerGroup_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Marker group:", None))
+        self.configFibreOrientation_label.setText(QCoreApplication.translate("GeometricFitWidget", u"Fibre orientation:", None))
+#if QT_CONFIG(tooltip)
+        self.configFibreOrientation_fieldChooser.setToolTip(QCoreApplication.translate("GeometricFitWidget", u"<html><head/><body><p>Field supplying Euler angles to rotate local 'fibre' axes on which strain and curvature penalties are applied. Clear to apply on global x, y, z axes. Required for fitting 2D meshes with 3 coordinate components.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.config_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Config", None))
         self.align_groupBox.setTitle(QCoreApplication.translate("GeometricFitWidget", u"Align", None))
         self.alignGroups_checkBox.setText(QCoreApplication.translate("GeometricFitWidget", u"Align groups", None))
