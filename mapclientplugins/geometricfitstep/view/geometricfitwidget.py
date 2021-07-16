@@ -3,9 +3,10 @@ User interface for github.com/ABI-Software/scaffoldfitter
 """
 from PySide2 import QtCore, QtGui, QtWidgets
 
+from mapclientplugins.geometricfitstep.utils.zinc_utils import field_is_managed_real_1_to_3_components
 from mapclientplugins.geometricfitstep.view.ui_geometricfitwidget import Ui_GeometricFitWidget
 from opencmiss.utils.maths.vectorops import dot, magnitude, mult, normalize, sub
-from opencmiss.utils.zinc.field import fieldIsManagedCoordinates, fieldIsManagedGroup
+from opencmiss.utils.zinc.field import field_is_managed_coordinates, field_is_managed_group
 from opencmiss.zinc.field import Field
 from opencmiss.zinc.scene import Scene
 from scaffoldfitter.fitterstepalign import FitterStepAlign
@@ -480,7 +481,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
         """
         self._ui.groupSettings_fieldChooser.setRegion(self._region)
         self._ui.groupSettings_fieldChooser.setNullObjectName("-")
-        self._ui.groupSettings_fieldChooser.setConditional(fieldIsManagedGroup)
+        self._ui.groupSettings_fieldChooser.setConditional(field_is_managed_group)
         self._ui.groupSettings_fieldChooser.setField(Field())
 
     def _makeConnectionsGroup(self):
@@ -698,20 +699,25 @@ class GeometricFitWidget(QtWidgets.QWidget):
         """
         self._ui.configModelCoordinates_fieldChooser.setRegion(self._region)
         self._ui.configModelCoordinates_fieldChooser.setNullObjectName("-")
-        self._ui.configModelCoordinates_fieldChooser.setConditional(fieldIsManagedCoordinates)
+        self._ui.configModelCoordinates_fieldChooser.setConditional(field_is_managed_coordinates)
         self._ui.configModelCoordinates_fieldChooser.setField(self._fitter.getModelCoordinatesField())
+        self._ui.configFibreOrientation_fieldChooser.setRegion(self._region)
+        self._ui.configFibreOrientation_fieldChooser.setNullObjectName("-")
+        self._ui.configFibreOrientation_fieldChooser.setConditional(field_is_managed_real_1_to_3_components)
+        self._ui.configFibreOrientation_fieldChooser.setField(self._fitter.getFibreField())
         self._ui.configDataCoordinates_fieldChooser.setRegion(self._region)
         self._ui.configDataCoordinates_fieldChooser.setNullObjectName("-")
-        self._ui.configDataCoordinates_fieldChooser.setConditional(fieldIsManagedCoordinates)
+        self._ui.configDataCoordinates_fieldChooser.setConditional(field_is_managed_coordinates)
         self._ui.configDataCoordinates_fieldChooser.setField(self._fitter.getDataCoordinatesField())
         self._ui.configMarkerGroup_fieldChooser.setRegion(self._region)
         self._ui.configMarkerGroup_fieldChooser.setNullObjectName("-")
-        self._ui.configMarkerGroup_fieldChooser.setConditional(fieldIsManagedGroup)
+        self._ui.configMarkerGroup_fieldChooser.setConditional(field_is_managed_group)
         self._ui.configMarkerGroup_fieldChooser.setField(self._fitter.getMarkerGroup())
         self._ui.configDiagnosticLevel_spinBox.setValue(self._fitter.getDiagnosticLevel())
 
     def _makeConnectionsConfig(self):
         self._ui.configModelCoordinates_fieldChooser.currentIndexChanged.connect(self._configModelCoordinatesFieldChanged)
+        self._ui.configFibreOrientation_fieldChooser.currentIndexChanged.connect(self._configFibreOrientationFieldChanged)
         self._ui.configDataCoordinates_fieldChooser.currentIndexChanged.connect(self._configDataCoordinatesFieldChanged)
         self._ui.configMarkerGroup_fieldChooser.currentIndexChanged.connect(self._configMarkerGroupChanged)
         self._ui.configDiagnosticLevel_spinBox.valueChanged.connect(self._configDiagnosticLevelValueChanged)
@@ -735,6 +741,12 @@ class GeometricFitWidget(QtWidgets.QWidget):
         if field:
             self._fitter.setModelCoordinatesField(field)
             self._model.createGraphics()
+
+    def _configFibreOrientationFieldChanged(self, index):
+        """
+        Callback for change in model coordinates field chooser widget.
+        """
+        self._fitter.setFibreField(self._ui.configFibreOrientation_fieldChooser.getField())
 
     def _configDataCoordinatesFieldChanged(self, index):
         """
