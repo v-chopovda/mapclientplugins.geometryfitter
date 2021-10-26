@@ -3,7 +3,7 @@ Created on Jul 23, 2015
 
 @author: Richard Christie
 '''
-from opencmiss.utils.maths import vectorops
+from opencmiss.maths.vectorops import add, matrix_vector_mult
 from opencmiss.utils.zinc.general import ChangeManager
 from opencmiss.zinc.node import Node, Nodeset
 from opencmiss.zinc.field import Field, FieldGroup
@@ -105,9 +105,9 @@ def transformCoordinates(field, rotationScale, offset, time = 0.0):
                 if result != ZINC_OK:
                     success = False
                 else:
-                    newValues = vectorops.matrixvectormult(rotationScale, values)
+                    newValues = matrix_vector_mult(rotationScale, values)
                     if derivative == Node.VALUE_LABEL_VALUE:
-                        newValues = vectorops.add(newValues, offset)
+                        newValues = add(newValues, offset)
                     result = feField.setNodeParameters(cache, -1, derivative, v, newValues)
                     if result != ZINC_OK:
                         success = False

@@ -5,7 +5,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 
 from mapclientplugins.geometricfitstep.utils.zinc_utils import field_is_managed_real_1_to_3_components
 from mapclientplugins.geometricfitstep.view.ui_geometricfitwidget import Ui_GeometricFitWidget
-from opencmiss.utils.maths.vectorops import dot, magnitude, mult, normalize, sub
+from opencmiss.maths.vectorops import dot, magnitude, mult, normalize, sub
 from opencmiss.utils.zinc.field import field_is_managed_coordinates, field_is_managed_group
 from opencmiss.zinc.field import Field
 from opencmiss.zinc.scene import Scene
