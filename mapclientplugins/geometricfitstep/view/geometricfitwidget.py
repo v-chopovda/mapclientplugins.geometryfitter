@@ -4,7 +4,7 @@ User interface for github.com/ABI-Software/scaffoldfitter
 from PySide2 import QtCore, QtGui, QtWidgets
 
 from mapclientplugins.geometricfitstep.view.ui_geometricfitwidget import Ui_GeometricFitWidget
-from opencmiss.utils.maths.vectorops import dot, magnitude, mult, normalize, sub
+from opencmiss.maths.vectorops import dot, magnitude, mult, normalize, sub
 from opencmiss.utils.zinc.field import fieldIsManagedCoordinates, fieldIsManagedGroup
 from opencmiss.zinc.field import Field
 from opencmiss.zinc.scene import Scene
@@ -71,6 +71,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._sceneChanged()
         sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
         if sceneviewer is not None:
+            print('graphics init: ', self._ui.alignmentsceneviewerwidget.size())
             sceneviewer.setTransparencyMode(sceneviewer.TRANSPARENCY_MODE_SLOW)
             self._autoPerturbLines()
             sceneviewer.viewAll()

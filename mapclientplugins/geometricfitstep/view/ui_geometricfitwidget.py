@@ -106,7 +106,7 @@ class Ui_GeometricFitWidget(object):
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollAreaWidgetContents = QWidget()
         self.stepedit_scrollAreaWidgetContents.setObjectName(u"stepedit_scrollAreaWidgetContents")
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 352, 679))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 421, 891))
         self.verticalLayout_3 = QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -733,11 +733,12 @@ class Ui_GeometricFitWidget(object):
 
         self.alignmentsceneviewerwidget = AlignmentSceneviewerWidget(GeometricFitWidget)
         self.alignmentsceneviewerwidget.setObjectName(u"alignmentsceneviewerwidget")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy6 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy6.setHorizontalStretch(1)
         sizePolicy6.setVerticalStretch(0)
         sizePolicy6.setHeightForWidth(self.alignmentsceneviewerwidget.sizePolicy().hasHeightForWidth())
         self.alignmentsceneviewerwidget.setSizePolicy(sizePolicy6)
+        self.alignmentsceneviewerwidget.setAutoFillBackground(True)
 
         self.horizontalLayout.addWidget(self.alignmentsceneviewerwidget)
 

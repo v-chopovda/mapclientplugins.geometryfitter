@@ -160,8 +160,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>352</width>
-               <height>679</height>
+               <width>421</width>
+               <height>891</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -300,67 +300,67 @@
                    </layout>
                   </widget>
                  </item>
-                    <item>
-                    <widget class="QGroupBox" name="configSetting_groupBox">
-                    <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <item>
+                  <widget class="QGroupBox" name="configSetting_groupBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="title">
+                    <string>Group settings</string>
+                   </property>
+                   <layout class="QFormLayout" name="configSettingGroup_Layout">
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="configSettingGroup_label">
+                      <property name="text">
+                       <string>Group:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="FieldChooserWidget" name="configSettingGroup_fieldChooser">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="title">
-                        <string>Group settings</string>
-                    </property>
-                        <layout class="QFormLayout" name="configSettingGroup_Layout">
-                        <property name="bottomMargin">
-                        <number>0</number>
-                        </property>
-                        <item row="1" column="0">
-                        <widget class="QLabel" name="configSettingGroup_label">
-                            <property name="text">
-                            <string>Group:</string>
-                            </property>
-                        </widget>
-                        </item>
-                        <item row="1" column="1">
-                        <widget class="FieldChooserWidget" name="configSettingGroup_fieldChooser">
-                            <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                            </sizepolicy>
-                            </property>
-                        </widget>
-                        </item>
-                        <item row="2" column="0">
-                        <widget class="QCheckBox" name="configDataProportion_checkBox">
-                            <property name="text">
-                            <string>Data Proportion</string>
-                            </property>
-                            <property name="tristate">
-                            <bool>true</bool>
-                            </property>
-                        </widget>
-                        </item>
-                        <item row="2" column="1">
-                        <widget class="QLineEdit" name="configDataProportion_lineEdit"/>
-                        </item>
-                        <item row="3" column="0">
-                        <widget class="QCheckBox" name="configDataWeight_checkBox">
-                            <property name="text">
-                            <string>Data Weight</string>
-                            </property>
-                            <property name="tristate">
-                            <bool>true</bool>
-                            </property>
-                        </widget>
-                        </item>
-                        <item row="3" column="1">
-                        <widget class="QLineEdit" name="configDataWeight_lineEdit"/>
-                        </item>
-                        </layout>
-                    </widget>
+                       </sizepolicy>
+                      </property>
+                     </widget>
                     </item>
+                    <item row="2" column="0">
+                     <widget class="QCheckBox" name="configDataProportion_checkBox">
+                      <property name="text">
+                       <string>Data Proportion</string>
+                      </property>
+                      <property name="tristate">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="QLineEdit" name="configDataProportion_lineEdit"/>
+                    </item>
+                    <item row="3" column="0">
+                     <widget class="QCheckBox" name="configDataWeight_checkBox">
+                      <property name="text">
+                       <string>Data Weight</string>
+                      </property>
+                      <property name="tristate">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="1">
+                     <widget class="QLineEdit" name="configDataWeight_lineEdit"/>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
                  <item>
                   <spacer name="config_verticalSpacer">
                    <property name="orientation">
@@ -1273,10 +1273,13 @@
    <item>
     <widget class="AlignmentSceneviewerWidget" name="alignmentsceneviewerwidget" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
-       <verstretch>0</verstretch>
+       <verstretch>1</verstretch>
       </sizepolicy>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
