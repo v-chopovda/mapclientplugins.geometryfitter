@@ -89,7 +89,6 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._sceneChanged()
         sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
         if sceneviewer is not None:
-            print('graphics init: ', self._ui.alignmentsceneviewerwidget.size())
             sceneviewer.setTransparencyMode(sceneviewer.TRANSPARENCY_MODE_SLOW)
             self._autoPerturbLines()
             sceneviewer.viewAll()
