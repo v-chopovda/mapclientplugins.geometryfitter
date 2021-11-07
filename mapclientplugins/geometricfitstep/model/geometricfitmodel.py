@@ -3,22 +3,22 @@ Geometric fit model adding visualisations to github.com/ABI-Software/scaffoldfit
 """
 import os
 import json
-from opencmiss.utils.maths.vectorops import add, axis_angle_to_rotation_matrix, euler_to_rotation_matrix, matrix_mult, rotation_matrix_to_euler
+
+from opencmiss.maths.vectorops import add, axis_angle_to_rotation_matrix, euler_to_rotation_matrix, matrix_mult, rotation_matrix_to_euler
 from opencmiss.utils.zinc.finiteelement import evaluateFieldNodesetRange
 from opencmiss.utils.zinc.general import ChangeManager
-from opencmiss.zinc.field import Field, FieldFindMeshLocation
+from opencmiss.zinc.field import Field, FieldGroup
 from opencmiss.zinc.glyph import Glyph
 from opencmiss.zinc.graphics import Graphics
 from opencmiss.zinc.material import Material
 from opencmiss.zinc.node import Node
-from opencmiss.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_NORMALISED_WINDOW_FIT_LEFT
 from opencmiss.zinc.scenefilter import Scenefilter
-from opencmiss.zinc.result import RESULT_OK
 from scaffoldfitter.fitter import Fitter
 from scaffoldfitter.fitterjson import decodeJSONFitterSteps
+from mapclientplugins.geometricfitstep.utils.zinc_utils import get_scene_selection_group, create_scene_selection_group, group_add_group_elements, group_add_group_nodes
 
+nodeDerivativeLabels = ["D1", "D2", "D3", "D12", "D13", "D23", "D123"]
 
-nodeDerivativeLabels = [ "D1", "D2", "D3", "D12", "D13", "D23", "D123" ]
 
 class GeometricFitModel(object):
     """
@@ -30,32 +30,32 @@ class GeometricFitModel(object):
         :param location: Path to folder for mapclient step name.
         """
         self._fitter = Fitter(inputZincModelFile, inputZincDataFile)
-        #self._fitter.setDiagnosticLevel(1)
+        # self._fitter.setDiagnosticLevel(1)
         self._location = os.path.join(location, identifier)
         self._identifier = identifier
         self._initGraphicsModules()
         self._settings = {
-            "displayAxes" : True,
-            "displayMarkerDataPoints" : True,
-            "displayMarkerDataNames" : False,
-            "displayMarkerDataProjections" : True,
-            "displayMarkerPoints" : True,
-            "displayMarkerNames" : False,
-            "displayDataPoints" : True,
-            "displayDataProjections" : True,
-            "displayDataProjectionPoints" : True,
-            "displayNodePoints" : False,
-            "displayNodeNumbers" : False,
-            "displayNodeDerivatives" : False,
-            "displayNodeDerivativeLabels" : nodeDerivativeLabels[0:3],
-            "displayElementNumbers" : False,
-            "displayElementAxes" : False,
-            "displayLines" : True,
-            "displayLinesExterior" : False,
-            "displaySurfaces" : True,
-            "displaySurfacesExterior" : True,
-            "displaySurfacesTranslucent" : True,
-            "displaySurfacesWireframe" : False
+            "displayAxes": True,
+            "displayMarkerDataPoints": True,
+            "displayMarkerDataNames": False,
+            "displayMarkerDataProjections": True,
+            "displayMarkerPoints": True,
+            "displayMarkerNames": False,
+            "displayDataPoints": True,
+            "displayDataProjections": True,
+            "displayDataProjectionPoints": True,
+            "displayNodePoints": False,
+            "displayNodeNumbers": False,
+            "displayNodeDerivatives": False,
+            "displayNodeDerivativeLabels": nodeDerivativeLabels[0:3],
+            "displayElementNumbers": False,
+            "displayElementAxes": False,
+            "displayLines": True,
+            "displayLinesExterior": False,
+            "displaySurfaces": True,
+            "displaySurfacesExterior": True,
+            "displaySurfacesTranslucent": True,
+            "displaySurfacesWireframe": False
         }
         self._loadSettings()
         self._fitter.load()
@@ -68,20 +68,20 @@ class GeometricFitModel(object):
             solid_blue = self._materialmodule.createMaterial()
             solid_blue.setName("solid_blue")
             solid_blue.setManaged(True)
-            solid_blue.setAttributeReal3(Material.ATTRIBUTE_AMBIENT, [ 0.0, 0.2, 0.6 ])
-            solid_blue.setAttributeReal3(Material.ATTRIBUTE_DIFFUSE, [ 0.0, 0.7, 1.0 ])
-            solid_blue.setAttributeReal3(Material.ATTRIBUTE_EMISSION, [ 0.0, 0.0, 0.0 ])
-            solid_blue.setAttributeReal3(Material.ATTRIBUTE_SPECULAR, [ 0.1, 0.1, 0.1 ])
-            solid_blue.setAttributeReal(Material.ATTRIBUTE_SHININESS , 0.2)
+            solid_blue.setAttributeReal3(Material.ATTRIBUTE_AMBIENT, [0.0, 0.2, 0.6])
+            solid_blue.setAttributeReal3(Material.ATTRIBUTE_DIFFUSE, [0.0, 0.7, 1.0])
+            solid_blue.setAttributeReal3(Material.ATTRIBUTE_EMISSION, [0.0, 0.0, 0.0])
+            solid_blue.setAttributeReal3(Material.ATTRIBUTE_SPECULAR, [0.1, 0.1, 0.1])
+            solid_blue.setAttributeReal(Material.ATTRIBUTE_SHININESS, 0.2)
             trans_blue = self._materialmodule.createMaterial()
             trans_blue.setName("trans_blue")
             trans_blue.setManaged(True)
-            trans_blue.setAttributeReal3(Material.ATTRIBUTE_AMBIENT, [ 0.0, 0.2, 0.6 ])
-            trans_blue.setAttributeReal3(Material.ATTRIBUTE_DIFFUSE, [ 0.0, 0.7, 1.0 ])
-            trans_blue.setAttributeReal3(Material.ATTRIBUTE_EMISSION, [ 0.0, 0.0, 0.0 ])
-            trans_blue.setAttributeReal3(Material.ATTRIBUTE_SPECULAR, [ 0.1, 0.1, 0.1 ])
-            trans_blue.setAttributeReal(Material.ATTRIBUTE_ALPHA , 0.3)
-            trans_blue.setAttributeReal(Material.ATTRIBUTE_SHININESS , 0.2)
+            trans_blue.setAttributeReal3(Material.ATTRIBUTE_AMBIENT, [0.0, 0.2, 0.6])
+            trans_blue.setAttributeReal3(Material.ATTRIBUTE_DIFFUSE, [0.0, 0.7, 1.0])
+            trans_blue.setAttributeReal3(Material.ATTRIBUTE_EMISSION, [0.0, 0.0, 0.0])
+            trans_blue.setAttributeReal3(Material.ATTRIBUTE_SPECULAR, [0.1, 0.1, 0.1])
+            trans_blue.setAttributeReal(Material.ATTRIBUTE_ALPHA, 0.3)
+            trans_blue.setAttributeReal(Material.ATTRIBUTE_SHININESS, 0.2)
         glyphmodule = context.getGlyphmodule()
         glyphmodule.defineStandardGlyphs()
         tessellationmodule = context.getTessellationmodule()
@@ -95,21 +95,21 @@ class GeometricFitModel(object):
         return self._location + "-display-settings.json"
 
     def _loadSettings(self):
-        #try:
+        # try:
         fitSettingsFileName = self._getFitSettingsFileName()
         if os.path.isfile(fitSettingsFileName):
             with open(fitSettingsFileName, "r") as f:
                 self._fitter.decodeSettingsJSON(f.read(), decodeJSONFitterSteps)
-        #except:
+        # except:
         #    print('_loadSettings FitSettings EXCEPTION')
         #    raise()
-        #try:
+        # try:
         displaySettingsFileName = self._getDisplaySettingsFileName()
         if os.path.isfile(displaySettingsFileName):
             with open(displaySettingsFileName, "r") as f:
                 savedSettings = json.loads(f.read())
                 self._settings.update(savedSettings)
-        #except:
+        # except:
         #    print('_loadSettings DisplaySettings EXCEPTION')
         #    pass
 
@@ -141,6 +141,9 @@ class GeometricFitModel(object):
 
     def getRegion(self):
         return self._fitter.getRegion()
+
+    def getFieldmodule(self):
+        return self._fitter.getFieldmodule()
 
     def getScene(self):
         return self._fitter.getRegion().getScene()
@@ -337,8 +340,44 @@ class GeometricFitModel(object):
             return False
         return self.isDisplayLines() and self.isDisplaySurfaces() and not self.isDisplaySurfacesTranslucent()
 
+    def setSelectHighlightGroup(self, group : FieldGroup):
+        """
+        Select and highlight objects in the group.
+        :param group: FieldGroup to select, or None to clear selection.
+        """
+        fieldmodule = self.getFieldmodule()
+        with ChangeManager(fieldmodule):
+            scene = self.getScene()
+            # can't use SUBELEMENT_HANDLING_MODE_FULL as some groups have been tweaked to omit some faces
+            selectionGroup = get_scene_selection_group(scene, subelementHandlingMode=FieldGroup.SUBELEMENT_HANDLING_MODE_NONE)
+            if group:
+                if selectionGroup:
+                    selectionGroup.clear()
+                else:
+                    selectionGroup = create_scene_selection_group(scene, subelementHandlingMode=FieldGroup.SUBELEMENT_HANDLING_MODE_NONE)
+                group_add_group_elements(selectionGroup, group, highest_dimension_only=False)
+                for fieldDomainType in (Field.DOMAIN_TYPE_NODES, Field.DOMAIN_TYPE_DATAPOINTS):
+                    group_add_group_nodes(selectionGroup, group, fieldmodule.findNodesetByFieldDomainType(fieldDomainType))
+            else:
+                if selectionGroup:
+                    selectionGroup.clear()
+                    scene.setSelectionField(Field())
+
+    def setSelectHighlightGroupByName(self, groupName):
+        """
+        Select and highlight objects in the group by name.
+        :param groupName: Name of group to select, or None to clear selection.
+        """
+        fieldmodule = self.getFieldmodule()
+        group = None
+        if groupName:
+            group = fieldmodule.findFieldByName(groupName).castGroup()
+            if not group.isValid():
+                group = None
+        self.setSelectHighlightGroup(group)
+
     def createGraphics(self):
-        fieldmodule = self._fitter.getFieldmodule()
+        fieldmodule = self.getFieldmodule()
         mesh = self._fitter.getHighestDimensionMesh()
         meshDimension = mesh.getDimension()
         modelCoordinates = self._fitter.getModelCoordinatesField()
@@ -347,10 +386,10 @@ class GeometricFitModel(object):
         # prepare fields and calculate axis and glyph scaling
         with ChangeManager(fieldmodule):
             # fields in same order as nodeDerivativeLabels
-            nodeDerivativeFields = [ fieldmodule.createFieldNodeValue(modelCoordinates, derivative, 1) for derivative in [
+            nodeDerivativeFields = [fieldmodule.createFieldNodeValue(modelCoordinates, derivative, 1) for derivative in [
                 Node.VALUE_LABEL_D_DS1, Node.VALUE_LABEL_D_DS2, Node.VALUE_LABEL_D_DS3,
-                Node.VALUE_LABEL_D2_DS1DS2, Node.VALUE_LABEL_D2_DS1DS3, Node.VALUE_LABEL_D2_DS2DS3, Node.VALUE_LABEL_D3_DS1DS2DS3 ] ]
-            elementDerivativesField = fieldmodule.createFieldConcatenate([ fieldmodule.createFieldDerivative(modelCoordinates, d + 1) for d in range(meshDimension) ])
+                Node.VALUE_LABEL_D2_DS1DS2, Node.VALUE_LABEL_D2_DS1DS3, Node.VALUE_LABEL_D2_DS2DS3, Node.VALUE_LABEL_D3_DS1DS2DS3]]
+            elementDerivativesField = fieldmodule.createFieldConcatenate([fieldmodule.createFieldDerivative(modelCoordinates, d + 1) for d in range(meshDimension)])
             cmiss_number = fieldmodule.findFieldByName("cmiss_number")
             markerNodeGroup, markerLocation, markerCoordinates, markerName = self._fitter.getMarkerModelFields()
 
@@ -365,9 +404,9 @@ class GeometricFitModel(object):
                 for c in range(1, componentsCount):
                     maxRange = max(maxRange, maxX[c] - minX[c])
             if maxRange > 0.0:
-                while axesScale*10.0 < maxRange:
+                while axesScale * 10.0 < maxRange:
                     axesScale *= 10.0
-                while axesScale*0.1 > maxRange:
+                while axesScale * 0.1 > maxRange:
                     axesScale *= 0.1
 
             # fixed width glyph size is based on average element size in all dimensions
@@ -379,7 +418,7 @@ class GeometricFitModel(object):
                 sumLineLength = fieldmodule.createFieldMeshIntegral(one, modelCoordinates, mesh1d)
                 cache = fieldmodule.createFieldcache()
                 result, totalLineLength = sumLineLength.evaluateReal(cache, 1)
-                glyphWidth = 0.1*totalLineLength/lineCount
+                glyphWidth = 0.1 * totalLineLength / lineCount
                 del cache
                 del sumLineLength
                 del one
@@ -396,8 +435,8 @@ class GeometricFitModel(object):
                             first = False
                 if maxScale == 0.0:
                     maxScale = 1.0
-                glyphWidth = 0.01*maxScale
-            glyphWidthSmall = 0.25*glyphWidth
+                glyphWidth = 0.01 * maxScale
+            glyphWidthSmall = 0.25 * glyphWidth
 
         # make graphics
         scene = self._fitter.getRegion().getScene()
@@ -407,7 +446,7 @@ class GeometricFitModel(object):
             axes = scene.createGraphicsPoints()
             pointattr = axes.getGraphicspointattributes()
             pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_AXES_XYZ)
-            pointattr.setBaseSize([ axesScale, axesScale, axesScale ])
+            pointattr.setBaseSize([axesScale, axesScale, axesScale])
             pointattr.setLabelText(1, "  " + str(axesScale))
             axes.setMaterial(self._materialmodule.findMaterialByName("grey50"))
             axes.setName("displayAxes")
@@ -463,8 +502,8 @@ class GeometricFitModel(object):
                 markerDataProjections.setCoordinateField(markerDataCoordinates)
             pointAttr = markerDataProjections.getGraphicspointattributes()
             pointAttr.setGlyphShapeType(Glyph.SHAPE_TYPE_LINE)
-            pointAttr.setBaseSize([0.0,1.0,1.0])
-            pointAttr.setScaleFactors([1.0,0.0,0.0])
+            pointAttr.setBaseSize([0.0, 1.0, 1.0])
+            pointAttr.setScaleFactors([1.0, 0.0, 0.0])
             if markerDataDelta:
                 pointAttr.setOrientationScaleField(markerDataDelta)
             markerDataProjections.setMaterial(self._materialmodule.findMaterialByName("magenta"))
@@ -507,10 +546,10 @@ class GeometricFitModel(object):
             if dataCoordinates:
                 dataPoints.setCoordinateField(dataCoordinates)
             pointattr = dataPoints.getGraphicspointattributes()
-            #pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_DIAMOND)
-            #pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+            # pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_DIAMOND)
+            # pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
             pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
-            dataPoints.setRenderPointSize(2.0);
+            dataPoints.setRenderPointSize(3.0)
             dataPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
             dataPoints.setName("displayDataPoints")
             dataPoints.setVisibilityFlag(self.isDisplayDataPoints())
@@ -530,8 +569,8 @@ class GeometricFitModel(object):
                     dataProjections.setCoordinateField(dataCoordinates)
                 pointAttr = dataProjections.getGraphicspointattributes()
                 pointAttr.setGlyphShapeType(Glyph.SHAPE_TYPE_LINE)
-                pointAttr.setBaseSize([0.0,1.0,1.0])
-                pointAttr.setScaleFactors([1.0,0.0,0.0])
+                pointAttr.setBaseSize([0.0, 1.0, 1.0])
+                pointAttr.setScaleFactors([1.0, 0.0, 0.0])
                 dataProjections.setRenderLineWidth(2.0 if (projectionMeshDimension == 1) else 1.0)
                 if dataProjectionDelta:
                     pointAttr.setOrientationScaleField(dataProjectionDelta)
@@ -549,10 +588,10 @@ class GeometricFitModel(object):
                 if dataProjectionCoordinates:
                     dataProjectionPoints.setCoordinateField(dataProjectionCoordinates)
                 pointattr = dataProjectionPoints.getGraphicspointattributes()
-                #pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_DIAMOND)
-                #pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+                # pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_DIAMOND)
+                # pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
                 pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
-                dataProjectionPoints.setRenderPointSize(2.0);
+                dataProjectionPoints.setRenderPointSize(3.0)
                 dataProjectionPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
                 dataProjectionPoints.setName("displayDataProjectionPoints")
                 dataProjectionPoints.setVisibilityFlag(self.isDisplayDataProjectionPoints())
@@ -578,8 +617,8 @@ class GeometricFitModel(object):
             nodeNumbers.setVisibilityFlag(self.isDisplayNodeNumbers())
 
             # names in same order as nodeDerivativeLabels "D1", "D2", "D3", "D12", "D13", "D23", "D123" and nodeDerivativeFields
-            nodeDerivativeMaterialNames = [ "gold", "silver", "green", "cyan", "magenta", "yellow", "blue" ]
-            derivativeScales = [ 1.0, 1.0, 1.0, 0.5, 0.5, 0.5, 0.25 ]
+            nodeDerivativeMaterialNames = ["gold", "silver", "green", "cyan", "magenta", "yellow", "blue"]
+            derivativeScales = [1.0, 1.0, 1.0, 0.5, 0.5, 0.5, 0.25]
             for i in range(len(nodeDerivativeLabels)):
                 nodeDerivativeLabel = nodeDerivativeLabels[i]
                 nodeDerivatives = scene.createGraphicsPoints()
@@ -589,7 +628,7 @@ class GeometricFitModel(object):
                 pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_ARROW_SOLID)
                 pointattr.setOrientationScaleField(nodeDerivativeFields[i])
                 pointattr.setBaseSize([0.0, glyphWidth, glyphWidth])
-                pointattr.setScaleFactors([ derivativeScales[i], 0.0, 0.0 ])
+                pointattr.setScaleFactors([derivativeScales[i], 0.0, 0.0])
                 material = self._materialmodule.findMaterialByName(nodeDerivativeMaterialNames[i])
                 nodeDerivatives.setMaterial(material)
                 nodeDerivatives.setSelectedMaterial(material)
@@ -613,10 +652,10 @@ class GeometricFitModel(object):
             pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_AXES_123)
             pointattr.setOrientationScaleField(elementDerivativesField)
             if meshDimension == 1:
-                pointattr.setBaseSize([0.0, 2*glyphWidth, 2*glyphWidth])
+                pointattr.setBaseSize([0.0, 2 * glyphWidth, 2 * glyphWidth])
                 pointattr.setScaleFactors([0.25, 0.0, 0.0])
             elif meshDimension == 2:
-                pointattr.setBaseSize([0.0, 0.0, 2*glyphWidth])
+                pointattr.setBaseSize([0.0, 0.0, 2 * glyphWidth])
                 pointattr.setScaleFactors([0.25, 0.25, 0.0])
             else:
                 pointattr.setBaseSize([0.0, 0.0, 0.0])
@@ -646,7 +685,7 @@ class GeometricFitModel(object):
         spectrum = spectrummodule.getDefaultSpectrum()
         spectrum.autorange(scene, Scenefilter())
 
-# === Align Utilities ===
+    # === Align Utilities ===
 
     def isStateAlign(self):
         return False  # disabled as not implemented

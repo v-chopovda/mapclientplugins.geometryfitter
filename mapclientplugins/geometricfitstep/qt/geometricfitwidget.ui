@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1718</width>
-    <height>1101</height>
+    <height>1365</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -85,16 +85,7 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_10">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -171,27 +162,112 @@
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>0</y>
-               <width>352</width>
-               <height>701</height>
+               <y>-100</y>
+               <width>845</width>
+               <height>1377</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <property name="spacing">
                <number>0</number>
               </property>
-              <property name="leftMargin">
+              <property name="margin">
                <number>0</number>
               </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
+              <item>
+               <widget class="QGroupBox" name="configInitial_groupBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="title">
+                 <string>Initial</string>
+                </property>
+                <layout class="QFormLayout" name="formLayout">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="configModelCoordinates_label">
+                   <property name="text">
+                    <string>Model coordinates:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="FieldChooserWidget" name="configModelCoordinates_fieldChooser">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="configDataCoordinates_label">
+                   <property name="text">
+                    <string>Data coordinates:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="FieldChooserWidget" name="configDataCoordinates_fieldChooser">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="1">
+                  <widget class="QSpinBox" name="configDiagnosticLevel_spinBox">
+                   <property name="maximum">
+                    <number>2</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QLabel" name="configDiagnosticLevel_label">
+                   <property name="text">
+                    <string>Diagnostic level:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="configMarkerGroup_label">
+                   <property name="text">
+                    <string>Marker group:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="FieldChooserWidget" name="configMarkerGroup_fieldChooser">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="configFibreOrientation_label">
+                   <property name="text">
+                    <string>Fibre orientation:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="FieldChooserWidget" name="configFibreOrientation_fieldChooser">
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Field supplying Euler angles to rotate local 'fibre' axes on which strain and curvature penalties are applied. Clear to apply on global x, y, z axes. Required for fitting 2D meshes with 3 coordinate components.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
               <item>
                <widget class="QGroupBox" name="config_groupBox">
                 <property name="sizePolicy">
@@ -204,175 +280,6 @@
                  <string>Config</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_4">
-                 <item>
-                  <widget class="QGroupBox" name="configInitial_groupBox">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="title">
-                    <string>Initial</string>
-                   </property>
-                   <layout class="QFormLayout" name="formLayout">
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="configModelCoordinates_label">
-                      <property name="text">
-                       <string>Model coordinates:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="1">
-                     <widget class="FieldChooserWidget" name="configModelCoordinates_fieldChooser">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="configDataCoordinates_label">
-                      <property name="text">
-                       <string>Data coordinates:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="FieldChooserWidget" name="configDataCoordinates_fieldChooser">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="1">
-                     <widget class="QSpinBox" name="configDiagnosticLevel_spinBox">
-                      <property name="maximum">
-                       <number>2</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="0">
-                     <widget class="QLabel" name="configDiagnosticLevel_label">
-                      <property name="text">
-                       <string>Diagnostic level:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QLabel" name="configMarkerGroup_label">
-                      <property name="text">
-                       <string>Marker group:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="1">
-                     <widget class="FieldChooserWidget" name="configMarkerGroup_fieldChooser">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QGroupBox" name="configProjection_groupBox">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="title">
-                    <string>Projection</string>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_5">
-                    <item>
-                     <widget class="QCheckBox" name="configProjectionCentreGroups_checkBox">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="text">
-                       <string>Centre groups</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QGroupBox" name="configSetting_groupBox">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="title">
-                    <string>Group settings</string>
-                   </property>
-                   <layout class="QFormLayout" name="configSettingGroup_Layout">
-                    <property name="bottomMargin">
-                     <number>0</number>
-                    </property>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="configSettingGroup_label">
-                      <property name="text">
-                       <string>Group:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="FieldChooserWidget" name="configSettingGroup_fieldChooser">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QCheckBox" name="configDataProportion_checkBox">
-                      <property name="text">
-                       <string>Data Proportion</string>
-                      </property>
-                      <property name="tristate">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="1">
-                     <widget class="QLineEdit" name="configDataProportion_lineEdit"/>
-                    </item>
-                    <item row="3" column="0">
-                     <widget class="QCheckBox" name="configDataWeight_checkBox">
-                      <property name="text">
-                       <string>Data Weight</string>
-                      </property>
-                      <property name="tristate">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="1">
-                     <widget class="QLineEdit" name="configDataWeight_lineEdit"/>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
                  <item>
                   <spacer name="config_verticalSpacer">
                    <property name="orientation">
@@ -502,85 +409,14 @@
                  <property name="fieldGrowthPolicy">
                   <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
                  </property>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="fitMarkerWeight_label">
-                   <property name="text">
-                    <string>Marker weight:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QLineEdit" name="fitMarkerWeight_lineEdit">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="toolTip">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Weighting of marker points with fixed mesh locations. Use 0.0 to omit.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QLabel" name="fitStrainPenalty_label">
-                   <property name="text">
-                    <string>Strain penalty:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="1">
-                  <widget class="QLineEdit" name="fitStrainPenalty_lineEdit">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="0">
-                  <widget class="QLabel" name="fitCurvaturePenalty_label">
-                   <property name="text">
-                    <string>Curvature penalty:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="1">
-                  <widget class="QLineEdit" name="fitCurvaturePenalty_lineEdit">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="0">
-                  <widget class="QLabel" name="fitEdgeDiscontinuityPenalty_label">
-                   <property name="text">
-                    <string>Edge discontinuity penalty:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="1">
-                  <widget class="QLineEdit" name="fitEdgeDiscontinuityPenalty_lineEdit">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="7" column="0">
+                 <item row="1" column="0">
                   <widget class="QLabel" name="fitIterations_label">
                    <property name="text">
                     <string>Iterations:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="1">
+                 <item row="1" column="1">
                   <widget class="QSpinBox" name="fitIterations_spinBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -596,14 +432,14 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="8" column="0">
+                 <item row="2" column="0">
                   <widget class="QLabel" name="fitMaximumSubIterations_label">
                    <property name="text">
                     <string>Maximum subiterations:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="8" column="1">
+                 <item row="2" column="1">
                   <widget class="QSpinBox" name="fitMaximumSubIterations_spinBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -619,7 +455,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="9" column="0">
+                 <item row="3" column="0">
                   <widget class="QCheckBox" name="fitUpdateReferenceState_checkBox">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -632,19 +468,98 @@
                    </property>
                   </widget>
                  </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="groupSettings_groupBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="title">
+                 <string>Group settings</string>
+                </property>
+                <layout class="QFormLayout" name="groupSettings_Layout">
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
                  <item row="1" column="0">
-                  <widget class="QLabel" name="fitLineWeight_label">
+                  <widget class="QLabel" name="groupSettings_label">
                    <property name="text">
-                    <string>Line weight:</string>
+                    <string>Group:</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="1">
-                  <widget class="QLineEdit" name="fitLineWeight_lineEdit">
-                   <property name="toolTip">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Weighting of data points which project onto line features.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  <widget class="FieldChooserWidget" name="groupSettings_fieldChooser">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
                   </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QCheckBox" name="groupConfigCentralProjection_checkBox">
+                   <property name="text">
+                    <string>Central Projection</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QCheckBox" name="groupConfigSetCentralProjection_checkBox">
+                   <property name="text">
+                    <string>Set</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QCheckBox" name="groupConfigDataProportion_checkBox">
+                   <property name="text">
+                    <string>Data Proportion</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QLineEdit" name="groupConfigDataProportion_lineEdit">
+                   <property name="toolTip">
+                    <string>Value from 0.0 to 1.0</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QCheckBox" name="groupFitDataWeight_checkBox">
+                   <property name="text">
+                    <string>Data Weight</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="1">
+                  <widget class="QLineEdit" name="groupFitDataWeight_lineEdit"/>
+                 </item>
+                 <item row="5" column="0">
+                  <widget class="QCheckBox" name="groupFitStrainPenalty_checkBox">
+                   <property name="text">
+                    <string>Strain Penalty</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="1">
+                  <widget class="QLineEdit" name="groupFitStrainPenalty_lineEdit"/>
+                 </item>
+                 <item row="6" column="0">
+                  <widget class="QCheckBox" name="groupFitCurvaturePenalty_checkBox">
+                   <property name="text">
+                    <string>Curvature Penalty</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="1">
+                  <widget class="QLineEdit" name="groupFitCurvaturePenalty_lineEdit"/>
                  </item>
                 </layout>
                </widget>
@@ -677,16 +592,7 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -721,16 +627,7 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item row="0" column="1">
@@ -780,16 +677,7 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_9">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -838,16 +726,7 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -908,16 +787,7 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_7">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -1036,16 +906,7 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -1093,16 +954,7 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -1150,16 +1002,7 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -1236,16 +1079,7 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <property name="leftMargin">
-           <number>3</number>
-          </property>
-          <property name="topMargin">
-           <number>3</number>
-          </property>
-          <property name="rightMargin">
-           <number>3</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>3</number>
           </property>
           <item>
@@ -1285,10 +1119,13 @@
    <item>
     <widget class="AlignmentSceneviewerWidget" name="alignmentsceneviewerwidget" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
-       <verstretch>0</verstretch>
+       <verstretch>1</verstretch>
       </sizepolicy>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
