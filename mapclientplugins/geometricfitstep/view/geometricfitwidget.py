@@ -71,8 +71,6 @@ class GeometricFitWidget(QtWidgets.QWidget):
         self._ui.alignmentsceneviewerwidget.setModel(model)
         self._model = model
         self._fitter = self._model.getFitter()
-        self._region = self._fitter.getRegion()
-        self._scene = self._region.getScene()
         self._currentFitterStep = self._fitter.getInitialFitterStepConfig()  # always exists
         self._ui.alignmentsceneviewerwidget.graphicsInitialized.connect(self._graphicsInitialized)
         self._callback = None
@@ -97,6 +95,8 @@ class GeometricFitWidget(QtWidgets.QWidget):
         """
         Set custom scene from model.
         """
+        self._setupConfigWidgets()
+        self._setupGroupSettingWidgets()
         sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
         if sceneviewer is not None:
             self._model.createGraphics()
@@ -482,7 +482,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
         """
         Set up group setting widgets and display values from fitter object.
         """
-        self._ui.groupSettings_fieldChooser.setRegion(self._region)
+        self._ui.groupSettings_fieldChooser.setRegion(self._fitter.getRegion())
         self._ui.groupSettings_fieldChooser.setNullObjectName("-")
         self._ui.groupSettings_fieldChooser.setConditional(field_is_managed_group)
         self._ui.groupSettings_fieldChooser.setField(Field())
@@ -565,7 +565,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
     def _updateGroupConfigCentralProjection(self):
         checkBoxTristate,checkBoxState,lineEditDisable,isCentralProjection = self._getGroupSettingDisplayState(self._getConfig().getGroupCentralProjection)
         self._ui.groupConfigCentralProjection_checkBox.setTristate(checkBoxTristate)
-        self._ui.groupConfigCentralProjection_checkBox.setCheckState(checkBoxState)        
+        self._ui.groupConfigCentralProjection_checkBox.setCheckState(checkBoxState)
         self._ui.groupConfigSetCentralProjection_checkBox.setDisabled(lineEditDisable)
         self._ui.groupConfigSetCentralProjection_checkBox.setCheckState(QtCore.Qt.Checked if isCentralProjection else QtCore.Qt.Unchecked)
 
@@ -595,7 +595,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
     def _updateGroupConfigDataProportion(self):
         checkBoxTristate,checkBoxState,lineEditDisable,dataProportionStr = self._getGroupSettingDisplayState(self._getConfig().getGroupDataProportion)
         self._ui.groupConfigDataProportion_checkBox.setTristate(checkBoxTristate)
-        self._ui.groupConfigDataProportion_checkBox.setCheckState(checkBoxState)        
+        self._ui.groupConfigDataProportion_checkBox.setCheckState(checkBoxState)
         self._ui.groupConfigDataProportion_lineEdit.setDisabled(lineEditDisable)
         self._ui.groupConfigDataProportion_lineEdit.setText(dataProportionStr)
 
@@ -649,7 +649,7 @@ class GeometricFitWidget(QtWidgets.QWidget):
     def _updateGroupFitStrainPenalty(self):
         checkBoxTristate,checkBoxState,lineEditDisable,dataStr = self._getGroupSettingDisplayState(self._getFit().getGroupStrainPenalty)
         self._ui.groupFitStrainPenalty_checkBox.setTristate(checkBoxTristate)
-        self._ui.groupFitStrainPenalty_checkBox.setCheckState(checkBoxState)        
+        self._ui.groupFitStrainPenalty_checkBox.setCheckState(checkBoxState)
         self._ui.groupFitStrainPenalty_lineEdit.setDisabled(lineEditDisable)
         self._ui.groupFitStrainPenalty_lineEdit.setText(dataStr)
 
@@ -700,19 +700,19 @@ class GeometricFitWidget(QtWidgets.QWidget):
         """
         Set up config widgets and display values from fitter object.
         """
-        self._ui.configModelCoordinates_fieldChooser.setRegion(self._region)
+        self._ui.configModelCoordinates_fieldChooser.setRegion(self._fitter.getRegion())
         self._ui.configModelCoordinates_fieldChooser.setNullObjectName("-")
         self._ui.configModelCoordinates_fieldChooser.setConditional(field_is_managed_coordinates)
         self._ui.configModelCoordinates_fieldChooser.setField(self._fitter.getModelCoordinatesField())
-        self._ui.configFibreOrientation_fieldChooser.setRegion(self._region)
+        self._ui.configFibreOrientation_fieldChooser.setRegion(self._fitter.getRegion())
         self._ui.configFibreOrientation_fieldChooser.setNullObjectName("-")
         self._ui.configFibreOrientation_fieldChooser.setConditional(field_is_managed_real_1_to_3_components)
         self._ui.configFibreOrientation_fieldChooser.setField(self._fitter.getFibreField())
-        self._ui.configDataCoordinates_fieldChooser.setRegion(self._region)
+        self._ui.configDataCoordinates_fieldChooser.setRegion(self._fitter.getRegion())
         self._ui.configDataCoordinates_fieldChooser.setNullObjectName("-")
         self._ui.configDataCoordinates_fieldChooser.setConditional(field_is_managed_coordinates)
         self._ui.configDataCoordinates_fieldChooser.setField(self._fitter.getDataCoordinatesField())
-        self._ui.configMarkerGroup_fieldChooser.setRegion(self._region)
+        self._ui.configMarkerGroup_fieldChooser.setRegion(self._fitter.getRegion())
         self._ui.configMarkerGroup_fieldChooser.setNullObjectName("-")
         self._ui.configMarkerGroup_fieldChooser.setConditional(field_is_managed_group)
         self._ui.configMarkerGroup_fieldChooser.setField(self._fitter.getMarkerGroup())
