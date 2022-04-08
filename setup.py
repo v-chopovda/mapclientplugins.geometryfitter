@@ -48,8 +48,8 @@ source_license = readfile("LICENSE")
 
 
 setup(
-    name='mapclientplugins.geometricfitstep',
-    version=find_version('mapclientplugins', 'geometricfitstep', '__init__.py'),
+    name='mapclientplugins.geometryfitter',
+    version=find_version('mapclientplugins', 'geometryfitter', '__init__.py'),
     description='',
     long_description='\n'.join(readme) + source_license,
     classifiers=[
@@ -59,7 +59,7 @@ setup(
     ],
     author='Auckland Bioengineering Institute',
     author_email='',
-    url='https://github.com/ABI-Software/mapclientplugins.geometricfitstep',
+    url='https://github.com/ABI-Software/mapclientplugins.geometryfitter',
     license='APACHE',
     packages=find_packages(exclude=['ez_setup',]),
     namespace_packages=['mapclientplugins'],
