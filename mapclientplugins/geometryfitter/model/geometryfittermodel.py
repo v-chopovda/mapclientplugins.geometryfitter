@@ -15,12 +15,12 @@ from opencmiss.zinc.node import Node
 from opencmiss.zinc.scenefilter import Scenefilter
 from scaffoldfitter.fitter import Fitter
 from scaffoldfitter.fitterjson import decodeJSONFitterSteps
-from mapclientplugins.geometricfitstep.utils.zinc_utils import get_scene_selection_group, create_scene_selection_group, group_add_group_elements, group_add_group_nodes
+from mapclientplugins.geometryfitter.utils.zinc_utils import get_scene_selection_group, create_scene_selection_group, group_add_group_elements, group_add_group_nodes
 
 nodeDerivativeLabels = ["D1", "D2", "D3", "D12", "D13", "D23", "D123"]
 
 
-class GeometricFitModel(object):
+class GeometryFitterModel(object):
     """
     Geometric fit model adding visualisations to github.com/ABI-Software/scaffoldfitter
     """

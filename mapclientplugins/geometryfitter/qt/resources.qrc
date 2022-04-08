@@ -1,6 +1,6 @@
 
 <RCC>
-  <qresource prefix="geometricfitstep">
+  <qresource prefix="geometryfitter">
     <file>images/fitting.png</file>
   </qresource>
 </RCC>
