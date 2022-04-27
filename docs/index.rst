@@ -43,8 +43,8 @@ The output fitted field takes the name of the field chosen to fit prefixed with 
    
 Whether you use the output in a further workflow step or not, on completion of the workflow step the output is written to a file in the workflow folder under the same name as the step with extension ".exf".
 
-Annotation, Projections and Fitting
------------------------------------
+Background
+----------
 
 Some background understanding of fitting is needed in order to effectively define the fitting steps.
 
@@ -60,7 +60,7 @@ The fit is governed by matching annotated groups in the scaffold and data as sho
 
 The above data is a `digitized rat heart from Leung et al <https://sparc.science/datasets/77>`_, and as an illustration, the group of dark blue surfaces and data contours are annotated as `"endocardium of left ventricle" / UBERON:0009713 <https://scicrunch.org/sawg/interlex/view/ilx_0728806>`_. Be aware that groups are currently matched by name (ignoring case) in the Mapping Tools, but in future the anatomical term identifiers will be used to match equivalent features where different but synonymous names have been used.
 
-Data groups should only be annotated with terms representing 2-D surfaces or 1-D edges as we can generally only digitize boundaries of features. During fitting, data points in each named group  are projected to the nearest point on the same-named 2-D surface or 1-D edge group on the scaffold (see :numref:`fig-fit-step-align` later); if none exists the data for that group is ignored. The fitting process calculates parameters of the scaffold coordinate field which minimize the projection lines between the data and these nearest points. A typical fitting sequence will repeatedly solve and reproject the data points until there is negligible change in the fitted geometry. This non-linear process allows the scaffold to slide across the data cloud to its eventual fitted position.
+Data groups should only be annotated with terms representing 2-D surfaces or 1-D edges as we can generally only digitize boundaries of features. During fitting, data points in each named group are projected to the nearest point on the same-named 2-D surface or 1-D edge group on the scaffold (see :numref:`fig-fit-step-align` later); if none exists the data for that group is ignored. The fitting process calculates parameters of the scaffold coordinate field which minimize the projection lines between the data and these nearest points. A typical fitting sequence will repeatedly solve and reproject the data points until there is negligible change in the fitted geometry. This non-linear process allows the scaffold to slide across the data cloud to its eventual fitted position.
 
 Single marker points with matching names in the scaffold and data are *fiducial markers* (also known as *landmarks*), which have precisely known anatomical locations specified in material coordinates on the scaffold. These don’t need to be projected. By convention, these are in a group called "marker". Such points are valuable for tying down known locations and are often more highly weighted (see later) to reflect confidence in their locations.
 
@@ -75,7 +75,7 @@ Poor alignment or loss of smoothness leads to poor data projections, which can m
 Fit Steps
 ---------
 
-To illustrate building a sequence of fit steps we will use a `rat heart ventricles fitting example workflow <https://github.com/rchristie/geometry-fitter-docs-example>`_ which uses data adapted from `Leung et al <https://sparc.science/datasets/77>`_ by removing the base/valve region and above, relabelling the outer surface of the heart as "epicardium" (which is in reality some distance inside it) and reducing the number points. The first part of the workflow uses **Scaffold Creator** to create scaffold type "3D Heart Ventricles 1" with Parameter set "Unit Rat 1"; click "Done" to move on to fitting.
+To illustrate building a sequence of fit steps we will use a `rat heart ventricles fitting example workflow <https://github.com/mapclient-workflows/geometry-fitter-docs-example>`_ (`download zip <https://github.com/mapclient-workflows/geometry-fitter-docs-example/archive/refs/heads/main.zip>`_) which uses data adapted from `Leung et al <https://sparc.science/datasets/77>`_ by removing the base/valve region and above, relabelling the outer surface of the heart as "epicardium" (which is in reality some distance inside it) and reducing the number points. The first part of the workflow uses **Scaffold Creator** to create scaffold type "3D Heart Ventricles 1" with Parameter set "Unit Rat 1"; click "Done" to move on to fitting.
 
 .. note::
 
