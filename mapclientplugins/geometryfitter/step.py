@@ -3,7 +3,7 @@ MAP Client Plugin Step
 """
 import json
 
-from PySide2 import QtGui
+from PySide2 import QtGui, QtCore, QtWidgets
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.geometryfitter.configuredialog import ConfigureDialog
@@ -49,10 +49,12 @@ class GeometryFitterStep(WorkflowStepMountPoint):
         may be connected up to a button in a widget for example.
         """
         # Put your execute step code here before calling the '_doneExecution' method.
+        QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         self._model = GeometryFitterModel(self._port0_inputZincModelFile, self._port1_inputZincDataFile, self._location, self._config['identifier'])
         self._view = GeometryFitterWidget(self._model)
         self._view.registerDoneExecution(self._doneExecution)
         self._setCurrentWidget(self._view)
+        QtWidgets.QApplication.restoreOverrideCursor()
 
     def setPortData(self, index, dataIn):
         """
