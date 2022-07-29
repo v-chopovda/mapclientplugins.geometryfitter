@@ -293,9 +293,11 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.stepsDelete_pushButton.setEnabled(not isInitialConfig)
 
     def _doneButtonClicked(self):
+        QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         self._model.done()
         self._ui.dockWidget.setFloating(False)
         self._callback()
+        QtWidgets.QApplication.restoreOverrideCursor()
 
     def _stdViewsButtonClicked(self):
         sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
