@@ -1,6 +1,8 @@
 """
 User interface for github.com/ABI-Software/scaffoldfitter
 """
+import webbrowser
+
 from PySide2 import QtCore, QtGui, QtWidgets
 
 from mapclientplugins.geometryfitter.utils.zinc_utils import field_is_managed_real_1_to_3_components
@@ -140,6 +142,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.stepsAddFit_pushButton.clicked.connect(self._stepsAddFitClicked)
         self._ui.stepsDelete_pushButton.clicked.connect(self._stepsDeleteClicked)
         self._ui.steps_listView.clicked[QtCore.QModelIndex].connect(self._stepsListItemClicked)
+        self._ui.pushButtonDocumentation.clicked.connect(self._documentationButtonClicked)
         self._ui.done_pushButton.clicked.connect(self._doneButtonClicked)
         self._ui.stdViews_pushButton.clicked.connect(self._stdViewsButtonClicked)
         self._ui.viewAll_pushButton.clicked.connect(self._viewAllButtonClicked)
@@ -291,6 +294,9 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.fit_groupBox.setVisible(isFit)
         self._ui.groupSettings_groupBox.setVisible(not isAlign)
         self._ui.stepsDelete_pushButton.setEnabled(not isInitialConfig)
+
+    def _documentationButtonClicked(self):
+        webbrowser.open("https://abi-mapping-tools.readthedocs.io/en/latest/mapclientplugins.geometryfitter/docs/index.html")
 
     def _doneButtonClicked(self):
         QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)

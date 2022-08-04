@@ -671,6 +671,11 @@ class Ui_GeometryFitterWidget(object):
         self.horizontalLayout_2 = QHBoxLayout(self.bottom_frame)
         self.horizontalLayout_2.setContentsMargins(3, 3, 3, 3)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.pushButtonDocumentation = QPushButton(self.bottom_frame)
+        self.pushButtonDocumentation.setObjectName(u"pushButtonDocumentation")
+
+        self.horizontalLayout_2.addWidget(self.pushButtonDocumentation)
+
         self.viewAll_pushButton = QPushButton(self.bottom_frame)
         self.viewAll_pushButton.setObjectName(u"viewAll_pushButton")
 
@@ -780,6 +785,7 @@ class Ui_GeometryFitterWidget(object):
         self.displaySurfacesExterior_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Exterior", None))
         self.displaySurfacesTranslucent_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Transluc.", None))
         self.displaySurfacesWireframe_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Wireframe", None))
+        self.pushButtonDocumentation.setText(QCoreApplication.translate("GeometryFitterWidget", u"Online Documentation", None))
         self.viewAll_pushButton.setText(QCoreApplication.translate("GeometryFitterWidget", u"View All", None))
         self.stdViews_pushButton.setText(QCoreApplication.translate("GeometryFitterWidget", u"Std. Views", None))
         self.done_pushButton.setText(QCoreApplication.translate("GeometryFitterWidget", u"Done", None))
