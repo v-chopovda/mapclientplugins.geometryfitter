@@ -679,6 +679,23 @@ class GeometryFitterModel(object):
             surfaces.setName("displaySurfaces")
             surfaces.setVisibilityFlag(self.isDisplaySurfaces())
 
+    def setGraphicsDisplaySubgroupField(self, subgroupField: Field):
+        """
+        Set graphics to only show a particular group, or all.
+        :param subgroupField: Subgroup field to set or None for none.
+        :return: 
+        """
+        scene = self._fitter.getRegion().getScene()
+        useSubgroupField = subgroupField if subgroupField else Field()
+        with ChangeManager(scene):
+            graphicsNames = [
+                "displayLines",
+                "displaySurfaces",
+            ]
+            for graphicsName in graphicsNames:
+                graphics = scene.findGraphicsByName(graphicsName)
+                graphics.setSubgroupField(useSubgroupField)
+
     def autorangeSpectrum(self):
         scene = self._fitter.getRegion().getScene()
         spectrummodule = scene.getSpectrummodule()

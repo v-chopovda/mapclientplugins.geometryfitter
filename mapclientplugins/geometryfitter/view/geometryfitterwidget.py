@@ -367,12 +367,23 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.displaySurfacesExterior_checkBox.clicked.connect(self._displaySurfacesExteriorClicked)
         self._ui.displaySurfacesTranslucent_checkBox.clicked.connect(self._displaySurfacesTranslucentClicked)
         self._ui.displaySurfacesWireframe_checkBox.clicked.connect(self._displaySurfacesWireframeClicked)
+        self._setupGroupDisplayWidgets()
+    
+    def _setupGroupDisplayWidgets(self):
+        """
+        Set up group display widgets and display values from fitter object.
+        """
+        self._ui.groupDisplay_fieldChooser.setRegion(self._fitter.getRegion())
+        self._ui.groupDisplay_fieldChooser.setNullObjectName("-")
+        self._ui.groupDisplay_fieldChooser.setConditional(field_is_managed_group)
+        self._ui.groupDisplay_fieldChooser.setField(Field())
 
     def _updateDisplayWidgets(self):
         """
         Update display widgets to display settings for model graphics display.
         """
         self._ui.displayAxes_checkBox.setChecked(self._model.isDisplayAxes())
+        self._ui.groupDisplay_fieldChooser.currentIndexChanged.connect(self._displayGroupChanged)
         self._ui.displayMarkerDataPoints_checkBox.setChecked(self._model.isDisplayMarkerDataPoints())
         self._ui.displayMarkerDataNames_checkBox.setChecked(self._model.isDisplayMarkerDataNames())
         self._ui.displayMarkerDataProjections_checkBox.setChecked(self._model.isDisplayMarkerDataProjections())
@@ -399,6 +410,12 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.displaySurfacesExterior_checkBox.setChecked(self._model.isDisplaySurfacesExterior())
         self._ui.displaySurfacesTranslucent_checkBox.setChecked(self._model.isDisplaySurfacesTranslucent())
         self._ui.displaySurfacesWireframe_checkBox.setChecked(self._model.isDisplaySurfacesWireframe())
+
+    def _displayGroupChanged(self, index):
+        """
+        Callback for change in group display field chooser widget.
+        """
+        self._model.setGraphicsDisplaySubgroupField(self._ui.groupDisplay_fieldChooser.getField())
 
     def _displayAxesClicked(self):
         self._model.setDisplayAxes(self._ui.displayAxes_checkBox.isChecked())
