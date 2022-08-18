@@ -15,12 +15,12 @@ from opencmiss.zinc.node import Node
 from opencmiss.zinc.scenefilter import Scenefilter
 from scaffoldfitter.fitter import Fitter
 from scaffoldfitter.fitterjson import decodeJSONFitterSteps
-from mapclientplugins.geometricfitstep.utils.zinc_utils import get_scene_selection_group, create_scene_selection_group, group_add_group_elements, group_add_group_nodes
+from mapclientplugins.geometryfitter.utils.zinc_utils import get_scene_selection_group, create_scene_selection_group, group_add_group_elements, group_add_group_nodes
 
 nodeDerivativeLabels = ["D1", "D2", "D3", "D12", "D13", "D23", "D123"]
 
 
-class GeometricFitModel(object):
+class GeometryFitterModel(object):
     """
     Geometric fit model adding visualisations to github.com/ABI-Software/scaffoldfitter
     """
@@ -678,6 +678,22 @@ class GeometricFitModel(object):
             surfaces.setMaterial(surfacesMaterial)
             surfaces.setName("displaySurfaces")
             surfaces.setVisibilityFlag(self.isDisplaySurfaces())
+
+    def setGraphicsDisplaySubgroupField(self, subgroupField: Field):
+        """
+        Set graphics to only show a particular group, or all.
+        :param subgroupField: Subgroup field to set or None for none.
+        """
+        scene = self._fitter.getRegion().getScene()
+        useSubgroupField = subgroupField if subgroupField else Field()
+        with ChangeManager(scene):
+            graphicsNames = [
+                "displayLines",
+                "displaySurfaces",
+            ]
+            for graphicsName in graphicsNames:
+                graphics = scene.findGraphicsByName(graphicsName)
+                graphics.setSubgroupField(useSubgroupField)
 
     def autorangeSpectrum(self):
         scene = self._fitter.getRegion().getScene()

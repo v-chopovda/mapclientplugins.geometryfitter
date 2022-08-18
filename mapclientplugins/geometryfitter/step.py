@@ -3,26 +3,26 @@ MAP Client Plugin Step
 """
 import json
 
-from PySide2 import QtGui, QtWidgets
+from PySide2 import QtGui, QtCore, QtWidgets
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
-from mapclientplugins.geometricfitstep.configuredialog import ConfigureDialog
-from mapclientplugins.geometricfitstep.model.geometricfitmodel import GeometricFitModel
-from mapclientplugins.geometricfitstep.view.geometricfitwidget import GeometricFitWidget
+from mapclientplugins.geometryfitter.configuredialog import ConfigureDialog
+from mapclientplugins.geometryfitter.model.geometryfittermodel import GeometryFitterModel
+from mapclientplugins.geometryfitter.view.geometryfitterwidget import GeometryFitterWidget
 
 
-class GeometricFitStep(WorkflowStepMountPoint):
+class GeometryFitterStep(WorkflowStepMountPoint):
     """
     Skeleton step which is intended to be a helpful starting point
     for new steps.
     """
 
     def __init__(self, location):
-        super(GeometricFitStep, self).__init__('Geometric Fit', location)
+        super(GeometryFitterStep, self).__init__('Geometry Fitter', location)
         self._configured = False  # A step cannot be executed until it has been configured.
         self._category = 'Fitting'
         # Add any other initialisation code here:
-        self._icon = QtGui.QImage(':/geometricfitstep/images/fitting.png')
+        self._icon = QtGui.QImage(':/geometryfitter/images/fitting.png')
         # Ports:
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#uses',
@@ -38,8 +38,7 @@ class GeometricFitStep(WorkflowStepMountPoint):
         self._port1_inputZincDataFile = None  # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
         self._port2_outputZincModelFile = None  # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
         # Config:
-        self._config = {}
-        self._config['identifier'] = ''
+        self._config = {'identifier': ''}
         self._model = None
         self._view = None
 
@@ -50,10 +49,12 @@ class GeometricFitStep(WorkflowStepMountPoint):
         may be connected up to a button in a widget for example.
         """
         # Put your execute step code here before calling the '_doneExecution' method.
-        self._model = GeometricFitModel(self._port0_inputZincModelFile, self._port1_inputZincDataFile, self._location, self._config['identifier'])
-        self._view = GeometricFitWidget(self._model)
+        QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+        self._model = GeometryFitterModel(self._port0_inputZincModelFile, self._port1_inputZincDataFile, self._location, self._config['identifier'])
+        self._view = GeometryFitterWidget(self._model)
         self._view.registerDoneExecution(self._doneExecution)
         self._setCurrentWidget(self._view)
+        QtWidgets.QApplication.restoreOverrideCursor()
 
     def setPortData(self, index, dataIn):
         """
