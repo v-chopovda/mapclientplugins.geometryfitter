@@ -399,6 +399,18 @@ class Ui_GeometryFitterWidget(object):
 
         self.horizontalLayout_8.addWidget(self.displayAxes_checkBox)
 
+        self.groupDisplay_label = QLabel(self.displayMisc_frame)
+        self.groupDisplay_label.setObjectName(u"groupDisplay_label")
+
+        self.horizontalLayout_8.addWidget(self.groupDisplay_label)
+
+        self.groupDisplay_fieldChooser = FieldChooserWidget(self.displayMisc_frame)
+        self.groupDisplay_fieldChooser.setObjectName(u"groupDisplay_fieldChooser")
+        sizePolicy4.setHeightForWidth(self.groupDisplay_fieldChooser.sizePolicy().hasHeightForWidth())
+        self.groupDisplay_fieldChooser.setSizePolicy(sizePolicy4)
+
+        self.horizontalLayout_8.addWidget(self.groupDisplay_fieldChooser)
+
         self.displaytMisc_horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_8.addItem(self.displaytMisc_horizontalSpacer)
@@ -759,6 +771,7 @@ class Ui_GeometryFitterWidget(object):
         self.groupFitCurvaturePenalty_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Curvature Penalty", None))
         self.display_groupBox.setTitle(QCoreApplication.translate("GeometryFitterWidget", u"Display:", None))
         self.displayAxes_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Axes", None))
+        self.groupDisplay_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Group:", None))
         self.displayMarkerDataNames_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Marker data names", None))
         self.displayMarkerDataPoints_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Marker data points", None))
         self.displayMarkerNames_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Marker names", None))

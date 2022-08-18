@@ -590,6 +590,23 @@
                </property>
               </widget>
              </item>
+              <item>
+                  <widget class="QLabel" name="groupDisplay_label">
+                   <property name="text">
+                    <string>Group:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="FieldChooserWidget" name="groupDisplay_fieldChooser">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                  </widget>
+                 </item>
              <item>
               <spacer name="displaytMisc_horizontalSpacer">
                <property name="orientation">
