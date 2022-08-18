@@ -374,7 +374,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         Set up group display widgets and display values from fitter object.
         """
         self._ui.groupDisplay_fieldChooser.setRegion(self._fitter.getRegion())
-        self._ui.groupDisplay_fieldChooser.setNullObjectName("-")
+        self._ui.groupDisplay_fieldChooser.setNullObjectName("- All -")
         self._ui.groupDisplay_fieldChooser.setConditional(field_is_managed_group)
         self._ui.groupDisplay_fieldChooser.setField(Field())
 

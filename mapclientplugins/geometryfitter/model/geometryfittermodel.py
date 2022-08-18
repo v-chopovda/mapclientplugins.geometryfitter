@@ -683,7 +683,6 @@ class GeometryFitterModel(object):
         """
         Set graphics to only show a particular group, or all.
         :param subgroupField: Subgroup field to set or None for none.
-        :return: 
         """
         scene = self._fitter.getRegion().getScene()
         useSubgroupField = subgroupField if subgroupField else Field()
