@@ -120,26 +120,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QListView" name="steps_listView">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="acceptDrops">
-             <bool>true</bool>
-            </property>
-            <property name="dragEnabled">
-             <bool>true</bool>
-            </property>
-            <property name="dragDropMode">
-             <enum>QAbstractItemView::InternalMove</enum>
-            </property>
-            <property name="defaultDropAction">
-             <enum>Qt::MoveAction</enum>
-            </property>
-           </widget>
+            <widget class="DraggableListWidget" name="steps_listWidget" native="true"/>
           </item>
           <item>
            <widget class="QScrollArea" name="stepedit_scrollArea">
@@ -1166,6 +1147,12 @@
    <class>FieldChooserWidget</class>
    <extends>QComboBox</extends>
    <header>opencmiss/zincwidgets/fieldchooserwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>DraggableListWidget</class>
+   <extends>QWidget</extends>
+   <header>opencmiss/zincwidgets/draggablelistwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
