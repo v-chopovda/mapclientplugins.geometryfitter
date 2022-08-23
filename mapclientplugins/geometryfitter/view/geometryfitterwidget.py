@@ -184,6 +184,10 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         endIndex = fitterSteps.index(endStep)
         sceneChanged = self._fitter.run(endStep, self._model.getOutputModelFileNameStem())
         print("sceneChanged", sceneChanged)
+        self.onSceneChange(sceneChanged, endIndex)
+
+    def onSceneChange(self, sceneChanged, endIndex):
+        fitterSteps = self._fitter.getFitterSteps()
         if sceneChanged:
             for index in range(endIndex + 1, len(fitterSteps)):
                 self._refreshStepItem(fitterSteps[index])
@@ -270,27 +274,16 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         if newRow != prevRow:
             fitterSteps = self._fitter.getFitterSteps()
             if newRow != 0 and prevRow !=0:
-                fitterSteps.insert(newRow , fitterSteps.pop(prevRow))
+                afterMovingStep = fitterSteps[newRow]
+                if prevRow < newRow:
+                    if newRow == len(fitterSteps) - 1:
+                        afterMovingStep = None
+                    else:
+                        afterMovingStep = fitterSteps[newRow + 1]
+                sceneChanged, endIndex = self._fitter.moveFitterStep(fitterSteps[prevRow], afterMovingStep, self._model.getOutputModelFileNameStem())
+                self.onSceneChange(sceneChanged, endIndex)
                 self._currentFitterStep = fitterSteps[newRow]
-                if self._endStep:
-                    self._fitter.load()
-                    self.runToStep(fitterSteps[0])
-                    endIndex = fitterSteps.index(self._endStep)
-                    print("prev _endStep", self._endStep)
-                    print("EndIndex", endIndex, "newRow", newRow)
-                    if endIndex > newRow and not self._currentFitterStep.hasRun():
-                        self._endStep = fitterSteps[newRow - 1]
-                        print("_endStep", self._endStep)
-                        print("fitterSteps", fitterSteps)
-                        # self.runToStep(self._endStep)
-                    if endIndex == newRow:
-                        if newRow > prevRow:
-                            self._endStep = fitterSteps[prevRow - 1]
-                        else:
-                            self._endStep = fitterSteps[prevRow]
-                        print("endIndex == newRow _endStep", self._endStep)
-                    self.runToStep(self._endStep)
-            self._buildStepsList()
+                self._buildStepsList()
 
     def _refreshStepItem(self, step):
         """
