@@ -63,8 +63,8 @@ class Ui_GeometryFitterWidget(object):
         self.stepsAddDelete_frame.setFrameShape(QFrame.StyledPanel)
         self.stepsAddDelete_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_10 = QHBoxLayout(self.stepsAddDelete_frame)
-        self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
         self.stepsAddAlign_pushButton = QPushButton(self.stepsAddDelete_frame)
         self.stepsAddAlign_pushButton.setObjectName(u"stepsAddAlign_pushButton")
 
@@ -102,11 +102,11 @@ class Ui_GeometryFitterWidget(object):
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollAreaWidgetContents = QWidget()
         self.stepedit_scrollAreaWidgetContents.setObjectName(u"stepedit_scrollAreaWidgetContents")
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, -100, 845, 1377))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 356, 604))
         self.verticalLayout_3 = QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setSpacing(0)
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.configInitial_groupBox = QGroupBox(self.stepedit_scrollAreaWidgetContents)
         self.configInitial_groupBox.setObjectName(u"configInitial_groupBox")
         sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
@@ -383,13 +383,13 @@ class Ui_GeometryFitterWidget(object):
         self.display_groupBox.setSizePolicy(sizePolicy)
         self.verticalLayout_7 = QVBoxLayout(self.display_groupBox)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.displayMisc_frame = QFrame(self.display_groupBox)
+        self.displayMisc_frame = QFrame(self.display_tab)
         self.displayMisc_frame.setObjectName(u"displayMisc_frame")
         self.displayMisc_frame.setFrameShape(QFrame.StyledPanel)
         self.displayMisc_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_8 = QHBoxLayout(self.displayMisc_frame)
-        self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
         self.displayAxes_checkBox = QCheckBox(self.displayMisc_frame)
         self.displayAxes_checkBox.setObjectName(u"displayAxes_checkBox")
 
@@ -414,13 +414,13 @@ class Ui_GeometryFitterWidget(object):
 
         self.verticalLayout_7.addWidget(self.displayMisc_frame)
 
-        self.displayMarker_frame = QFrame(self.display_groupBox)
+        self.displayMarker_frame = QFrame(self.display_tab)
         self.displayMarker_frame.setObjectName(u"displayMarker_frame")
         self.displayMarker_frame.setFrameShape(QFrame.StyledPanel)
         self.displayMarker_frame.setFrameShadow(QFrame.Raised)
         self.gridLayout = QGridLayout(self.displayMarker_frame)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName(u"gridLayout")
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.displayMarkerDataNames_checkBox = QCheckBox(self.displayMarker_frame)
         self.displayMarkerDataNames_checkBox.setObjectName(u"displayMarkerDataNames_checkBox")
 
@@ -449,13 +449,13 @@ class Ui_GeometryFitterWidget(object):
 
         self.verticalLayout_7.addWidget(self.displayMarker_frame)
 
-        self.displayData_frame = QFrame(self.display_groupBox)
+        self.displayData_frame = QFrame(self.display_tab)
         self.displayData_frame.setObjectName(u"displayData_frame")
         self.displayData_frame.setFrameShape(QFrame.StyledPanel)
         self.displayData_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_9 = QHBoxLayout(self.displayData_frame)
-        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
         self.displayDataPoints_checkBox = QCheckBox(self.displayData_frame)
         self.displayDataPoints_checkBox.setObjectName(u"displayDataPoints_checkBox")
 
@@ -478,13 +478,13 @@ class Ui_GeometryFitterWidget(object):
 
         self.verticalLayout_7.addWidget(self.displayData_frame)
 
-        self.displayNodes_frame = QFrame(self.display_groupBox)
+        self.displayNodes_frame = QFrame(self.display_tab)
         self.displayNodes_frame.setObjectName(u"displayNodes_frame")
         self.displayNodes_frame.setFrameShape(QFrame.StyledPanel)
         self.displayNodes_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_6 = QHBoxLayout(self.displayNodes_frame)
-        self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.displayNodePoints_checkBox = QCheckBox(self.displayNodes_frame)
         self.displayNodePoints_checkBox.setObjectName(u"displayNodePoints_checkBox")
 
@@ -492,18 +492,18 @@ class Ui_GeometryFitterWidget(object):
 
         self.displayNodeNumbers_checkBox = QCheckBox(self.displayNodes_frame)
         self.displayNodeNumbers_checkBox.setObjectName(u"displayNodeNumbers_checkBox")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.displayNodeNumbers_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeNumbers_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.displayNodeNumbers_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeNumbers_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_6.addWidget(self.displayNodeNumbers_checkBox)
 
         self.displayNodeDerivatives_checkBox = QCheckBox(self.displayNodes_frame)
         self.displayNodeDerivatives_checkBox.setObjectName(u"displayNodeDerivatives_checkBox")
-        sizePolicy4.setHeightForWidth(self.displayNodeDerivatives_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivatives_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivatives_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivatives_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_6.addWidget(self.displayNodeDerivatives_checkBox)
 
@@ -514,76 +514,76 @@ class Ui_GeometryFitterWidget(object):
 
         self.verticalLayout_7.addWidget(self.displayNodes_frame)
 
-        self.displayNodeDerivativeLabels_frame = QFrame(self.display_groupBox)
+        self.displayNodeDerivativeLabels_frame = QFrame(self.display_tab)
         self.displayNodeDerivativeLabels_frame.setObjectName(u"displayNodeDerivativeLabels_frame")
         self.displayNodeDerivativeLabels_frame.setFrameShape(QFrame.StyledPanel)
         self.displayNodeDerivativeLabels_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_7 = QHBoxLayout(self.displayNodeDerivativeLabels_frame)
-        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.displayNodeDerivativeLabels_horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_7.addItem(self.displayNodeDerivativeLabels_horizontalSpacer)
 
         self.displayNodeDerivativeLabelsD1_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD1_checkBox.setObjectName(u"displayNodeDerivativeLabelsD1_checkBox")
-        sizePolicy4.setHeightForWidth(self.displayNodeDerivativeLabelsD1_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD1_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD1_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD1_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD1_checkBox)
 
         self.displayNodeDerivativeLabelsD2_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD2_checkBox.setObjectName(u"displayNodeDerivativeLabelsD2_checkBox")
-        sizePolicy4.setHeightForWidth(self.displayNodeDerivativeLabelsD2_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD2_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD2_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD2_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD2_checkBox)
 
         self.displayNodeDerivativeLabelsD3_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD3_checkBox.setObjectName(u"displayNodeDerivativeLabelsD3_checkBox")
-        sizePolicy4.setHeightForWidth(self.displayNodeDerivativeLabelsD3_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD3_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD3_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD3_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD3_checkBox)
 
         self.displayNodeDerivativeLabelsD12_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD12_checkBox.setObjectName(u"displayNodeDerivativeLabelsD12_checkBox")
-        sizePolicy4.setHeightForWidth(self.displayNodeDerivativeLabelsD12_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD12_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD12_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD12_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD12_checkBox)
 
         self.displayNodeDerivativeLabelsD13_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD13_checkBox.setObjectName(u"displayNodeDerivativeLabelsD13_checkBox")
-        sizePolicy4.setHeightForWidth(self.displayNodeDerivativeLabelsD13_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD13_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD13_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD13_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD13_checkBox)
 
         self.displayNodeDerivativeLabelsD23_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD23_checkBox.setObjectName(u"displayNodeDerivativeLabelsD23_checkBox")
-        sizePolicy4.setHeightForWidth(self.displayNodeDerivativeLabelsD23_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD23_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD23_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD23_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD23_checkBox)
 
         self.displayNodeDerivativeLabelsD123_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD123_checkBox.setObjectName(u"displayNodeDerivativeLabelsD123_checkBox")
-        sizePolicy4.setHeightForWidth(self.displayNodeDerivativeLabelsD123_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD123_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD123_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD123_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD123_checkBox)
 
 
         self.verticalLayout_7.addWidget(self.displayNodeDerivativeLabels_frame)
 
-        self.displayElements_frame = QFrame(self.display_groupBox)
+        self.displayElements_frame = QFrame(self.display_tab)
         self.displayElements_frame.setObjectName(u"displayElements_frame")
         self.displayElements_frame.setFrameShape(QFrame.StyledPanel)
         self.displayElements_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_4 = QHBoxLayout(self.displayElements_frame)
-        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.displayElementNumbers_checkBox = QCheckBox(self.displayElements_frame)
         self.displayElementNumbers_checkBox.setObjectName(u"displayElementNumbers_checkBox")
 
@@ -591,8 +591,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.displayElementAxes_checkBox = QCheckBox(self.displayElements_frame)
         self.displayElementAxes_checkBox.setObjectName(u"displayElementAxes_checkBox")
-        sizePolicy4.setHeightForWidth(self.displayElementAxes_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayElementAxes_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.displayElementAxes_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayElementAxes_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_4.addWidget(self.displayElementAxes_checkBox)
 
@@ -603,13 +603,13 @@ class Ui_GeometryFitterWidget(object):
 
         self.verticalLayout_7.addWidget(self.displayElements_frame)
 
-        self.displayLines_frame = QFrame(self.display_groupBox)
+        self.displayLines_frame = QFrame(self.display_tab)
         self.displayLines_frame.setObjectName(u"displayLines_frame")
         self.displayLines_frame.setFrameShape(QFrame.StyledPanel)
         self.displayLines_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_5 = QHBoxLayout(self.displayLines_frame)
-        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.displayLines_checkBox = QCheckBox(self.displayLines_frame)
         self.displayLines_checkBox.setObjectName(u"displayLines_checkBox")
 
@@ -617,8 +617,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.displayLinesExterior_checkBox = QCheckBox(self.displayLines_frame)
         self.displayLinesExterior_checkBox.setObjectName(u"displayLinesExterior_checkBox")
-        sizePolicy4.setHeightForWidth(self.displayLinesExterior_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayLinesExterior_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.displayLinesExterior_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayLinesExterior_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_5.addWidget(self.displayLinesExterior_checkBox)
 
@@ -629,13 +629,13 @@ class Ui_GeometryFitterWidget(object):
 
         self.verticalLayout_7.addWidget(self.displayLines_frame)
 
-        self.displaySurfaces_frame = QFrame(self.display_groupBox)
+        self.displaySurfaces_frame = QFrame(self.display_tab)
         self.displaySurfaces_frame.setObjectName(u"displaySurfaces_frame")
         self.displaySurfaces_frame.setFrameShape(QFrame.StyledPanel)
         self.displaySurfaces_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_3 = QHBoxLayout(self.displaySurfaces_frame)
-        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.displaySurfaces_checkBox = QCheckBox(self.displaySurfaces_frame)
         self.displaySurfaces_checkBox.setObjectName(u"displaySurfaces_checkBox")
 
@@ -643,22 +643,22 @@ class Ui_GeometryFitterWidget(object):
 
         self.displaySurfacesExterior_checkBox = QCheckBox(self.displaySurfaces_frame)
         self.displaySurfacesExterior_checkBox.setObjectName(u"displaySurfacesExterior_checkBox")
-        sizePolicy4.setHeightForWidth(self.displaySurfacesExterior_checkBox.sizePolicy().hasHeightForWidth())
-        self.displaySurfacesExterior_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.displaySurfacesExterior_checkBox.sizePolicy().hasHeightForWidth())
+        self.displaySurfacesExterior_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_3.addWidget(self.displaySurfacesExterior_checkBox)
 
         self.displaySurfacesTranslucent_checkBox = QCheckBox(self.displaySurfaces_frame)
         self.displaySurfacesTranslucent_checkBox.setObjectName(u"displaySurfacesTranslucent_checkBox")
-        sizePolicy4.setHeightForWidth(self.displaySurfacesTranslucent_checkBox.sizePolicy().hasHeightForWidth())
-        self.displaySurfacesTranslucent_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.displaySurfacesTranslucent_checkBox.sizePolicy().hasHeightForWidth())
+        self.displaySurfacesTranslucent_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_3.addWidget(self.displaySurfacesTranslucent_checkBox)
 
         self.displaySurfacesWireframe_checkBox = QCheckBox(self.displaySurfaces_frame)
         self.displaySurfacesWireframe_checkBox.setObjectName(u"displaySurfacesWireframe_checkBox")
-        sizePolicy4.setHeightForWidth(self.displaySurfacesWireframe_checkBox.sizePolicy().hasHeightForWidth())
-        self.displaySurfacesWireframe_checkBox.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.displaySurfacesWireframe_checkBox.sizePolicy().hasHeightForWidth())
+        self.displaySurfacesWireframe_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_3.addWidget(self.displaySurfacesWireframe_checkBox)
 
@@ -669,16 +669,52 @@ class Ui_GeometryFitterWidget(object):
 
         self.verticalLayout_7.addWidget(self.displaySurfaces_frame)
 
+        self.controls_tabWidget.addTab(self.display_tab, "")
+        self.error_message_tab = QWidget()
+        self.error_message_tab.setObjectName(u"error_message_tab")
+        self.verticalLayout_12 = QVBoxLayout(self.error_message_tab)
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.error_group_frame = QFrame(self.error_message_tab)
+        self.error_group_frame.setObjectName(u"error_group_frame")
+        self.error_group_frame.setFrameShape(QFrame.StyledPanel)
+        self.error_group_frame.setFrameShadow(QFrame.Raised)
+        self.formLayout_21 = QFormLayout(self.error_group_frame)
+        self.formLayout_21.setObjectName(u"formLayout_21")
+        self.formLayout_21.setContentsMargins(0, 0, 0, 0)
+        self.displayRMSError_label = QLabel(self.error_group_frame)
+        self.displayRMSError_label.setObjectName(u"displayRMSError_label")
 
-        self.verticalLayout.addWidget(self.display_groupBox)
+        self.formLayout_21.setWidget(0, QFormLayout.LabelRole, self.displayRMSError_label)
+
+        self.displayRMSError_lineEdit = QLineEdit(self.error_group_frame)
+        self.displayRMSError_lineEdit.setObjectName(u"displayRMSError_lineEdit")
+
+        self.formLayout_21.setWidget(0, QFormLayout.FieldRole, self.displayRMSError_lineEdit)
+
+        self.displayMaxError_label = QLabel(self.error_group_frame)
+        self.displayMaxError_label.setObjectName(u"displayMaxError_label")
+
+        self.formLayout_21.setWidget(1, QFormLayout.LabelRole, self.displayMaxError_label)
+
+        self.displayMaxError_lineEdit = QLineEdit(self.error_group_frame)
+        self.displayMaxError_lineEdit.setObjectName(u"displayMaxError_lineEdit")
+
+        self.formLayout_21.setWidget(1, QFormLayout.FieldRole, self.displayMaxError_lineEdit)
+
+
+        self.verticalLayout_12.addWidget(self.error_group_frame)
+
+        self.controls_tabWidget.addTab(self.error_message_tab, "")
+
+        self.verticalLayout.addWidget(self.controls_tabWidget)
 
         self.bottom_frame = QFrame(self.dockWidgetContents)
         self.bottom_frame.setObjectName(u"bottom_frame")
         self.bottom_frame.setFrameShape(QFrame.StyledPanel)
         self.bottom_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_2 = QHBoxLayout(self.bottom_frame)
-        self.horizontalLayout_2.setContentsMargins(3, 3, 3, 3)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setContentsMargins(3, 3, 3, 3)
         self.pushButtonDocumentation = QPushButton(self.bottom_frame)
         self.pushButtonDocumentation.setObjectName(u"pushButtonDocumentation")
 
@@ -696,8 +732,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.done_pushButton = QPushButton(self.bottom_frame)
         self.done_pushButton.setObjectName(u"done_pushButton")
-        sizePolicy4.setHeightForWidth(self.done_pushButton.sizePolicy().hasHeightForWidth())
-        self.done_pushButton.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.done_pushButton.sizePolicy().hasHeightForWidth())
+        self.done_pushButton.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_2.addWidget(self.done_pushButton)
 
@@ -710,17 +746,20 @@ class Ui_GeometryFitterWidget(object):
 
         self.alignmentsceneviewerwidget = AlignmentSceneviewerWidget(GeometryFitterWidget)
         self.alignmentsceneviewerwidget.setObjectName(u"alignmentsceneviewerwidget")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy5.setHorizontalStretch(1)
-        sizePolicy5.setVerticalStretch(1)
-        sizePolicy5.setHeightForWidth(self.alignmentsceneviewerwidget.sizePolicy().hasHeightForWidth())
-        self.alignmentsceneviewerwidget.setSizePolicy(sizePolicy5)
+        sizePolicy6 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy6.setHorizontalStretch(1)
+        sizePolicy6.setVerticalStretch(1)
+        sizePolicy6.setHeightForWidth(self.alignmentsceneviewerwidget.sizePolicy().hasHeightForWidth())
+        self.alignmentsceneviewerwidget.setSizePolicy(sizePolicy6)
         self.alignmentsceneviewerwidget.setAutoFillBackground(False)
 
         self.horizontalLayout.addWidget(self.alignmentsceneviewerwidget)
 
 
         self.retranslateUi(GeometryFitterWidget)
+
+        self.controls_tabWidget.setCurrentIndex(1)
+
 
         QMetaObject.connectSlotsByName(GeometryFitterWidget)
     # setupUi
@@ -765,7 +804,6 @@ class Ui_GeometryFitterWidget(object):
         self.groupFitDataWeight_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Data Weight", None))
         self.groupFitStrainPenalty_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Strain Penalty", None))
         self.groupFitCurvaturePenalty_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Curvature Penalty", None))
-        self.display_groupBox.setTitle(QCoreApplication.translate("GeometryFitterWidget", u"Display:", None))
         self.displayAxes_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Axes", None))
         self.groupDisplay_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Group:", None))
         self.displayMarkerDataNames_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Marker data names", None))
@@ -794,6 +832,10 @@ class Ui_GeometryFitterWidget(object):
         self.displaySurfacesExterior_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Exterior", None))
         self.displaySurfacesTranslucent_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Transluc.", None))
         self.displaySurfacesWireframe_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Wireframe", None))
+        self.controls_tabWidget.setTabText(self.controls_tabWidget.indexOf(self.display_tab), QCoreApplication.translate("GeometryFitterWidget", u"Display", None))
+        self.displayRMSError_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"RMS error:", None))
+        self.displayMaxError_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Maximum error:", None))
+        self.controls_tabWidget.setTabText(self.controls_tabWidget.indexOf(self.error_message_tab), QCoreApplication.translate("GeometryFitterWidget", u"Error Log", None))
         self.pushButtonDocumentation.setText(QCoreApplication.translate("GeometryFitterWidget", u"Online Documentation", None))
         self.viewAll_pushButton.setText(QCoreApplication.translate("GeometryFitterWidget", u"View All", None))
         self.stdViews_pushButton.setText(QCoreApplication.translate("GeometryFitterWidget", u"Std. Views", None))
