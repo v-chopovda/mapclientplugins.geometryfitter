@@ -690,25 +690,25 @@ class Ui_GeometryFitterWidget(object):
         self.formLayout_21 = QFormLayout(self.error_group_frame)
         self.formLayout_21.setObjectName(u"formLayout_21")
         self.formLayout_21.setContentsMargins(0, 0, 0, 0)
-        self.annotationGroupOntId_label = QLabel(self.error_group_frame)
-        self.annotationGroupOntId_label.setObjectName(u"annotationGroupOntId_label")
+        self.displayRMSError_label = QLabel(self.error_group_frame)
+        self.displayRMSError_label.setObjectName(u"displayRMSError_label")
 
-        self.formLayout_21.setWidget(0, QFormLayout.LabelRole, self.annotationGroupOntId_label)
+        self.formLayout_21.setWidget(0, QFormLayout.LabelRole, self.displayRMSError_label)
 
-        self.annotationGroupOntId_lineEdit = QLineEdit(self.error_group_frame)
-        self.annotationGroupOntId_lineEdit.setObjectName(u"annotationGroupOntId_lineEdit")
+        self.displayRMSError_lineEdit = QLineEdit(self.error_group_frame)
+        self.displayRMSError_lineEdit.setObjectName(u"displayRMSError_lineEdit")
 
-        self.formLayout_21.setWidget(0, QFormLayout.FieldRole, self.annotationGroupOntId_lineEdit)
+        self.formLayout_21.setWidget(0, QFormLayout.FieldRole, self.displayRMSError_lineEdit)
 
-        self.annotationGroupDimension_label = QLabel(self.error_group_frame)
-        self.annotationGroupDimension_label.setObjectName(u"annotationGroupDimension_label")
+        self.displayMaxError_label = QLabel(self.error_group_frame)
+        self.displayMaxError_label.setObjectName(u"displayMaxError_label")
 
-        self.formLayout_21.setWidget(1, QFormLayout.LabelRole, self.annotationGroupDimension_label)
+        self.formLayout_21.setWidget(1, QFormLayout.LabelRole, self.displayMaxError_label)
 
-        self.markerMaterialCoordinates_lineEdit = QLineEdit(self.error_group_frame)
-        self.markerMaterialCoordinates_lineEdit.setObjectName(u"markerMaterialCoordinates_lineEdit")
+        self.displayMaxError_lineEdit = QLineEdit(self.error_group_frame)
+        self.displayMaxError_lineEdit.setObjectName(u"displayMaxError_lineEdit")
 
-        self.formLayout_21.setWidget(1, QFormLayout.FieldRole, self.markerMaterialCoordinates_lineEdit)
+        self.formLayout_21.setWidget(1, QFormLayout.FieldRole, self.displayMaxError_lineEdit)
 
 
         self.verticalLayout_12.addWidget(self.error_group_frame)
@@ -842,8 +842,8 @@ class Ui_GeometryFitterWidget(object):
         self.displaySurfacesTranslucent_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Transluc.", None))
         self.displaySurfacesWireframe_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Wireframe", None))
         self.controls_tabWidget.setTabText(self.controls_tabWidget.indexOf(self.display_tab), QCoreApplication.translate("GeometryFitterWidget", u"Display", None))
-        self.annotationGroupOntId_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"RMS Error:", None))
-        self.annotationGroupDimension_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Error:", None))
+        self.displayRMSError_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"RMS error:", None))
+        self.displayMaxError_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Maximum error:", None))
         self.controls_tabWidget.setTabText(self.controls_tabWidget.indexOf(self.error_message_tab), QCoreApplication.translate("GeometryFitterWidget", u"Error Log", None))
         self.pushButtonDocumentation.setText(QCoreApplication.translate("GeometryFitterWidget", u"Online Documentation", None))
         self.viewAll_pushButton.setText(QCoreApplication.translate("GeometryFitterWidget", u"View All", None))

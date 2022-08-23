@@ -1195,24 +1195,24 @@
                <number>0</number>
               </property>
               <item row="0" column="0">
-               <widget class="QLabel" name="annotationGroupOntId_label">
+               <widget class="QLabel" name="displayRMSError_label">
                 <property name="text">
-                 <string>RMS Error:</string>
+                 <string>RMS error:</string>
                 </property>
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QLineEdit" name="annotationGroupOntId_lineEdit"/>
+               <widget class="QLineEdit" name="displayRMSError_lineEdit"/>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="annotationGroupDimension_label">
+               <widget class="QLabel" name="displayMaxError_label">
                 <property name="text">
-                 <string>Error:</string>
+                 <string>Maximum error:</string>
                 </property>
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QLineEdit" name="markerMaterialCoordinates_lineEdit"/>
+               <widget class="QLineEdit" name="displayMaxError_lineEdit"/>
               </item>
              </layout>
             </widget>
