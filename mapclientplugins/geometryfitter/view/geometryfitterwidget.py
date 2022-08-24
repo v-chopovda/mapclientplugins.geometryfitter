@@ -238,8 +238,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
             self._ui.steps_listWidget.clear()  # Must clear or holds on to steps references
         firstStep = True
         fitterSteps = self._fitter.getFitterSteps()
-        for i in range(len(fitterSteps)):
-            step = fitterSteps[i]
+        for step in fitterSteps:
             name = None
             if isinstance(step, FitterStepAlign):
                 name = "Align"
