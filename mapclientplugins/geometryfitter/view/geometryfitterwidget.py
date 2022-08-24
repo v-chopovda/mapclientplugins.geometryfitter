@@ -75,7 +75,6 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._fitter = self._model.getFitter()
         self._currentFitterStep = self._fitter.getInitialFitterStepConfig()  # always exists
         self._ui.alignmentsceneviewerwidget.graphicsInitialized.connect(self._graphicsInitialized)
-        self._endStep = None
         self._callback = None
         self._setupConfigWidgets()
         self._setupGroupSettingWidgets()
@@ -225,12 +224,11 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         isChecked = True if isInitialConfig else (item.checkState() == QtCore.Qt.Checked)
         if step.hasRun() != isChecked:
             if isChecked:
-                self._endStep = step
+                endStep = step
             else:
                 index = fitterSteps.index(step)
-                self._endStep = fitterSteps[index - 1]
-                print("end by click", self._endStep)
-            self.runToStep(self._endStep)
+                endStep = fitterSteps[index - 1]
+            self.runToStep(endStep)
 
     def _buildStepsList(self):
         """
