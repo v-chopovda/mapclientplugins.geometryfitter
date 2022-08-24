@@ -183,10 +183,9 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         fitterSteps = self._fitter.getFitterSteps()
         endIndex = fitterSteps.index(endStep)
         sceneChanged = self._fitter.run(endStep, self._model.getOutputModelFileNameStem())
-        print("sceneChanged", sceneChanged)
-        self.onSceneChange(sceneChanged, endIndex)
+        self._reloadSteps(sceneChanged, endIndex)
 
-    def onSceneChange(self, sceneChanged, endIndex):
+    def _reloadSteps(self, sceneChanged, endIndex):
         fitterSteps = self._fitter.getFitterSteps()
         if sceneChanged:
             for index in range(endIndex + 1, len(fitterSteps)):
@@ -274,16 +273,10 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         if newRow != prevRow:
             fitterSteps = self._fitter.getFitterSteps()
             if newRow != 0 and prevRow !=0:
-                afterMovingStep = fitterSteps[newRow]
-                if prevRow < newRow:
-                    if newRow == len(fitterSteps) - 1:
-                        afterMovingStep = None
-                    else:
-                        afterMovingStep = fitterSteps[newRow + 1]
-                sceneChanged, endIndex = self._fitter.moveFitterStep(fitterSteps[prevRow], afterMovingStep, self._model.getOutputModelFileNameStem())
-                self.onSceneChange(sceneChanged, endIndex)
+                sceneChanged, endIndex = self._fitter.moveFitterStep(prevRow, newRow, self._model.getOutputModelFileNameStem())
+                self._reloadSteps(sceneChanged, endIndex)
                 self._currentFitterStep = fitterSteps[newRow]
-                self._buildStepsList()
+            self._buildStepsList()
 
     def _refreshStepItem(self, step):
         """
