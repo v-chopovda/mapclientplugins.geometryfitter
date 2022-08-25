@@ -586,7 +586,7 @@
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="display_tab">
           <attribute name="title">
@@ -1168,9 +1168,9 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="error_message_tab">
+         <widget class="QWidget" name="error_statistics_tab">
           <attribute name="title">
-           <string>Error Log</string>
+           <string>Error Statistics</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_12">
            <item>

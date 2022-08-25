@@ -679,11 +679,11 @@ class Ui_GeometryFitterWidget(object):
         self.verticalLayout_7.addWidget(self.displaySurfaces_frame)
 
         self.controls_tabWidget.addTab(self.display_tab, "")
-        self.error_message_tab = QWidget()
-        self.error_message_tab.setObjectName(u"error_message_tab")
-        self.verticalLayout_12 = QVBoxLayout(self.error_message_tab)
+        self.error_statistics_tab = QWidget()
+        self.error_statistics_tab.setObjectName(u"error_statistics_tab")
+        self.verticalLayout_12 = QVBoxLayout(self.error_statistics_tab)
         self.verticalLayout_12.setObjectName(u"verticalLayout_12")
-        self.error_group_frame = QFrame(self.error_message_tab)
+        self.error_group_frame = QFrame(self.error_statistics_tab)
         self.error_group_frame.setObjectName(u"error_group_frame")
         self.error_group_frame.setFrameShape(QFrame.StyledPanel)
         self.error_group_frame.setFrameShadow(QFrame.Raised)
@@ -713,7 +713,7 @@ class Ui_GeometryFitterWidget(object):
 
         self.verticalLayout_12.addWidget(self.error_group_frame)
 
-        self.controls_tabWidget.addTab(self.error_message_tab, "")
+        self.controls_tabWidget.addTab(self.error_statistics_tab, "")
 
         self.verticalLayout.addWidget(self.controls_tabWidget)
 
@@ -767,7 +767,7 @@ class Ui_GeometryFitterWidget(object):
 
         self.retranslateUi(GeometryFitterWidget)
 
-        self.controls_tabWidget.setCurrentIndex(1)
+        self.controls_tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(GeometryFitterWidget)
@@ -844,7 +844,7 @@ class Ui_GeometryFitterWidget(object):
         self.controls_tabWidget.setTabText(self.controls_tabWidget.indexOf(self.display_tab), QCoreApplication.translate("GeometryFitterWidget", u"Display", None))
         self.displayRMSError_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"RMS error:", None))
         self.displayMaxError_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Maximum error:", None))
-        self.controls_tabWidget.setTabText(self.controls_tabWidget.indexOf(self.error_message_tab), QCoreApplication.translate("GeometryFitterWidget", u"Error Log", None))
+        self.controls_tabWidget.setTabText(self.controls_tabWidget.indexOf(self.error_statistics_tab), QCoreApplication.translate("GeometryFitterWidget", u"Error Statistics", None))
         self.pushButtonDocumentation.setText(QCoreApplication.translate("GeometryFitterWidget", u"Online Documentation", None))
         self.viewAll_pushButton.setText(QCoreApplication.translate("GeometryFitterWidget", u"View All", None))
         self.stdViews_pushButton.setText(QCoreApplication.translate("GeometryFitterWidget", u"Std. Views", None))
