@@ -415,10 +415,10 @@ class GeometryFitterWidget(QtWidgets.QWidget):
     
     def _displayErrors(self):
         rmsError, maxError = self._fitter.getDataRMSAndMaximumProjectionError()
-        if rmsError:
-            self._ui.displayRMSError_lineEdit.setText("%f"%rmsError)
-        if maxError:
-            self._ui.displayMaxError_lineEdit.setText("%f"%maxError)
+        self._ui.displayRMSError_lineEdit.setText("-" if rmsError is None else f"{rmsError}")
+        self._ui.displayRMSError_lineEdit.setCursorPosition(0)
+        self._ui.displayMaxError_lineEdit.setText("-" if maxError is None else f"{maxError}")
+        self._ui.displayMaxError_lineEdit.setCursorPosition(0)
 
     def _displayGroupChanged(self, index):
         """
