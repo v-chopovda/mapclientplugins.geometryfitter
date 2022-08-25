@@ -182,6 +182,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         fitterSteps = self._fitter.getFitterSteps()
         endIndex = fitterSteps.index(endStep)
         sceneChanged = self._fitter.run(endStep, self._model.getOutputModelFileNameStem())
+        self._displayErrors()
         if sceneChanged:
             for index in range(endIndex + 1, len(fitterSteps)):
                 self._refreshStepItem(fitterSteps[index])
@@ -410,8 +411,14 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.displaySurfacesExterior_checkBox.setChecked(self._model.isDisplaySurfacesExterior())
         self._ui.displaySurfacesTranslucent_checkBox.setChecked(self._model.isDisplaySurfacesTranslucent())
         self._ui.displaySurfacesWireframe_checkBox.setChecked(self._model.isDisplaySurfacesWireframe())
-        self._ui.displayRMSError_lineEdit.setText("TEST!")
-        self._ui.displayMaxError_lineEdit.setText("TEST22!")
+        self._displayErrors()
+    
+    def _displayErrors(self):
+        rmsError, maxError = self._fitter.getDataRMSAndMaximumProjectionError()
+        if rmsError:
+            self._ui.displayRMSError_lineEdit.setText("%f"%rmsError)
+        if maxError:
+            self._ui.displayMaxError_lineEdit.setText("%f"%maxError)
 
     def _displayGroupChanged(self, index):
         """
