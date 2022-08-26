@@ -106,6 +106,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
         if sceneviewer is not None:
             self._model.createGraphics()
+            self._setupGroupDisplayWidgets()
             sceneviewer.setScene(self._model.getScene())
             self._refreshGraphics()
             groupName = self._getGroupSettingsGroupName()
@@ -145,7 +146,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.stepsAddConfig_pushButton.clicked.connect(self._stepsAddConfigClicked)
         self._ui.stepsAddFit_pushButton.clicked.connect(self._stepsAddFitClicked)
         self._ui.stepsDelete_pushButton.clicked.connect(self._stepsDeleteClicked)
-        self._ui.steps_listView.clicked[QtCore.QModelIndex].connect(self._stepsListItemClicked)
+        self._ui.steps_listWidget.itemClicked.connect(self._stepsListItemClicked)
         self._ui.pushButtonDocumentation.clicked.connect(self._documentationButtonClicked)
         self._ui.done_pushButton.clicked.connect(self._doneButtonClicked)
         self._ui.stdViews_pushButton.clicked.connect(self._stdViewsButtonClicked)
@@ -186,7 +187,10 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         fitterSteps = self._fitter.getFitterSteps()
         endIndex = fitterSteps.index(endStep)
         sceneChanged = self._fitter.run(endStep, self._model.getOutputModelFileNameStem())
-        self._displayErrors()
+        self._reloadSteps(sceneChanged, endIndex)
+
+    def _reloadSteps(self, sceneChanged, endIndex):
+        fitterSteps = self._fitter.getFitterSteps()
         if sceneChanged:
             for index in range(endIndex + 1, len(fitterSteps)):
                 self._refreshStepItem(fitterSteps[index])
@@ -211,13 +215,13 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._currentFitterStep = self._fitter.removeFitterStep(self._currentFitterStep)
         self._buildStepsList()
 
-    def _stepsListItemClicked(self, modelIndex):
+    def _stepsListItemClicked(self, item):
         """
         Changes current step and possibly changes checked/run status.
         """
-        model = modelIndex.model()
-        item = model.itemFromIndex(modelIndex)
-        step = item.data()
+        clickedIndex = self._ui.steps_listWidget.row(item)
+        fitterSteps = self._fitter.getFitterSteps()
+        step = fitterSteps[clickedIndex]
         if step != self._currentFitterStep:
             self._currentFitterStep = step
             self._updateFitterStepWidgets()
@@ -227,17 +231,16 @@ class GeometryFitterWidget(QtWidgets.QWidget):
             if isChecked:
                 endStep = step
             else:
-                fitterSteps = self._fitter.getFitterSteps()
                 index = fitterSteps.index(step)
                 endStep = fitterSteps[index - 1]
             self.runToStep(endStep)
 
     def _buildStepsList(self):
         """
-        Fill the graphics list view with the list of graphics for current region/scene
+        Fill the steps list widget with the list of steps
         """
-        self._stepsItems = QtGui.QStandardItemModel(self._ui.steps_listView)
-        selectedIndex = None
+        if self._ui.steps_listWidget is not None:
+            self._ui.steps_listWidget.clear()  # Must clear or holds on to steps references
         firstStep = True
         fitterSteps = self._fitter.getFitterSteps()
         for step in fitterSteps:
@@ -250,22 +253,32 @@ class GeometryFitterWidget(QtWidgets.QWidget):
                 name = "Fit"
             else:
                 assert False, "GeometricFitWidget.  Unknown FitterStep type"
-            item = QtGui.QStandardItem(name)
-            item.setData(step)
-            item.setEditable(False)
+            item = QtWidgets.QListWidgetItem(name)
             if firstStep:
-                item.setCheckable(False)
                 firstStep = False
+                item.setFlags(item.flags() & ~QtCore.Qt.ItemIsDragEnabled)
             else:
-                item.setCheckable(True)
+                item.setFlags(item.flags() | QtCore.Qt.ItemIsUserCheckable)
                 item.setCheckState(QtCore.Qt.Checked if step.hasRun() else QtCore.Qt.Unchecked)
-            self._stepsItems.appendRow(item)
+            self._ui.steps_listWidget.addItem(item)
             if step == self._currentFitterStep:
-                selectedIndex = self._stepsItems.indexFromItem(item)
-        self._ui.steps_listView.setModel(self._stepsItems)
-        self._ui.steps_listView.setCurrentIndex(selectedIndex)
-        self._ui.steps_listView.show()
+                self._ui.steps_listWidget.setCurrentItem(item)
+        self._ui.steps_listWidget.registerDropCallback(self._onStepsListItemChanged)
+        self._ui.steps_listWidget.show()
         self._updateFitterStepWidgets()
+
+    def _onStepsListItemChanged(self, prevRow, newRow):
+        """
+        For steps list drag and drop event.
+        Update the order of steps in fitterSteps.
+        """ 
+        if newRow != prevRow:
+            if newRow != 0 and prevRow != 0:
+                sceneChanged, endIndex = self._fitter.moveFitterStep(prevRow, newRow, self._model.getOutputModelFileNameStem())
+                self._reloadSteps(sceneChanged, endIndex)
+                fitterSteps = self._fitter.getFitterSteps()
+                self._currentFitterStep = fitterSteps[newRow]
+            self._buildStepsList()
 
     def _refreshStepItem(self, step):
         """
@@ -273,11 +286,11 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         :param stepIndex: Row index of item in step items.
         """
         index = self._fitter.getFitterSteps().index(step)
-        item = self._stepsItems.item(index)
+        item = self._ui.steps_listWidget.item(index)
         if step is not self._fitter.getInitialFitterStepConfig():
             item.setCheckState(QtCore.Qt.Checked if step.hasRun() else QtCore.Qt.Unchecked)
         if step == self._currentFitterStep:
-            self._ui.steps_listView.setCurrentIndex(self._stepsItems.indexFromItem(item))
+            self._ui.steps_listWidget.setCurrentItem(item)
 
     def _updateFitterStepWidgets(self):
         """
@@ -381,7 +394,13 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.groupDisplay_fieldChooser.setRegion(self._fitter.getRegion())
         self._ui.groupDisplay_fieldChooser.setNullObjectName("- All -")
         self._ui.groupDisplay_fieldChooser.setConditional(field_is_managed_group)
-        self._ui.groupDisplay_fieldChooser.setField(Field())
+        displayGroupFieldName = self._model.getGraphicsDisplaySubgroupFieldName()
+        displayGroupField = Field()
+        if displayGroupFieldName:
+            displayGroupField = self._fitter.getFieldmodule().findFieldByName(displayGroupFieldName)
+        self._ui.groupDisplay_fieldChooser.setField(displayGroupField)
+        self._model.setGraphicsDisplaySubgroupFieldName(displayGroupField.getName() if displayGroupField else None)
+        self._model.setGraphicsDisplaySubgroupField(displayGroupField)
 
     def _updateDisplayWidgets(self):
         """
@@ -432,7 +451,9 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         """
         Callback for change in group display field chooser widget.
         """
-        self._model.setGraphicsDisplaySubgroupField(self._ui.groupDisplay_fieldChooser.getField())
+        displayGroupField = self._ui.groupDisplay_fieldChooser.getField()
+        self._model.setGraphicsDisplaySubgroupFieldName(displayGroupField.getName() if displayGroupField else None)
+        self._model.setGraphicsDisplaySubgroupField(displayGroupField)
 
     def _displayAxesClicked(self):
         self._model.setDisplayAxes(self._ui.displayAxes_checkBox.isChecked())

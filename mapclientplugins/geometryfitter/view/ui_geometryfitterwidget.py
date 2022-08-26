@@ -14,6 +14,7 @@ from PySide2.QtWidgets import *
 
 from opencmiss.zincwidgets.alignmentsceneviewerwidget import AlignmentSceneviewerWidget
 from opencmiss.zincwidgets.fieldchooserwidget import FieldChooserWidget
+from opencmiss.zincwidgets.draggablelistwidget import DraggableListWidget
 
 
 class Ui_GeometryFitterWidget(object):
@@ -87,15 +88,10 @@ class Ui_GeometryFitterWidget(object):
 
         self.verticalLayout_2.addWidget(self.stepsAddDelete_frame)
 
-        self.steps_listView = QListView(self.steps_groupBox)
-        self.steps_listView.setObjectName(u"steps_listView")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.steps_listView.sizePolicy().hasHeightForWidth())
-        self.steps_listView.setSizePolicy(sizePolicy2)
+        self.steps_listWidget = DraggableListWidget(self.steps_groupBox)
+        self.steps_listWidget.setObjectName(u"steps_listWidget")
 
-        self.verticalLayout_2.addWidget(self.steps_listView)
+        self.verticalLayout_2.addWidget(self.steps_listWidget)
 
         self.stepedit_scrollArea = QScrollArea(self.steps_groupBox)
         self.stepedit_scrollArea.setObjectName(u"stepedit_scrollArea")
@@ -113,11 +109,11 @@ class Ui_GeometryFitterWidget(object):
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.configInitial_groupBox = QGroupBox(self.stepedit_scrollAreaWidgetContents)
         self.configInitial_groupBox.setObjectName(u"configInitial_groupBox")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.configInitial_groupBox.sizePolicy().hasHeightForWidth())
-        self.configInitial_groupBox.setSizePolicy(sizePolicy3)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.configInitial_groupBox.sizePolicy().hasHeightForWidth())
+        self.configInitial_groupBox.setSizePolicy(sizePolicy2)
         self.formLayout = QFormLayout(self.configInitial_groupBox)
         self.formLayout.setObjectName(u"formLayout")
         self.configModelCoordinates_label = QLabel(self.configInitial_groupBox)
@@ -127,11 +123,11 @@ class Ui_GeometryFitterWidget(object):
 
         self.configModelCoordinates_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
         self.configModelCoordinates_fieldChooser.setObjectName(u"configModelCoordinates_fieldChooser")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.configModelCoordinates_fieldChooser.sizePolicy().hasHeightForWidth())
-        self.configModelCoordinates_fieldChooser.setSizePolicy(sizePolicy4)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.configModelCoordinates_fieldChooser.sizePolicy().hasHeightForWidth())
+        self.configModelCoordinates_fieldChooser.setSizePolicy(sizePolicy3)
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.configModelCoordinates_fieldChooser)
 
@@ -142,8 +138,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.configDataCoordinates_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
         self.configDataCoordinates_fieldChooser.setObjectName(u"configDataCoordinates_fieldChooser")
-        sizePolicy4.setHeightForWidth(self.configDataCoordinates_fieldChooser.sizePolicy().hasHeightForWidth())
-        self.configDataCoordinates_fieldChooser.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.configDataCoordinates_fieldChooser.sizePolicy().hasHeightForWidth())
+        self.configDataCoordinates_fieldChooser.setSizePolicy(sizePolicy3)
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.configDataCoordinates_fieldChooser)
 
@@ -165,8 +161,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.configMarkerGroup_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
         self.configMarkerGroup_fieldChooser.setObjectName(u"configMarkerGroup_fieldChooser")
-        sizePolicy4.setHeightForWidth(self.configMarkerGroup_fieldChooser.sizePolicy().hasHeightForWidth())
-        self.configMarkerGroup_fieldChooser.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.configMarkerGroup_fieldChooser.sizePolicy().hasHeightForWidth())
+        self.configMarkerGroup_fieldChooser.setSizePolicy(sizePolicy3)
 
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.configMarkerGroup_fieldChooser)
 
@@ -222,8 +218,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.alignRotation_lineEdit = QLineEdit(self.align_groupBox)
         self.alignRotation_lineEdit.setObjectName(u"alignRotation_lineEdit")
-        sizePolicy4.setHeightForWidth(self.alignRotation_lineEdit.sizePolicy().hasHeightForWidth())
-        self.alignRotation_lineEdit.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.alignRotation_lineEdit.sizePolicy().hasHeightForWidth())
+        self.alignRotation_lineEdit.setSizePolicy(sizePolicy3)
 
         self.formLayout_2.setWidget(4, QFormLayout.FieldRole, self.alignRotation_lineEdit)
 
@@ -234,8 +230,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.alignScale_lineEdit = QLineEdit(self.align_groupBox)
         self.alignScale_lineEdit.setObjectName(u"alignScale_lineEdit")
-        sizePolicy4.setHeightForWidth(self.alignScale_lineEdit.sizePolicy().hasHeightForWidth())
-        self.alignScale_lineEdit.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.alignScale_lineEdit.sizePolicy().hasHeightForWidth())
+        self.alignScale_lineEdit.setSizePolicy(sizePolicy3)
 
         self.formLayout_2.setWidget(5, QFormLayout.FieldRole, self.alignScale_lineEdit)
 
@@ -246,8 +242,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.alignTranslation_lineEdit = QLineEdit(self.align_groupBox)
         self.alignTranslation_lineEdit.setObjectName(u"alignTranslation_lineEdit")
-        sizePolicy4.setHeightForWidth(self.alignTranslation_lineEdit.sizePolicy().hasHeightForWidth())
-        self.alignTranslation_lineEdit.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.alignTranslation_lineEdit.sizePolicy().hasHeightForWidth())
+        self.alignTranslation_lineEdit.setSizePolicy(sizePolicy3)
 
         self.formLayout_2.setWidget(6, QFormLayout.FieldRole, self.alignTranslation_lineEdit)
 
@@ -271,8 +267,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.fitIterations_spinBox = QSpinBox(self.fit_groupBox)
         self.fitIterations_spinBox.setObjectName(u"fitIterations_spinBox")
-        sizePolicy4.setHeightForWidth(self.fitIterations_spinBox.sizePolicy().hasHeightForWidth())
-        self.fitIterations_spinBox.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.fitIterations_spinBox.sizePolicy().hasHeightForWidth())
+        self.fitIterations_spinBox.setSizePolicy(sizePolicy3)
         self.fitIterations_spinBox.setMinimum(1)
         self.fitIterations_spinBox.setMaximum(1000)
 
@@ -285,8 +281,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.fitMaximumSubIterations_spinBox = QSpinBox(self.fit_groupBox)
         self.fitMaximumSubIterations_spinBox.setObjectName(u"fitMaximumSubIterations_spinBox")
-        sizePolicy4.setHeightForWidth(self.fitMaximumSubIterations_spinBox.sizePolicy().hasHeightForWidth())
-        self.fitMaximumSubIterations_spinBox.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.fitMaximumSubIterations_spinBox.sizePolicy().hasHeightForWidth())
+        self.fitMaximumSubIterations_spinBox.setSizePolicy(sizePolicy3)
         self.fitMaximumSubIterations_spinBox.setMinimum(1)
         self.fitMaximumSubIterations_spinBox.setMaximum(1000)
 
@@ -304,8 +300,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.groupSettings_groupBox = QGroupBox(self.stepedit_scrollAreaWidgetContents)
         self.groupSettings_groupBox.setObjectName(u"groupSettings_groupBox")
-        sizePolicy3.setHeightForWidth(self.groupSettings_groupBox.sizePolicy().hasHeightForWidth())
-        self.groupSettings_groupBox.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.groupSettings_groupBox.sizePolicy().hasHeightForWidth())
+        self.groupSettings_groupBox.setSizePolicy(sizePolicy2)
         self.groupSettings_Layout = QFormLayout(self.groupSettings_groupBox)
         self.groupSettings_Layout.setObjectName(u"groupSettings_Layout")
         self.groupSettings_Layout.setContentsMargins(-1, -1, -1, 0)
@@ -316,8 +312,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.groupSettings_fieldChooser = FieldChooserWidget(self.groupSettings_groupBox)
         self.groupSettings_fieldChooser.setObjectName(u"groupSettings_fieldChooser")
-        sizePolicy4.setHeightForWidth(self.groupSettings_fieldChooser.sizePolicy().hasHeightForWidth())
-        self.groupSettings_fieldChooser.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.groupSettings_fieldChooser.sizePolicy().hasHeightForWidth())
+        self.groupSettings_fieldChooser.setSizePolicy(sizePolicy3)
 
         self.groupSettings_Layout.setWidget(1, QFormLayout.FieldRole, self.groupSettings_fieldChooser)
 
@@ -383,11 +379,11 @@ class Ui_GeometryFitterWidget(object):
 
         self.controls_tabWidget = QTabWidget(self.dockWidgetContents)
         self.controls_tabWidget.setObjectName(u"controls_tabWidget")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.controls_tabWidget.sizePolicy().hasHeightForWidth())
-        self.controls_tabWidget.setSizePolicy(sizePolicy5)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.controls_tabWidget.sizePolicy().hasHeightForWidth())
+        self.controls_tabWidget.setSizePolicy(sizePolicy4)
         self.display_tab = QWidget()
         self.display_tab.setObjectName(u"display_tab")
         self.verticalLayout_7 = QVBoxLayout(self.display_tab)
@@ -411,8 +407,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.groupDisplay_fieldChooser = FieldChooserWidget(self.displayMisc_frame)
         self.groupDisplay_fieldChooser.setObjectName(u"groupDisplay_fieldChooser")
-        sizePolicy4.setHeightForWidth(self.groupDisplay_fieldChooser.sizePolicy().hasHeightForWidth())
-        self.groupDisplay_fieldChooser.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.groupDisplay_fieldChooser.sizePolicy().hasHeightForWidth())
+        self.groupDisplay_fieldChooser.setSizePolicy(sizePolicy3)
 
         self.horizontalLayout_8.addWidget(self.groupDisplay_fieldChooser)
 
@@ -501,18 +497,18 @@ class Ui_GeometryFitterWidget(object):
 
         self.displayNodeNumbers_checkBox = QCheckBox(self.displayNodes_frame)
         self.displayNodeNumbers_checkBox.setObjectName(u"displayNodeNumbers_checkBox")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        sizePolicy6.setHorizontalStretch(0)
-        sizePolicy6.setVerticalStretch(0)
-        sizePolicy6.setHeightForWidth(self.displayNodeNumbers_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeNumbers_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.displayNodeNumbers_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeNumbers_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_6.addWidget(self.displayNodeNumbers_checkBox)
 
         self.displayNodeDerivatives_checkBox = QCheckBox(self.displayNodes_frame)
         self.displayNodeDerivatives_checkBox.setObjectName(u"displayNodeDerivatives_checkBox")
-        sizePolicy6.setHeightForWidth(self.displayNodeDerivatives_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivatives_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivatives_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivatives_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_6.addWidget(self.displayNodeDerivatives_checkBox)
 
@@ -536,50 +532,50 @@ class Ui_GeometryFitterWidget(object):
 
         self.displayNodeDerivativeLabelsD1_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD1_checkBox.setObjectName(u"displayNodeDerivativeLabelsD1_checkBox")
-        sizePolicy6.setHeightForWidth(self.displayNodeDerivativeLabelsD1_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD1_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD1_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD1_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD1_checkBox)
 
         self.displayNodeDerivativeLabelsD2_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD2_checkBox.setObjectName(u"displayNodeDerivativeLabelsD2_checkBox")
-        sizePolicy6.setHeightForWidth(self.displayNodeDerivativeLabelsD2_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD2_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD2_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD2_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD2_checkBox)
 
         self.displayNodeDerivativeLabelsD3_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD3_checkBox.setObjectName(u"displayNodeDerivativeLabelsD3_checkBox")
-        sizePolicy6.setHeightForWidth(self.displayNodeDerivativeLabelsD3_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD3_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD3_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD3_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD3_checkBox)
 
         self.displayNodeDerivativeLabelsD12_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD12_checkBox.setObjectName(u"displayNodeDerivativeLabelsD12_checkBox")
-        sizePolicy6.setHeightForWidth(self.displayNodeDerivativeLabelsD12_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD12_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD12_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD12_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD12_checkBox)
 
         self.displayNodeDerivativeLabelsD13_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD13_checkBox.setObjectName(u"displayNodeDerivativeLabelsD13_checkBox")
-        sizePolicy6.setHeightForWidth(self.displayNodeDerivativeLabelsD13_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD13_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD13_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD13_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD13_checkBox)
 
         self.displayNodeDerivativeLabelsD23_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD23_checkBox.setObjectName(u"displayNodeDerivativeLabelsD23_checkBox")
-        sizePolicy6.setHeightForWidth(self.displayNodeDerivativeLabelsD23_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD23_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD23_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD23_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD23_checkBox)
 
         self.displayNodeDerivativeLabelsD123_checkBox = QCheckBox(self.displayNodeDerivativeLabels_frame)
         self.displayNodeDerivativeLabelsD123_checkBox.setObjectName(u"displayNodeDerivativeLabelsD123_checkBox")
-        sizePolicy6.setHeightForWidth(self.displayNodeDerivativeLabelsD123_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayNodeDerivativeLabelsD123_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.displayNodeDerivativeLabelsD123_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayNodeDerivativeLabelsD123_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_7.addWidget(self.displayNodeDerivativeLabelsD123_checkBox)
 
@@ -600,8 +596,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.displayElementAxes_checkBox = QCheckBox(self.displayElements_frame)
         self.displayElementAxes_checkBox.setObjectName(u"displayElementAxes_checkBox")
-        sizePolicy6.setHeightForWidth(self.displayElementAxes_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayElementAxes_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.displayElementAxes_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayElementAxes_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_4.addWidget(self.displayElementAxes_checkBox)
 
@@ -626,8 +622,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.displayLinesExterior_checkBox = QCheckBox(self.displayLines_frame)
         self.displayLinesExterior_checkBox.setObjectName(u"displayLinesExterior_checkBox")
-        sizePolicy6.setHeightForWidth(self.displayLinesExterior_checkBox.sizePolicy().hasHeightForWidth())
-        self.displayLinesExterior_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.displayLinesExterior_checkBox.sizePolicy().hasHeightForWidth())
+        self.displayLinesExterior_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_5.addWidget(self.displayLinesExterior_checkBox)
 
@@ -652,22 +648,22 @@ class Ui_GeometryFitterWidget(object):
 
         self.displaySurfacesExterior_checkBox = QCheckBox(self.displaySurfaces_frame)
         self.displaySurfacesExterior_checkBox.setObjectName(u"displaySurfacesExterior_checkBox")
-        sizePolicy6.setHeightForWidth(self.displaySurfacesExterior_checkBox.sizePolicy().hasHeightForWidth())
-        self.displaySurfacesExterior_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.displaySurfacesExterior_checkBox.sizePolicy().hasHeightForWidth())
+        self.displaySurfacesExterior_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_3.addWidget(self.displaySurfacesExterior_checkBox)
 
         self.displaySurfacesTranslucent_checkBox = QCheckBox(self.displaySurfaces_frame)
         self.displaySurfacesTranslucent_checkBox.setObjectName(u"displaySurfacesTranslucent_checkBox")
-        sizePolicy6.setHeightForWidth(self.displaySurfacesTranslucent_checkBox.sizePolicy().hasHeightForWidth())
-        self.displaySurfacesTranslucent_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.displaySurfacesTranslucent_checkBox.sizePolicy().hasHeightForWidth())
+        self.displaySurfacesTranslucent_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_3.addWidget(self.displaySurfacesTranslucent_checkBox)
 
         self.displaySurfacesWireframe_checkBox = QCheckBox(self.displaySurfaces_frame)
         self.displaySurfacesWireframe_checkBox.setObjectName(u"displaySurfacesWireframe_checkBox")
-        sizePolicy6.setHeightForWidth(self.displaySurfacesWireframe_checkBox.sizePolicy().hasHeightForWidth())
-        self.displaySurfacesWireframe_checkBox.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.displaySurfacesWireframe_checkBox.sizePolicy().hasHeightForWidth())
+        self.displaySurfacesWireframe_checkBox.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_3.addWidget(self.displaySurfacesWireframe_checkBox)
 
@@ -741,8 +737,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.done_pushButton = QPushButton(self.bottom_frame)
         self.done_pushButton.setObjectName(u"done_pushButton")
-        sizePolicy6.setHeightForWidth(self.done_pushButton.sizePolicy().hasHeightForWidth())
-        self.done_pushButton.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.done_pushButton.sizePolicy().hasHeightForWidth())
+        self.done_pushButton.setSizePolicy(sizePolicy5)
 
         self.horizontalLayout_2.addWidget(self.done_pushButton)
 
@@ -755,11 +751,11 @@ class Ui_GeometryFitterWidget(object):
 
         self.alignmentsceneviewerwidget = AlignmentSceneviewerWidget(GeometryFitterWidget)
         self.alignmentsceneviewerwidget.setObjectName(u"alignmentsceneviewerwidget")
-        sizePolicy7 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy7.setHorizontalStretch(1)
-        sizePolicy7.setVerticalStretch(1)
-        sizePolicy7.setHeightForWidth(self.alignmentsceneviewerwidget.sizePolicy().hasHeightForWidth())
-        self.alignmentsceneviewerwidget.setSizePolicy(sizePolicy7)
+        sizePolicy6 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy6.setHorizontalStretch(1)
+        sizePolicy6.setVerticalStretch(1)
+        sizePolicy6.setHeightForWidth(self.alignmentsceneviewerwidget.sizePolicy().hasHeightForWidth())
+        self.alignmentsceneviewerwidget.setSizePolicy(sizePolicy6)
         self.alignmentsceneviewerwidget.setAutoFillBackground(False)
 
         self.horizontalLayout.addWidget(self.alignmentsceneviewerwidget)
