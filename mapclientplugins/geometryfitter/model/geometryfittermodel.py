@@ -55,7 +55,8 @@ class GeometryFitterModel(object):
             "displaySurfaces": True,
             "displaySurfacesExterior": True,
             "displaySurfacesTranslucent": True,
-            "displaySurfacesWireframe": False
+            "displaySurfacesWireframe": False,
+            "displaySubgroupField":  None
         }
         self._loadSettings()
         self._fitter.load()
@@ -694,6 +695,13 @@ class GeometryFitterModel(object):
             for graphicsName in graphicsNames:
                 graphics = scene.findGraphicsByName(graphicsName)
                 graphics.setSubgroupField(useSubgroupField)
+
+    def setGraphicsDisplaySubgroupFieldName(self, subgroupFieldName):
+        self._settings["displaySubgroupField"] = subgroupFieldName
+        self.setGraphicsDisplaySubgroupField(self.getFieldmodule().findFieldByName(subgroupFieldName) if subgroupFieldName else Field())
+
+    def getGraphicsDisplaySubgroupFieldName(self):
+        return self._settings["displaySubgroupField"]
 
     def autorangeSpectrum(self):
         scene = self._fitter.getRegion().getScene()

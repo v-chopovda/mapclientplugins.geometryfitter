@@ -102,6 +102,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
         if sceneviewer is not None:
             self._model.createGraphics()
+            self._setupGroupDisplayWidgets()
             sceneviewer.setScene(self._model.getScene())
             self._refreshGraphics()
             groupName = self._getGroupSettingsGroupName()
@@ -268,10 +269,10 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         Update the order of steps in fitterSteps.
         """ 
         if newRow != prevRow:
-            fitterSteps = self._fitter.getFitterSteps()
-            if newRow != 0 and prevRow !=0:
+            if newRow != 0 and prevRow != 0:
                 sceneChanged, endIndex = self._fitter.moveFitterStep(prevRow, newRow, self._model.getOutputModelFileNameStem())
                 self._reloadSteps(sceneChanged, endIndex)
+                fitterSteps = self._fitter.getFitterSteps()
                 self._currentFitterStep = fitterSteps[newRow]
             self._buildStepsList()
 
@@ -389,7 +390,12 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.groupDisplay_fieldChooser.setRegion(self._fitter.getRegion())
         self._ui.groupDisplay_fieldChooser.setNullObjectName("- All -")
         self._ui.groupDisplay_fieldChooser.setConditional(field_is_managed_group)
-        self._ui.groupDisplay_fieldChooser.setField(Field())
+        displayGroupFieldName = self._model.getGraphicsDisplaySubgroupFieldName()
+        displayGroupField = Field()
+        if displayGroupFieldName:
+            displayGroupField = self._fitter.getFieldmodule().findFieldByName(displayGroupFieldName)
+        self._ui.groupDisplay_fieldChooser.setField(displayGroupField)
+        self._model.setGraphicsDisplaySubgroupFieldName(displayGroupField.getName() if displayGroupField else None)
 
     def _updateDisplayWidgets(self):
         """
@@ -430,7 +436,8 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         """
         Callback for change in group display field chooser widget.
         """
-        self._model.setGraphicsDisplaySubgroupField(self._ui.groupDisplay_fieldChooser.getField())
+        displayGroupField = self._ui.groupDisplay_fieldChooser.getField()
+        self._model.setGraphicsDisplaySubgroupFieldName(displayGroupField.getName() if displayGroupField else None)
 
     def _displayAxesClicked(self):
         self._model.setDisplayAxes(self._ui.displayAxes_checkBox.isChecked())
