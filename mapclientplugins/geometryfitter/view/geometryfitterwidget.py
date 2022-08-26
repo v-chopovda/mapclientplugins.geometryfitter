@@ -400,6 +400,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
             displayGroupField = self._fitter.getFieldmodule().findFieldByName(displayGroupFieldName)
         self._ui.groupDisplay_fieldChooser.setField(displayGroupField)
         self._model.setGraphicsDisplaySubgroupFieldName(displayGroupField.getName() if displayGroupField else None)
+        self._model.setGraphicsDisplaySubgroupField(displayGroupField)
 
     def _updateDisplayWidgets(self):
         """
@@ -452,6 +453,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         """
         displayGroupField = self._ui.groupDisplay_fieldChooser.getField()
         self._model.setGraphicsDisplaySubgroupFieldName(displayGroupField.getName() if displayGroupField else None)
+        self._model.setGraphicsDisplaySubgroupField(displayGroupField)
 
     def _displayAxesClicked(self):
         self._model.setDisplayAxes(self._ui.displayAxes_checkBox.isChecked())
