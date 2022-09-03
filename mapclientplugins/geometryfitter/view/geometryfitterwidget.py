@@ -116,8 +116,10 @@ class GeometryFitterWidget(QtWidgets.QWidget):
     def _refreshGraphics(self):
         """
         Autorange spectrum and force redraw of graphics.
+        Also show up-to-date error estimates.
         """
         self._model.autorangeSpectrum()
+        self._displayErrors()
 
     def _makeConnections(self):
         self._makeConnectionsGeneral()
