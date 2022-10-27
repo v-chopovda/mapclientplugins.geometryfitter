@@ -38,9 +38,9 @@ readme = readfile("README.rst", split=True)[3:]  # skip title
 requires = [
     # minimal requirements listing
     "opencmiss.maths",
-    "scaffoldfitter >= 0.3.0",
+    "scaffoldfitter >= 0.6.0",
     "opencmiss.utils >= 0.3",
-    "opencmiss.zinc > 3.4",
+    "opencmiss.zinc >= 3.10",
     "opencmiss.zincwidgets >= 2.0",
     "PySide2"
 ]

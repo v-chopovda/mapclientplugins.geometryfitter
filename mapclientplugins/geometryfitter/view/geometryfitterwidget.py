@@ -20,6 +20,18 @@ from scaffoldfitter.fitterstepfit import FitterStepFit
 logger = logging.getLogger(__name__)
 
 
+def field_is_managed_group_mesh(field, mesh):
+    """
+    Chooser conditional function limiting to field group with a mesh group for mesh.
+    """
+    if field_is_managed_group(field):
+        elementGroup = field.castGroup().getFieldElementGroup(mesh)
+        if elementGroup.isValid():
+            if elementGroup.getMeshGroup().getSize() > 0:
+                return True
+    return False
+
+
 def QLineEdit_parseVector3(lineedit):
     """
     Return 3 component real vector as list from comma separated text in QLineEdit widget
@@ -678,7 +690,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
     def _groupConfigDataProportionEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.groupConfigDataProportion_lineEdit)
         groupName = self._getGroupSettingsGroupName()
-        if value > 0.0:
+        if value >= 0.0:
             self._getConfig().setGroupDataProportion(groupName, value)
         else:
             print("Invalid model Data Proportion entered")
@@ -769,10 +781,19 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.configModelCoordinates_fieldChooser.setNullObjectName("-")
         self._ui.configModelCoordinates_fieldChooser.setConditional(field_is_managed_coordinates)
         self._ui.configModelCoordinates_fieldChooser.setField(self._fitter.getModelCoordinatesField())
+        self._ui.configModelFitGroup_fieldChooser.setRegion(self._fitter.getRegion())
+        self._ui.configModelFitGroup_fieldChooser.setNullObjectName("-")
+        self._ui.configModelFitGroup_fieldChooser.setConditional(
+            lambda field: field_is_managed_group_mesh(field, self._fitter.getHighestDimensionMesh()))
+        self._ui.configModelFitGroup_fieldChooser.setField(self._fitter.getModelFitGroup())
         self._ui.configFibreOrientation_fieldChooser.setRegion(self._fitter.getRegion())
         self._ui.configFibreOrientation_fieldChooser.setNullObjectName("-")
         self._ui.configFibreOrientation_fieldChooser.setConditional(field_is_managed_real_1_to_3_components)
         self._ui.configFibreOrientation_fieldChooser.setField(self._fitter.getFibreField())
+        self._ui.configFlattenGroup_fieldChooser.setRegion(self._fitter.getRegion())
+        self._ui.configFlattenGroup_fieldChooser.setNullObjectName("-")
+        self._ui.configFlattenGroup_fieldChooser.setConditional(field_is_managed_group)
+        self._ui.configFlattenGroup_fieldChooser.setField(self._fitter.getFlattenGroup())
         self._ui.configDataCoordinates_fieldChooser.setRegion(self._fitter.getRegion())
         self._ui.configDataCoordinates_fieldChooser.setNullObjectName("-")
         self._ui.configDataCoordinates_fieldChooser.setConditional(field_is_managed_coordinates)
@@ -785,7 +806,9 @@ class GeometryFitterWidget(QtWidgets.QWidget):
 
     def _makeConnectionsConfig(self):
         self._ui.configModelCoordinates_fieldChooser.currentIndexChanged.connect(self._configModelCoordinatesFieldChanged)
+        self._ui.configModelFitGroup_fieldChooser.currentIndexChanged.connect(self._configModelFitGroupChanged)
         self._ui.configFibreOrientation_fieldChooser.currentIndexChanged.connect(self._configFibreOrientationFieldChanged)
+        self._ui.configFlattenGroup_fieldChooser.currentIndexChanged.connect(self._configFlattenGroupChanged)
         self._ui.configDataCoordinates_fieldChooser.currentIndexChanged.connect(self._configDataCoordinatesFieldChanged)
         self._ui.configMarkerGroup_fieldChooser.currentIndexChanged.connect(self._configMarkerGroupChanged)
         self._ui.configDiagnosticLevel_spinBox.valueChanged.connect(self._configDiagnosticLevelValueChanged)
@@ -810,11 +833,23 @@ class GeometryFitterWidget(QtWidgets.QWidget):
             self._fitter.setModelCoordinatesField(field)
             self._model.createGraphics()
 
+    def _configModelFitGroupChanged(self, index):
+        """
+        Callback for change in model fit group field chooser widget.
+        """
+        self._fitter.setModelFitGroup(self._ui.configModelFitGroup_fieldChooser.getField())
+
     def _configFibreOrientationFieldChanged(self, index):
         """
         Callback for change in model coordinates field chooser widget.
         """
         self._fitter.setFibreField(self._ui.configFibreOrientation_fieldChooser.getField())
+
+    def _configFlattenGroupChanged(self, index):
+        """
+        Callback for change in flatten group field chooser widget.
+        """
+        self._fitter.setFlattenGroup(self._ui.configFlattenGroup_fieldChooser.getField())
 
     def _configDataCoordinatesFieldChanged(self, index):
         """
