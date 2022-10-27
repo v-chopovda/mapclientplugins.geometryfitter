@@ -423,21 +423,21 @@ class Ui_GeometryFitterWidget(object):
 
         self.horizontalLayout_8.addWidget(self.displayAxes_checkBox)
 
-        self.groupDisplay_label = QLabel(self.displayMisc_frame)
-        self.groupDisplay_label.setObjectName(u"groupDisplay_label")
+        self.displayMisc_horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_8.addWidget(self.groupDisplay_label)
+        self.horizontalLayout_8.addItem(self.displayMisc_horizontalSpacer)
 
-        self.groupDisplay_fieldChooser = FieldChooserWidget(self.displayMisc_frame)
-        self.groupDisplay_fieldChooser.setObjectName(u"groupDisplay_fieldChooser")
-        sizePolicy3.setHeightForWidth(self.groupDisplay_fieldChooser.sizePolicy().hasHeightForWidth())
-        self.groupDisplay_fieldChooser.setSizePolicy(sizePolicy3)
+        self.displayGroup_label = QLabel(self.displayMisc_frame)
+        self.displayGroup_label.setObjectName(u"displayGroup_label")
 
-        self.horizontalLayout_8.addWidget(self.groupDisplay_fieldChooser)
+        self.horizontalLayout_8.addWidget(self.displayGroup_label)
 
-        self.displaytMisc_horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.displayGroup_fieldChooser = FieldChooserWidget(self.displayMisc_frame)
+        self.displayGroup_fieldChooser.setObjectName(u"displayGroup_fieldChooser")
+        sizePolicy3.setHeightForWidth(self.displayGroup_fieldChooser.sizePolicy().hasHeightForWidth())
+        self.displayGroup_fieldChooser.setSizePolicy(sizePolicy3)
 
-        self.horizontalLayout_8.addItem(self.displaytMisc_horizontalSpacer)
+        self.horizontalLayout_8.addWidget(self.displayGroup_fieldChooser)
 
 
         self.verticalLayout_7.addWidget(self.displayMisc_frame)
@@ -856,9 +856,9 @@ class Ui_GeometryFitterWidget(object):
         self.groupFitStrainPenalty_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Strain Penalty", None))
         self.groupFitCurvaturePenalty_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Curvature Penalty", None))
         self.displayAxes_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Axes", None))
-        self.groupDisplay_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Group:", None))
+        self.displayGroup_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Group:", None))
 #if QT_CONFIG(tooltip)
-        self.groupDisplay_fieldChooser.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Optional group to limit display of model and data to.</p></body></html>", None))
+        self.displayGroup_fieldChooser.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Optional group to limit display of model and data to.</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.displayMarkerDataNames_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Marker data names", None))
         self.displayMarkerDataPoints_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Marker data points", None))

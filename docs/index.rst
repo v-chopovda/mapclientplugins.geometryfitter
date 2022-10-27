@@ -79,7 +79,7 @@ To illustrate building a sequence of fit steps we will use a `rat heart ventricl
 
 .. note::
 
-   Fitting is **slow**. Even with this modest-sized example, both data projections and fit calculations take several seconds to run, and for large problems this can become minutes. For this reason the **Geometry Fitter** interface requires the user to invoke fitting steps, as explained below, and ... patience is needed!
+   Fitting is **slow**. Even with this modest-sized example, fit calculations take several seconds to run, and for large problems this can become minutes. For this reason the **Geometry Fitter** interface requires the user to invoke fitting steps, as explained below, and ... patience is needed!
 
 
 Config

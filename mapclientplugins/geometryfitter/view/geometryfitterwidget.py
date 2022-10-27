@@ -115,10 +115,11 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         """
         self._setupConfigWidgets()
         self._setupGroupSettingWidgets()
+        self._updateGroupSettingWidgets()  # needed because group is generally reset to None
         sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
         if sceneviewer is not None:
             self._model.createGraphics()
-            self._setupGroupDisplayWidgets()
+            self._setupDisplayGroupWidgets()
             sceneviewer.setScene(self._model.getScene())
             self._refreshGraphics()
             groupName = self._getGroupSettingsGroupName()
@@ -399,29 +400,25 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.displaySurfacesExterior_checkBox.clicked.connect(self._displaySurfacesExteriorClicked)
         self._ui.displaySurfacesTranslucent_checkBox.clicked.connect(self._displaySurfacesTranslucentClicked)
         self._ui.displaySurfacesWireframe_checkBox.clicked.connect(self._displaySurfacesWireframeClicked)
-        self._setupGroupDisplayWidgets()
+        self._setupDisplayGroupWidgets()
     
-    def _setupGroupDisplayWidgets(self):
+    def _setupDisplayGroupWidgets(self):
         """
         Set up group display widgets and display values from fitter object.
         """
-        self._ui.groupDisplay_fieldChooser.setRegion(self._fitter.getRegion())
-        self._ui.groupDisplay_fieldChooser.setNullObjectName("- All -")
-        self._ui.groupDisplay_fieldChooser.setConditional(field_is_managed_group)
-        displayGroupFieldName = self._model.getGraphicsDisplaySubgroupFieldName()
-        displayGroupField = Field()
-        if displayGroupFieldName:
-            displayGroupField = self._fitter.getFieldmodule().findFieldByName(displayGroupFieldName)
-        self._ui.groupDisplay_fieldChooser.setField(displayGroupField)
-        self._model.setGraphicsDisplaySubgroupFieldName(displayGroupField.getName() if displayGroupField else None)
-        self._model.setGraphicsDisplaySubgroupField(displayGroupField)
+        self._ui.displayGroup_fieldChooser.setRegion(self._fitter.getRegion())
+        self._ui.displayGroup_fieldChooser.setNullObjectName("- All -")
+        self._ui.displayGroup_fieldChooser.setConditional(field_is_managed_group)
+        displayGroupField = self._model.getGraphicsDisplaySubgroupField()
+        if displayGroupField:
+            self._ui.displayGroup_fieldChooser.setField(displayGroupField)
 
     def _updateDisplayWidgets(self):
         """
         Update display widgets to display settings for model graphics display.
         """
         self._ui.displayAxes_checkBox.setChecked(self._model.isDisplayAxes())
-        self._ui.groupDisplay_fieldChooser.currentIndexChanged.connect(self._displayGroupChanged)
+        self._ui.displayGroup_fieldChooser.currentIndexChanged.connect(self._displayGroupChanged)
         self._ui.displayMarkerDataPoints_checkBox.setChecked(self._model.isDisplayMarkerDataPoints())
         self._ui.displayMarkerDataNames_checkBox.setChecked(self._model.isDisplayMarkerDataNames())
         self._ui.displayMarkerDataProjections_checkBox.setChecked(self._model.isDisplayMarkerDataProjections())
@@ -463,10 +460,9 @@ class GeometryFitterWidget(QtWidgets.QWidget):
 
     def _displayGroupChanged(self, index):
         """
-        Callback for change in group display field chooser widget.
+        Callback for change in display group field chooser widget.
         """
-        displayGroupField = self._ui.groupDisplay_fieldChooser.getField()
-        self._model.setGraphicsDisplaySubgroupFieldName(displayGroupField.getName() if displayGroupField else None)
+        displayGroupField = self._ui.displayGroup_fieldChooser.getField()
         self._model.setGraphicsDisplaySubgroupField(displayGroupField)
 
     def _displayAxesClicked(self):
@@ -693,7 +689,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         if value >= 0.0:
             self._getConfig().setGroupDataProportion(groupName, value)
         else:
-            print("Invalid model Data Proportion entered")
+            print("Invalid group data proportion entered", value)
         self._updateGroupConfigDataProportion()
 
     def _updateGroupFitDataWeight(self):
