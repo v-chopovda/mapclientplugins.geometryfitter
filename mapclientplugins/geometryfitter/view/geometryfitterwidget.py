@@ -556,7 +556,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         Set up group setting widgets and display values from fitter object.
         """
         self._ui.groupSettings_fieldChooser.setRegion(self._fitter.getRegion())
-        self._ui.groupSettings_fieldChooser.setNullObjectName("-")
+        self._ui.groupSettings_fieldChooser.setNullObjectName("- Default -")
         self._ui.groupSettings_fieldChooser.setConditional(field_is_managed_group)
         self._ui.groupSettings_fieldChooser.setField(Field())
 
