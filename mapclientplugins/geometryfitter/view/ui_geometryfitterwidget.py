@@ -196,56 +196,57 @@ class Ui_GeometryFitterWidget(object):
         self.align_groupBox.setObjectName(u"align_groupBox")
         sizePolicy.setHeightForWidth(self.align_groupBox.sizePolicy().hasHeightForWidth())
         self.align_groupBox.setSizePolicy(sizePolicy)
-        self.formLayout_2 = QFormLayout(self.align_groupBox)
-        self.formLayout_2.setObjectName(u"formLayout_2")
-        self.formLayout_2.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
+        self.alignStep_formLayout = QFormLayout(self.align_groupBox)
+        self.alignStep_formLayout.setObjectName(u"alignStep_formLayout")
+        self.alignStep_formLayout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
         self.alignGroups_checkBox = QCheckBox(self.align_groupBox)
         self.alignGroups_checkBox.setObjectName(u"alignGroups_checkBox")
+        self.alignGroups_checkBox.setToolTipDuration(2)
 
-        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.alignGroups_checkBox)
+        self.alignStep_formLayout.setWidget(1, QFormLayout.LabelRole, self.alignGroups_checkBox)
 
         self.alignMarkers_checkBox = QCheckBox(self.align_groupBox)
         self.alignMarkers_checkBox.setObjectName(u"alignMarkers_checkBox")
         sizePolicy.setHeightForWidth(self.alignMarkers_checkBox.sizePolicy().hasHeightForWidth())
         self.alignMarkers_checkBox.setSizePolicy(sizePolicy)
 
-        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.alignMarkers_checkBox)
+        self.alignStep_formLayout.setWidget(1, QFormLayout.FieldRole, self.alignMarkers_checkBox)
 
         self.alignRotation_label = QLabel(self.align_groupBox)
         self.alignRotation_label.setObjectName(u"alignRotation_label")
 
-        self.formLayout_2.setWidget(4, QFormLayout.LabelRole, self.alignRotation_label)
+        self.alignStep_formLayout.setWidget(4, QFormLayout.LabelRole, self.alignRotation_label)
 
         self.alignRotation_lineEdit = QLineEdit(self.align_groupBox)
         self.alignRotation_lineEdit.setObjectName(u"alignRotation_lineEdit")
         sizePolicy3.setHeightForWidth(self.alignRotation_lineEdit.sizePolicy().hasHeightForWidth())
         self.alignRotation_lineEdit.setSizePolicy(sizePolicy3)
 
-        self.formLayout_2.setWidget(4, QFormLayout.FieldRole, self.alignRotation_lineEdit)
+        self.alignStep_formLayout.setWidget(4, QFormLayout.FieldRole, self.alignRotation_lineEdit)
 
         self.alignScale_label = QLabel(self.align_groupBox)
         self.alignScale_label.setObjectName(u"alignScale_label")
 
-        self.formLayout_2.setWidget(5, QFormLayout.LabelRole, self.alignScale_label)
+        self.alignStep_formLayout.setWidget(5, QFormLayout.LabelRole, self.alignScale_label)
 
         self.alignScale_lineEdit = QLineEdit(self.align_groupBox)
         self.alignScale_lineEdit.setObjectName(u"alignScale_lineEdit")
         sizePolicy3.setHeightForWidth(self.alignScale_lineEdit.sizePolicy().hasHeightForWidth())
         self.alignScale_lineEdit.setSizePolicy(sizePolicy3)
 
-        self.formLayout_2.setWidget(5, QFormLayout.FieldRole, self.alignScale_lineEdit)
+        self.alignStep_formLayout.setWidget(5, QFormLayout.FieldRole, self.alignScale_lineEdit)
 
         self.alignTranslation_label = QLabel(self.align_groupBox)
         self.alignTranslation_label.setObjectName(u"alignTranslation_label")
 
-        self.formLayout_2.setWidget(6, QFormLayout.LabelRole, self.alignTranslation_label)
+        self.alignStep_formLayout.setWidget(6, QFormLayout.LabelRole, self.alignTranslation_label)
 
         self.alignTranslation_lineEdit = QLineEdit(self.align_groupBox)
         self.alignTranslation_lineEdit.setObjectName(u"alignTranslation_lineEdit")
         sizePolicy3.setHeightForWidth(self.alignTranslation_lineEdit.sizePolicy().hasHeightForWidth())
         self.alignTranslation_lineEdit.setSizePolicy(sizePolicy3)
 
-        self.formLayout_2.setWidget(6, QFormLayout.FieldRole, self.alignTranslation_lineEdit)
+        self.alignStep_formLayout.setWidget(6, QFormLayout.FieldRole, self.alignTranslation_lineEdit)
 
 
         self.verticalLayout_3.addWidget(self.align_groupBox)
@@ -683,28 +684,28 @@ class Ui_GeometryFitterWidget(object):
         self.error_group_frame.setObjectName(u"error_group_frame")
         self.error_group_frame.setFrameShape(QFrame.StyledPanel)
         self.error_group_frame.setFrameShadow(QFrame.Raised)
-        self.formLayout_21 = QFormLayout(self.error_group_frame)
-        self.formLayout_21.setObjectName(u"formLayout_21")
-        self.formLayout_21.setContentsMargins(0, 0, 0, 0)
+        self.formLayout_2 = QFormLayout(self.error_group_frame)
+        self.formLayout_2.setObjectName(u"formLayout_2")
+        self.formLayout_2.setContentsMargins(0, 0, 0, 0)
         self.displayRMSError_label = QLabel(self.error_group_frame)
         self.displayRMSError_label.setObjectName(u"displayRMSError_label")
 
-        self.formLayout_21.setWidget(0, QFormLayout.LabelRole, self.displayRMSError_label)
+        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.displayRMSError_label)
 
         self.displayRMSError_lineEdit = QLineEdit(self.error_group_frame)
         self.displayRMSError_lineEdit.setObjectName(u"displayRMSError_lineEdit")
 
-        self.formLayout_21.setWidget(0, QFormLayout.FieldRole, self.displayRMSError_lineEdit)
+        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.displayRMSError_lineEdit)
 
         self.displayMaxError_label = QLabel(self.error_group_frame)
         self.displayMaxError_label.setObjectName(u"displayMaxError_label")
 
-        self.formLayout_21.setWidget(1, QFormLayout.LabelRole, self.displayMaxError_label)
+        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.displayMaxError_label)
 
         self.displayMaxError_lineEdit = QLineEdit(self.error_group_frame)
         self.displayMaxError_lineEdit.setObjectName(u"displayMaxError_lineEdit")
 
-        self.formLayout_21.setWidget(1, QFormLayout.FieldRole, self.displayMaxError_lineEdit)
+        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.displayMaxError_lineEdit)
 
 
         self.verticalLayout_12.addWidget(self.error_group_frame)
@@ -789,7 +790,13 @@ class Ui_GeometryFitterWidget(object):
 #endif // QT_CONFIG(tooltip)
         self.config_groupBox.setTitle(QCoreApplication.translate("GeometryFitterWidget", u"Config", None))
         self.align_groupBox.setTitle(QCoreApplication.translate("GeometryFitterWidget", u"Align", None))
+#if QT_CONFIG(tooltip)
+        self.alignGroups_checkBox.setToolTip("")
+#endif // QT_CONFIG(tooltip)
         self.alignGroups_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Align groups", None))
+#if QT_CONFIG(tooltip)
+        self.alignMarkers_checkBox.setToolTip("")
+#endif // QT_CONFIG(tooltip)
         self.alignMarkers_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Align markers", None))
         self.alignRotation_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Rotation:", None))
         self.alignScale_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Scale:", None))

@@ -226,6 +226,12 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         step = fitterSteps[clickedIndex]
         if step != self._currentFitterStep:
             self._currentFitterStep = step
+            if isinstance(self._currentFitterStep, FitterStepAlign):
+                self._model.setStateAlign(True)
+                self._model.setAlignStep(self._currentFitterStep)
+                self._model.setAlignSettingsChangeCallback(self._alignCallback)
+            else:
+                self._model.setStateAlign(False)
             self._updateFitterStepWidgets()
         isInitialConfig = step is self._fitter.getInitialFitterStepConfig()
         isChecked = True if isInitialConfig else (item.checkState() == QtCore.Qt.Checked)
@@ -862,14 +868,37 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.alignRotation_lineEdit.setText(", ".join(realFormat.format(value) for value in align.getRotation()))
         self._ui.alignScale_lineEdit.setText(realFormat.format(align.getScale()))
         self._ui.alignTranslation_lineEdit.setText(", ".join(realFormat.format(value) for value in align.getTranslation()))
+        self._updateManualAligment()
+
+    def _alignCallback(self):
+        self._updateAlignWidgets()
+        fitterSteps = self._fitter.getFitterSteps()
+        index = fitterSteps.index(self._currentFitterStep)
+        self._fitter.run(fitterSteps[index], reorder = True)
+        for index in range(0, len(fitterSteps)):
+            self._refreshStepItem(fitterSteps[index])
+        self._sceneChanged()
 
     def _alignGroupsClicked(self):
         state = self._ui.alignGroups_checkBox.checkState()
         self._getAlign().setAlignGroups(state == QtCore.Qt.Checked)
+        self._updateManualAligment()
 
     def _alignMarkersClicked(self):
         state = self._ui.alignMarkers_checkBox.checkState()
         self._getAlign().setAlignMarkers(state == QtCore.Qt.Checked)
+        self._updateManualAligment()
+
+    def _updateManualAligment(self):
+        isAlignGroups = self._ui.alignGroups_checkBox.checkState()
+        isAlignMarkers = self._ui.alignMarkers_checkBox.checkState()
+        if isAlignGroups == QtCore.Qt.Checked or isAlignMarkers == QtCore.Qt.Checked:
+            manualAligentEnabled = False
+        else:
+            manualAligentEnabled = True
+        self._ui.alignRotation_lineEdit.setEnabled(manualAligentEnabled)
+        self._ui.alignScale_lineEdit.setEnabled(manualAligentEnabled)
+        self._ui.alignTranslation_lineEdit.setEnabled(manualAligentEnabled)
 
     def _alignRotationEntered(self):
         values = QLineEdit_parseVector3(self._ui.alignRotation_lineEdit)

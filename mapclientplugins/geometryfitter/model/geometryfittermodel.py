@@ -60,6 +60,9 @@ class GeometryFitterModel(object):
         }
         self._loadSettings()
         self._fitter.load()
+        self._isStateAlign = False
+        self._alignStep = None
+        self._modelTransformedCoordinateField = None
 
     def _initGraphicsModules(self):
         context = self._fitter.getContext()
@@ -711,21 +714,31 @@ class GeometryFitterModel(object):
     # === Align Utilities ===
 
     def isStateAlign(self):
-        return False  # disabled as not implemented
+        return self._isStateAlign
+
+    def setStateAlign(self, isStateAlign):
+        self._isStateAlign = isStateAlign
+
+    def setAlignStep(self, alignStep):
+        self._alignStep = alignStep
+
+    def setAlignSettingsChangeCallback(self, alignSettingsChangeCallback):
+        self._alignSettingsChangeCallback = alignSettingsChangeCallback
 
     def rotateModel(self, axis, angle):
         mat1 = axis_angle_to_rotation_matrix(axis, angle)
-        mat2 = euler_to_rotation_matrix(self._alignSettings["euler_angles"])
+        mat2 = euler_to_rotation_matrix(self._alignStep.getRotation())
         newmat = matrix_mult(mat1, mat2)
-        self._alignSettings["euler_angles"] = rotation_matrix_to_euler(newmat)
+        self._alignStep.setRotation(rotation_matrix_to_euler(newmat))
         self._applyAlignSettings()
 
     def scaleModel(self, factor):
-        self._alignSettings["scale"] *= factor
+        newScale = self._alignStep.getScale() * factor
+        self._alignStep.setScale(newScale)
         self._applyAlignSettings()
 
-    def translateModel(self, relativeOffset):
-        self._alignSettings["offset"] = add(self._alignSettings["offset"], relativeOffset)
+    def offsetModel(self, relativeOffset):
+        self._alignStep.setTranslation(add(self._alignStep.getTranslation(), relativeOffset))
         self._applyAlignSettings()
 
     def _autorangeSpectrum(self):
@@ -735,3 +748,8 @@ class GeometryFitterModel(object):
         scenefiltermodule = scene.getScenefiltermodule()
         scenefilter = scenefiltermodule.getDefaultScenefilter()
         spectrum.autorange(scene, scenefilter)
+
+    def _applyAlignSettings(self):
+        if not self._fitter.getModelCoordinatesField().isValid():
+            print("Can't create transformed model coordinate field. Is problem 2-D?")
+        self._alignSettingsChangeCallback()
