@@ -868,7 +868,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.alignRotation_lineEdit.setText(", ".join(realFormat.format(value) for value in align.getRotation()))
         self._ui.alignScale_lineEdit.setText(realFormat.format(align.getScale()))
         self._ui.alignTranslation_lineEdit.setText(", ".join(realFormat.format(value) for value in align.getTranslation()))
-        self._updateManualAligment()
+        self._updateManualAlignment()
 
     def _alignCallback(self):
         self._updateAlignWidgets()
@@ -882,23 +882,24 @@ class GeometryFitterWidget(QtWidgets.QWidget):
     def _alignGroupsClicked(self):
         state = self._ui.alignGroups_checkBox.checkState()
         self._getAlign().setAlignGroups(state == QtCore.Qt.Checked)
-        self._updateManualAligment()
+        self._updateManualAlignment()
 
     def _alignMarkersClicked(self):
         state = self._ui.alignMarkers_checkBox.checkState()
         self._getAlign().setAlignMarkers(state == QtCore.Qt.Checked)
-        self._updateManualAligment()
+        self._updateManualAlignment()
 
-    def _updateManualAligment(self):
+    def _updateManualAlignment(self):
         isAlignGroups = self._ui.alignGroups_checkBox.checkState()
         isAlignMarkers = self._ui.alignMarkers_checkBox.checkState()
         if isAlignGroups == QtCore.Qt.Checked or isAlignMarkers == QtCore.Qt.Checked:
-            manualAligentEnabled = False
+            manualAlignmentEnabled = False
         else:
-            manualAligentEnabled = True
-        self._ui.alignRotation_lineEdit.setEnabled(manualAligentEnabled)
-        self._ui.alignScale_lineEdit.setEnabled(manualAligentEnabled)
-        self._ui.alignTranslation_lineEdit.setEnabled(manualAligentEnabled)
+            manualAlignmentEnabled = True
+        self._model.setStateAlign(manualAlignmentEnabled)
+        self._ui.alignRotation_lineEdit.setEnabled(manualAlignmentEnabled)
+        self._ui.alignScale_lineEdit.setEnabled(manualAlignmentEnabled)
+        self._ui.alignTranslation_lineEdit.setEnabled(manualAlignmentEnabled)
 
     def _alignRotationEntered(self):
         values = QLineEdit_parseVector3(self._ui.alignRotation_lineEdit)
