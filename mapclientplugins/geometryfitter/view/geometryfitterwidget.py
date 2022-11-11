@@ -875,6 +875,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.alignMarkers_checkBox.clicked.connect(self._alignMarkersClicked)
         self._ui.alignRotation_lineEdit.editingFinished.connect(self._alignRotationEntered)
         self._ui.alignScale_lineEdit.editingFinished.connect(self._alignScaleEntered)
+        self._ui.alignScaleProportion_lineEdit.editingFinished.connect(self._alignScaleProportionEntered)
         self._ui.alignTranslation_lineEdit.editingFinished.connect(self._alignTranslationEntered)
 
     def _getAlign(self):
@@ -892,6 +893,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.alignMarkers_checkBox.setCheckState(QtCore.Qt.Checked if align.isAlignMarkers() else QtCore.Qt.Unchecked)
         self._ui.alignRotation_lineEdit.setText(", ".join(realFormat.format(value) for value in align.getRotation()))
         self._ui.alignScale_lineEdit.setText(realFormat.format(align.getScale()))
+        self._ui.alignScaleProportion_lineEdit.setText(realFormat.format(align.getScaleProportion()))
         self._ui.alignTranslation_lineEdit.setText(", ".join(realFormat.format(value) for value in align.getTranslation()))
 
     def _alignGroupsClicked(self):
@@ -916,6 +918,11 @@ class GeometryFitterWidget(QtWidgets.QWidget):
             self._getAlign().setScale(value)
         else:
             print("Invalid model scale entered")
+        self._updateAlignWidgets()
+
+    def _alignScaleProportionEntered(self):
+        value = QLineEdit_parseRealNonNegative(self._ui.alignScaleProportion_lineEdit)
+        self._getAlign().setScaleProportion(value)
         self._updateAlignWidgets()
 
     def _alignTranslationEntered(self):
