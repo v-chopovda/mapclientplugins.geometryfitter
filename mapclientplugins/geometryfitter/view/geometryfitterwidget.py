@@ -686,10 +686,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
     def _groupConfigDataProportionEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.groupConfigDataProportion_lineEdit)
         groupName = self._getGroupSettingsGroupName()
-        if value >= 0.0:
-            self._getConfig().setGroupDataProportion(groupName, value)
-        else:
-            print("Invalid group data proportion entered", value)
+        self._getConfig().setGroupDataProportion(groupName, value)
         self._updateGroupConfigDataProportion()
 
     def _updateGroupFitDataWeight(self):
@@ -713,10 +710,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
     def _groupFitDataWeightEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.groupFitDataWeight_lineEdit)
         groupName = self._getGroupSettingsGroupName()
-        if value > 0.0:
-            self._getFit().setGroupDataWeight(groupName, value)
-        else:
-            print("Invalid model Data Weight entered")
+        self._getFit().setGroupDataWeight(groupName, value)
         self._updateGroupFitDataWeight()
 
     def _updateGroupFitStrainPenalty(self):
@@ -954,46 +948,6 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.fitMaximumSubIterations_spinBox.setValue(fit.getMaximumSubIterations())
         self._ui.fitUpdateReferenceState_checkBox.setCheckState(QtCore.Qt.Checked if fit.isUpdateReferenceState() else QtCore.Qt.Unchecked)
         self._updateGroupSettingWidgets()
-
-    def _fitLineWeightEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.fitLineWeight_lineEdit)
-        if value >= 0.0:
-            self._getFit().setLineWeight(value)
-        else:
-            print("Invalid line weight; must be non-negative")
-        self._updateFitWidgets()
-
-    def _fitMarkerWeightEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.fitMarkerWeight_lineEdit)
-        if value >= 0.0:
-            self._getFit().setMarkerWeight(value)
-        else:
-            print("Invalid marker weight; must be non-negative")
-        self._updateFitWidgets()
-
-    def _fitStrainPenaltyEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.fitStrainPenalty_lineEdit)
-        if value >= 0.0:
-            self._getFit().setStrainPenaltyWeight(value)
-        else:
-            print("Invalid penalty weight; must be non-negative")
-        self._updateFitWidgets()
-
-    def _fitCurvaturePenaltyEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.fitCurvaturePenalty_lineEdit)
-        if value >= 0.0:
-            self._getFit().setCurvaturePenaltyWeight(value)
-        else:
-            print("Invalid penalty weight; must be non-negative")
-        self._updateFitWidgets()
-
-    def _fitEdgeDiscontinuityPenaltyEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.fitEdgeDiscontinuityPenalty_lineEdit)
-        if value >= 0.0:
-            self._getFit().setEdgeDiscontinuityPenaltyWeight(value)
-        else:
-            print("Invalid penalty weight; must be non-negative")
-        self._updateFitWidgets()
 
     def _fitIterationsValueChanged(self, value):
         self._getFit().setNumberOfIterations(value)
