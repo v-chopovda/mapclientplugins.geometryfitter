@@ -559,9 +559,9 @@ class GeometryFitterModel(object):
                 dataProjectionNodeGroup = self._fitter.getDataProjectionNodeGroupField(projectionMeshDimension)
                 if dataProjectionNodeGroup.getNodesetGroup().getSize() == 0:
                     continue
-                dataProjectionCoordinates = self._fitter.getDataProjectionCoordinatesField(projectionMeshDimension)
-                dataProjectionDelta = self._fitter.getDataProjectionDeltaField(projectionMeshDimension)
-                dataProjectionError = self._fitter.getDataProjectionErrorField(projectionMeshDimension)
+                dataProjectionCoordinates = self._fitter.getDataHostCoordinatesField()
+                dataProjectionDelta = self._fitter.getDataDeltaField()
+                dataProjectionError = self._fitter.getDataErrorField()
 
                 dataProjections = scene.createGraphicsPoints()
                 dataProjections.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
@@ -589,10 +589,14 @@ class GeometryFitterModel(object):
                 if dataProjectionCoordinates:
                     dataProjectionPoints.setCoordinateField(dataProjectionCoordinates)
                 pointattr = dataProjectionPoints.getGraphicspointattributes()
-                # pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_DIAMOND)
-                # pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
-                pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
-                dataProjectionPoints.setRenderPointSize(3.0)
+                if True:
+                    # visualize local projection tangent 1
+                    pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_LINE)
+                    pointattr.setOrientationScaleField(self._fitter.getDataProjectionOrientationField())
+                    pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+                else:
+                    pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
+                    dataProjectionPoints.setRenderPointSize(3.0)
                 dataProjectionPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
                 dataProjectionPoints.setName("displayDataProjectionPoints")
                 dataProjectionPoints.setVisibilityFlag(self.isDisplayDataProjectionPoints())

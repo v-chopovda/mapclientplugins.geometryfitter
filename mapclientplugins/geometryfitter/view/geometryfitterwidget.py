@@ -568,6 +568,8 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.groupConfigDataProportion_lineEdit.editingFinished.connect(self._groupConfigDataProportionEntered)
         self._ui.groupFitDataWeight_checkBox.clicked.connect(self._groupFitDataWeightClicked)
         self._ui.groupFitDataWeight_lineEdit.editingFinished.connect(self._groupFitDataWeightEntered)
+        self._ui.groupFitDataSlidingFactor_checkBox.clicked.connect(self._groupFitDataSlidingFactorClicked)
+        self._ui.groupFitDataSlidingFactor_lineEdit.editingFinished.connect(self._groupFitDataSlidingFactorEntered)
         self._ui.groupFitStrainPenalty_checkBox.clicked.connect(self._groupFitStrainPenaltyClicked)
         self._ui.groupFitStrainPenalty_lineEdit.editingFinished.connect(self._groupFitStrainPenaltyEntered)
         self._ui.groupFitCurvaturePenalty_checkBox.clicked.connect(self._groupFitCurvaturePenaltyClicked)
@@ -585,6 +587,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
             self._updateGroupConfigDataProportion()
         elif isFit:
             self._updateGroupFitDataWeight()
+            self._updateGroupFitDataSlidingFactor()
             self._updateGroupFitStrainPenalty()
             self._updateGroupFitCurvaturePenalty()
         self._ui.groupConfigCentralProjection_checkBox.setVisible(isConfig)
@@ -593,6 +596,8 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.groupConfigDataProportion_lineEdit.setVisible(isConfig)
         self._ui.groupFitDataWeight_checkBox.setVisible(isFit)
         self._ui.groupFitDataWeight_lineEdit.setVisible(isFit)
+        self._ui.groupFitDataSlidingFactor_checkBox.setVisible(isFit)
+        self._ui.groupFitDataSlidingFactor_lineEdit.setVisible(isFit)
         self._ui.groupFitStrainPenalty_checkBox.setVisible(isFit)
         self._ui.groupFitStrainPenalty_lineEdit.setVisible(isFit)
         self._ui.groupFitCurvaturePenalty_checkBox.setVisible(isFit)
@@ -690,7 +695,8 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._updateGroupConfigDataProportion()
 
     def _updateGroupFitDataWeight(self):
-        checkBoxTristate, checkBoxState, lineEditDisable, dataWeightStr = self._getGroupSettingDisplayState(self._getFit().getGroupDataWeight)
+        checkBoxTristate, checkBoxState, lineEditDisable, dataWeightStr = \
+            self._getGroupSettingDisplayState(self._getFit().getGroupDataWeight)
         self._ui.groupFitDataWeight_checkBox.setTristate(checkBoxTristate)
         self._ui.groupFitDataWeight_checkBox.setCheckState(checkBoxState)
         self._ui.groupFitDataWeight_lineEdit.setDisabled(lineEditDisable)
@@ -713,8 +719,34 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._getFit().setGroupDataWeight(groupName, value)
         self._updateGroupFitDataWeight()
 
+    def _updateGroupFitDataSlidingFactor(self):
+        checkBoxTristate, checkBoxState, lineEditDisable, dataSlidingFactorStr = \
+            self._getGroupSettingDisplayState(self._getFit().getGroupDataSlidingFactor)
+        self._ui.groupFitDataSlidingFactor_checkBox.setTristate(checkBoxTristate)
+        self._ui.groupFitDataSlidingFactor_checkBox.setCheckState(checkBoxState)
+        self._ui.groupFitDataSlidingFactor_lineEdit.setDisabled(lineEditDisable)
+        self._ui.groupFitDataSlidingFactor_lineEdit.setText(dataSlidingFactorStr)
+
+    def _groupFitDataSlidingFactorClicked(self):
+        checkState = self._ui.groupFitDataSlidingFactor_checkBox.checkState()
+        groupName = self._getGroupSettingsGroupName()
+        if checkState == QtCore.Qt.Unchecked:
+            self._getFit().setGroupDataSlidingFactor(groupName, None)
+        elif checkState == QtCore.Qt.PartiallyChecked:
+            self._getFit().clearGroupDataSlidingFactor(groupName)
+        else:
+            self._groupFitDataSlidingFactorEntered()
+        self._updateGroupFitDataSlidingFactor()
+
+    def _groupFitDataSlidingFactorEntered(self):
+        value = QLineEdit_parseRealNonNegative(self._ui.groupFitDataSlidingFactor_lineEdit)
+        groupName = self._getGroupSettingsGroupName()
+        self._getFit().setGroupDataSlidingFactor(groupName, value)
+        self._updateGroupFitDataSlidingFactor()
+
     def _updateGroupFitStrainPenalty(self):
-        checkBoxTristate, checkBoxState, lineEditDisable, dataStr = self._getGroupSettingDisplayState(self._getFit().getGroupStrainPenalty)
+        checkBoxTristate, checkBoxState, lineEditDisable, dataStr = \
+            self._getGroupSettingDisplayState(self._getFit().getGroupStrainPenalty)
         self._ui.groupFitStrainPenalty_checkBox.setTristate(checkBoxTristate)
         self._ui.groupFitStrainPenalty_checkBox.setCheckState(checkBoxState)
         self._ui.groupFitStrainPenalty_lineEdit.setDisabled(lineEditDisable)
@@ -738,7 +770,8 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._updateGroupFitStrainPenalty()
 
     def _updateGroupFitCurvaturePenalty(self):
-        checkBoxTristate, checkBoxState, lineEditDisable, dataStr = self._getGroupSettingDisplayState(self._getFit().getGroupCurvaturePenalty)
+        checkBoxTristate, checkBoxState, lineEditDisable, dataStr = \
+            self._getGroupSettingDisplayState(self._getFit().getGroupCurvaturePenalty)
         self._ui.groupFitCurvaturePenalty_checkBox.setTristate(checkBoxTristate)
         self._ui.groupFitCurvaturePenalty_checkBox.setCheckState(checkBoxState)
         self._ui.groupFitCurvaturePenalty_lineEdit.setDisabled(lineEditDisable)

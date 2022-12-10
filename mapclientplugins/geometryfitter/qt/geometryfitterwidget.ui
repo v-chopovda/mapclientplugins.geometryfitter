@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1718</width>
-    <height>1365</height>
+    <width>1726</width>
+    <height>1382</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -85,7 +85,16 @@
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_10">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -143,16 +152,25 @@
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>-421</y>
-               <width>675</width>
-               <height>1258</height>
+               <y>-430</y>
+               <width>605</width>
+               <height>1030</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <property name="spacing">
                <number>0</number>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -553,60 +571,107 @@
                  <item row="2" column="0">
                   <widget class="QCheckBox" name="groupConfigCentralProjection_checkBox">
                    <property name="text">
-                    <string>Central Projection</string>
+                    <string>Central projection:</string>
                    </property>
                   </widget>
                  </item>
                  <item row="2" column="1">
                   <widget class="QCheckBox" name="groupConfigSetCentralProjection_checkBox">
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When set, data projections are made as if centroid of group data has been moved to centroid of model group they project on to.&lt;/p&gt;&lt;p&gt;Use early in fit for groups that are not near their data, but generally unset later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
                    <property name="text">
                     <string>Set</string>
+                   </property>
+                   <property name="tristate">
+                    <bool>false</bool>
                    </property>
                   </widget>
                  </item>
                  <item row="3" column="0">
                   <widget class="QCheckBox" name="groupConfigDataProportion_checkBox">
                    <property name="text">
-                    <string>Data Proportion</string>
+                    <string>Data proportion:</string>
+                   </property>
+                   <property name="tristate">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
                  <item row="3" column="1">
                   <widget class="QLineEdit" name="groupConfigDataProportion_lineEdit">
                    <property name="toolTip">
-                    <string>Value from 0.0 to 1.0</string>
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Value from 0.0 to 1.0 giving proportion of data included in fit expression.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                   </widget>
                  </item>
                  <item row="4" column="0">
                   <widget class="QCheckBox" name="groupFitDataWeight_checkBox">
                    <property name="text">
-                    <string>Data Weight</string>
+                    <string>Data weight:</string>
+                   </property>
+                   <property name="tristate">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
                  <item row="4" column="1">
-                  <widget class="QLineEdit" name="groupFitDataWeight_lineEdit"/>
-                 </item>
-                 <item row="5" column="0">
-                  <widget class="QCheckBox" name="groupFitStrainPenalty_checkBox">
-                   <property name="text">
-                    <string>Strain Penalty</string>
+                  <widget class="QLineEdit" name="groupFitDataWeight_lineEdit">
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Real value multiplying the data projection error; higher values make the group fit closer relative to other groups&lt;/p&gt;&lt;p&gt;It is recommended that the default group data weight be kept at 1.0 and other weights or penalties changed relative to it.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="5" column="1">
-                  <widget class="QLineEdit" name="groupFitStrainPenalty_lineEdit"/>
-                 </item>
                  <item row="6" column="0">
-                  <widget class="QCheckBox" name="groupFitCurvaturePenalty_checkBox">
+                  <widget class="QCheckBox" name="groupFitStrainPenalty_checkBox">
                    <property name="text">
-                    <string>Curvature Penalty</string>
+                    <string>Strain penalty</string>
+                   </property>
+                   <property name="tristate">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
                  <item row="6" column="1">
-                  <widget class="QLineEdit" name="groupFitCurvaturePenalty_lineEdit"/>
+                  <widget class="QLineEdit" name="groupFitStrainPenalty_lineEdit">
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Penalty on finite (Lagrange) strains relative to last reference state.&lt;/p&gt;&lt;p&gt;Up to 9 values for 3D model fit, 4 for 2D, 1 for 1D.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="0">
+                  <widget class="QCheckBox" name="groupFitCurvaturePenalty_checkBox">
+                   <property name="text">
+                    <string>Curvature penalty</string>
+                   </property>
+                   <property name="tristate">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="1">
+                  <widget class="QLineEdit" name="groupFitCurvaturePenalty_lineEdit">
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Penalty on curvature (gradient of displacement gradient) relative to last reference state.&lt;/p&gt;&lt;p&gt;Up to 9 values per coordinate component for 3D model fit, 4 for 2D, 1 for 1D.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="0">
+                  <widget class="QCheckBox" name="groupFitDataSlidingFactor_checkBox">
+                   <property name="text">
+                    <string>Data sliding factor:</string>
+                   </property>
+                   <property name="tristate">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="1">
+                  <widget class="QLineEdit" name="groupFitDataSlidingFactor_lineEdit">
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Factor multiplying group weight in sliding directions.&lt;/p&gt;&lt;p&gt;Default value 0.0 gives zero sliding resistance.&lt;/p&gt;&lt;p&gt;A small positive value &amp;lt;&amp;lt; 1.0 may aid stability in the absence of other constraints.&lt;/p&gt;&lt;p&gt;Higher values increasingly apply stretch to span of data, but also limit movement which can cause tangential wrinkling.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </widget>
@@ -643,7 +708,16 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_8">
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -698,7 +772,16 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout">
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item row="0" column="1">
@@ -748,7 +831,16 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_9">
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -768,7 +860,7 @@
               <item>
                <widget class="QCheckBox" name="displayDataProjectionPoints_checkBox">
                 <property name="text">
-                 <string>Data projection points</string>
+                 <string>Data projection tangents</string>
                 </property>
                </widget>
               </item>
@@ -797,7 +889,16 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -858,7 +959,16 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_7">
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -977,7 +1087,16 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -1025,7 +1144,16 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -1073,7 +1201,16 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -1154,7 +1291,16 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QFormLayout" name="formLayout_2">
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item row="0" column="0">
@@ -1193,7 +1339,16 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <property name="margin">
+          <property name="leftMargin">
+           <number>3</number>
+          </property>
+          <property name="topMargin">
+           <number>3</number>
+          </property>
+          <property name="rightMargin">
+           <number>3</number>
+          </property>
+          <property name="bottomMargin">
            <number>3</number>
           </property>
           <item>
