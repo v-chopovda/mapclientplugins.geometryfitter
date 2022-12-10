@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1726</width>
-    <height>1382</height>
+    <width>1634</width>
+    <height>1260</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -154,7 +154,7 @@
                <x>0</x>
                <y>-430</y>
                <width>605</width>
-               <height>1030</height>
+               <height>1065</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -576,7 +576,7 @@
                   </widget>
                  </item>
                  <item row="2" column="1">
-                  <widget class="QCheckBox" name="groupConfigSetCentralProjection_checkBox">
+                  <widget class="QCheckBox" name="groupConfigCentralProjectionSet_checkBox">
                    <property name="toolTip">
                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When set, data projections are made as if centroid of group data has been moved to centroid of model group they project on to.&lt;/p&gt;&lt;p&gt;Use early in fit for groups that are not near their data, but generally unset later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
@@ -622,7 +622,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="6" column="0">
+                 <item row="7" column="0">
                   <widget class="QCheckBox" name="groupFitStrainPenalty_checkBox">
                    <property name="text">
                     <string>Strain penalty</string>
@@ -632,14 +632,14 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="6" column="1">
+                 <item row="7" column="1">
                   <widget class="QLineEdit" name="groupFitStrainPenalty_lineEdit">
                    <property name="toolTip">
                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Penalty on finite (Lagrange) strains relative to last reference state.&lt;/p&gt;&lt;p&gt;Up to 9 values for 3D model fit, 4 for 2D, 1 for 1D.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="0">
+                 <item row="8" column="0">
                   <widget class="QCheckBox" name="groupFitCurvaturePenalty_checkBox">
                    <property name="text">
                     <string>Curvature penalty</string>
@@ -649,7 +649,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="1">
+                 <item row="8" column="1">
                   <widget class="QLineEdit" name="groupFitCurvaturePenalty_lineEdit">
                    <property name="toolTip">
                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Penalty on curvature (gradient of displacement gradient) relative to last reference state.&lt;/p&gt;&lt;p&gt;Up to 9 values per coordinate component for 3D model fit, 4 for 2D, 1 for 1D.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -670,6 +670,26 @@
                   <widget class="QLineEdit" name="groupFitDataSlidingFactor_lineEdit">
                    <property name="toolTip">
                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Factor multiplying group weight in sliding directions.&lt;/p&gt;&lt;p&gt;Default value 0.0 gives zero sliding resistance.&lt;/p&gt;&lt;p&gt;A small positive value &amp;lt;&amp;lt; 1.0 may aid stability in the absence of other constraints.&lt;/p&gt;&lt;p&gt;Higher values increasingly apply stretch to span of data, but also limit movement which can cause tangential wrinkling.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="0">
+                  <widget class="QCheckBox" name="groupFitDataStretch_checkBox">
+                   <property name="text">
+                    <string>Stretch to data:</string>
+                   </property>
+                   <property name="tristate">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="1">
+                  <widget class="QCheckBox" name="groupFitDataStretchSet_checkBox">
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Default On stretches model to span of data by applying full data weight in projection tangent direction where projections have a non-negligible tangent component.&lt;/p&gt;&lt;p&gt;Set to Off for groups cut to variable lengths between specimens so feature is oriented but keeps reference length from model.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="text">
+                    <string>Set</string>
                    </property>
                   </widget>
                  </item>

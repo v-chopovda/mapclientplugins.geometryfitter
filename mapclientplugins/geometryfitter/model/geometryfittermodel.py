@@ -594,6 +594,7 @@ class GeometryFitterModel(object):
                     pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_LINE)
                     pointattr.setOrientationScaleField(self._fitter.getDataProjectionOrientationField())
                     pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+                    pointattr.setScaleFactors([0.0, 0.0, 0.0])
                 else:
                     pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
                     dataProjectionPoints.setRenderPointSize(3.0)

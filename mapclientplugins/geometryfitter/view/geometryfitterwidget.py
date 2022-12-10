@@ -213,6 +213,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         else:
             for index in range(1, endIndex + 1):
                 self._refreshStepItem(fitterSteps[index])
+            self._model.createGraphics()
             self._refreshGraphics()
 
     def _stepsDeleteClicked(self):
@@ -563,13 +564,15 @@ class GeometryFitterWidget(QtWidgets.QWidget):
     def _makeConnectionsGroup(self):
         self._ui.groupSettings_fieldChooser.currentIndexChanged.connect(self._groupSettingsGroupChanged)
         self._ui.groupConfigCentralProjection_checkBox.clicked.connect(self._groupConfigCentralProjectionClicked)
-        self._ui.groupConfigSetCentralProjection_checkBox.clicked.connect(self._groupConfigSetCentralProjectionClicked)
+        self._ui.groupConfigCentralProjectionSet_checkBox.clicked.connect(self._groupConfigCentralProjectionSetClicked)
         self._ui.groupConfigDataProportion_checkBox.clicked.connect(self._groupConfigDataProportionClicked)
         self._ui.groupConfigDataProportion_lineEdit.editingFinished.connect(self._groupConfigDataProportionEntered)
         self._ui.groupFitDataWeight_checkBox.clicked.connect(self._groupFitDataWeightClicked)
         self._ui.groupFitDataWeight_lineEdit.editingFinished.connect(self._groupFitDataWeightEntered)
         self._ui.groupFitDataSlidingFactor_checkBox.clicked.connect(self._groupFitDataSlidingFactorClicked)
         self._ui.groupFitDataSlidingFactor_lineEdit.editingFinished.connect(self._groupFitDataSlidingFactorEntered)
+        self._ui.groupFitDataStretch_checkBox.clicked.connect(self._groupFitDataStretchClicked)
+        self._ui.groupFitDataStretchSet_checkBox.clicked.connect(self._groupFitDataStretchSetClicked)
         self._ui.groupFitStrainPenalty_checkBox.clicked.connect(self._groupFitStrainPenaltyClicked)
         self._ui.groupFitStrainPenalty_lineEdit.editingFinished.connect(self._groupFitStrainPenaltyEntered)
         self._ui.groupFitCurvaturePenalty_checkBox.clicked.connect(self._groupFitCurvaturePenaltyClicked)
@@ -588,16 +591,19 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         elif isFit:
             self._updateGroupFitDataWeight()
             self._updateGroupFitDataSlidingFactor()
+            self._updateGroupFitDataStretch()
             self._updateGroupFitStrainPenalty()
             self._updateGroupFitCurvaturePenalty()
         self._ui.groupConfigCentralProjection_checkBox.setVisible(isConfig)
-        self._ui.groupConfigSetCentralProjection_checkBox.setVisible(isConfig)
+        self._ui.groupConfigCentralProjectionSet_checkBox.setVisible(isConfig)
         self._ui.groupConfigDataProportion_checkBox.setVisible(isConfig)
         self._ui.groupConfigDataProportion_lineEdit.setVisible(isConfig)
         self._ui.groupFitDataWeight_checkBox.setVisible(isFit)
         self._ui.groupFitDataWeight_lineEdit.setVisible(isFit)
         self._ui.groupFitDataSlidingFactor_checkBox.setVisible(isFit)
         self._ui.groupFitDataSlidingFactor_lineEdit.setVisible(isFit)
+        self._ui.groupFitDataStretch_checkBox.setVisible(isFit)
+        self._ui.groupFitDataStretchSet_checkBox.setVisible(isFit)
         self._ui.groupFitStrainPenalty_checkBox.setVisible(isFit)
         self._ui.groupFitStrainPenalty_lineEdit.setVisible(isFit)
         self._ui.groupFitCurvaturePenalty_checkBox.setVisible(isFit)
@@ -641,11 +647,13 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         return checkBoxTristate, checkBoxState, lineEditDisable, data
 
     def _updateGroupConfigCentralProjection(self):
-        checkBoxTristate, checkBoxState, lineEditDisable, isCentralProjection = self._getGroupSettingDisplayState(self._getConfig().getGroupCentralProjection)
+        checkBoxTristate, checkBoxState, lineEditDisable, isConfigCentralProjectionSet = \
+            self._getGroupSettingDisplayState(self._getConfig().getGroupCentralProjection)
         self._ui.groupConfigCentralProjection_checkBox.setTristate(checkBoxTristate)
         self._ui.groupConfigCentralProjection_checkBox.setCheckState(checkBoxState)
-        self._ui.groupConfigSetCentralProjection_checkBox.setDisabled(lineEditDisable)
-        self._ui.groupConfigSetCentralProjection_checkBox.setCheckState(QtCore.Qt.Checked if isCentralProjection else QtCore.Qt.Unchecked)
+        self._ui.groupConfigCentralProjectionSet_checkBox.setDisabled(lineEditDisable)
+        self._ui.groupConfigCentralProjectionSet_checkBox.setCheckState(
+            QtCore.Qt.Checked if isConfigCentralProjectionSet else QtCore.Qt.Unchecked)
 
     def _groupConfigCentralProjectionClicked(self):
         checkState = self._ui.groupConfigCentralProjection_checkBox.checkState()
@@ -655,11 +663,11 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         elif checkState == QtCore.Qt.PartiallyChecked:
             self._getConfig().clearGroupCentralProjection(groupName)
         else:
-            self._groupConfigSetCentralProjectionClicked()
+            self._groupConfigCentralProjectionSetClicked()
         self._updateGroupConfigCentralProjection()
 
-    def _groupConfigSetCentralProjectionClicked(self):
-        state = self._ui.groupConfigSetCentralProjection_checkBox.checkState()
+    def _groupConfigCentralProjectionSetClicked(self):
+        state = self._ui.groupConfigCentralProjectionSet_checkBox.checkState()
         config = self._getConfig()
         groupName = self._getGroupSettingsGroupName()
         if config.setGroupCentralProjection(groupName, state == QtCore.Qt.Checked):
@@ -671,7 +679,8 @@ class GeometryFitterWidget(QtWidgets.QWidget):
                 self._refreshGraphics()
 
     def _updateGroupConfigDataProportion(self):
-        checkBoxTristate, checkBoxState, lineEditDisable, dataProportionStr = self._getGroupSettingDisplayState(self._getConfig().getGroupDataProportion)
+        checkBoxTristate, checkBoxState, lineEditDisable, dataProportionStr = \
+            self._getGroupSettingDisplayState(self._getConfig().getGroupDataProportion)
         self._ui.groupConfigDataProportion_checkBox.setTristate(checkBoxTristate)
         self._ui.groupConfigDataProportion_checkBox.setCheckState(checkBoxState)
         self._ui.groupConfigDataProportion_lineEdit.setDisabled(lineEditDisable)
@@ -743,6 +752,31 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         groupName = self._getGroupSettingsGroupName()
         self._getFit().setGroupDataSlidingFactor(groupName, value)
         self._updateGroupFitDataSlidingFactor()
+
+    def _updateGroupFitDataStretch(self):
+        checkBoxTristate, checkBoxState, lineEditDisable, isFitDataStretchSet = \
+            self._getGroupSettingDisplayState(self._getFit().getGroupDataStretch)
+        self._ui.groupFitDataStretch_checkBox.setTristate(checkBoxTristate)
+        self._ui.groupFitDataStretch_checkBox.setCheckState(checkBoxState)
+        self._ui.groupFitDataStretchSet_checkBox.setDisabled(lineEditDisable)
+        self._ui.groupFitDataStretchSet_checkBox.setCheckState(
+            QtCore.Qt.Checked if isFitDataStretchSet else QtCore.Qt.Unchecked)
+
+    def _groupFitDataStretchClicked(self):
+        checkState = self._ui.groupFitDataStretch_checkBox.checkState()
+        groupName = self._getGroupSettingsGroupName()
+        if checkState == QtCore.Qt.Unchecked:
+            self._getFit().setGroupDataStretch(groupName, None)
+        elif checkState == QtCore.Qt.PartiallyChecked:
+            self._getFit().clearGroupDataStretch(groupName)
+        else:
+            self._groupFitDataStretchSetClicked()
+        self._updateGroupFitDataStretch()
+
+    def _groupFitDataStretchSetClicked(self):
+        state = self._ui.groupFitDataStretchSet_checkBox.checkState()
+        groupName = self._getGroupSettingsGroupName()
+        self._getFit().setGroupDataStretch(groupName, state == QtCore.Qt.Checked)
 
     def _updateGroupFitStrainPenalty(self):
         checkBoxTristate, checkBoxState, lineEditDisable, dataStr = \

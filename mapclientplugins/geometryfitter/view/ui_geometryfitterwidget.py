@@ -21,7 +21,7 @@ class Ui_GeometryFitterWidget(object):
     def setupUi(self, GeometryFitterWidget):
         if not GeometryFitterWidget.objectName():
             GeometryFitterWidget.setObjectName(u"GeometryFitterWidget")
-        GeometryFitterWidget.resize(1726, 1382)
+        GeometryFitterWidget.resize(1634, 1260)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -102,7 +102,7 @@ class Ui_GeometryFitterWidget(object):
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollAreaWidgetContents = QWidget()
         self.stepedit_scrollAreaWidgetContents.setObjectName(u"stepedit_scrollAreaWidgetContents")
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, -430, 605, 1030))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, -430, 605, 1065))
         self.verticalLayout_3 = QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -355,11 +355,11 @@ class Ui_GeometryFitterWidget(object):
 
         self.groupSettings_Layout.setWidget(2, QFormLayout.LabelRole, self.groupConfigCentralProjection_checkBox)
 
-        self.groupConfigSetCentralProjection_checkBox = QCheckBox(self.groupSettings_groupBox)
-        self.groupConfigSetCentralProjection_checkBox.setObjectName(u"groupConfigSetCentralProjection_checkBox")
-        self.groupConfigSetCentralProjection_checkBox.setTristate(False)
+        self.groupConfigCentralProjectionSet_checkBox = QCheckBox(self.groupSettings_groupBox)
+        self.groupConfigCentralProjectionSet_checkBox.setObjectName(u"groupConfigCentralProjectionSet_checkBox")
+        self.groupConfigCentralProjectionSet_checkBox.setTristate(False)
 
-        self.groupSettings_Layout.setWidget(2, QFormLayout.FieldRole, self.groupConfigSetCentralProjection_checkBox)
+        self.groupSettings_Layout.setWidget(2, QFormLayout.FieldRole, self.groupConfigCentralProjectionSet_checkBox)
 
         self.groupConfigDataProportion_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupConfigDataProportion_checkBox.setObjectName(u"groupConfigDataProportion_checkBox")
@@ -387,23 +387,23 @@ class Ui_GeometryFitterWidget(object):
         self.groupFitStrainPenalty_checkBox.setObjectName(u"groupFitStrainPenalty_checkBox")
         self.groupFitStrainPenalty_checkBox.setTristate(True)
 
-        self.groupSettings_Layout.setWidget(6, QFormLayout.LabelRole, self.groupFitStrainPenalty_checkBox)
+        self.groupSettings_Layout.setWidget(7, QFormLayout.LabelRole, self.groupFitStrainPenalty_checkBox)
 
         self.groupFitStrainPenalty_lineEdit = QLineEdit(self.groupSettings_groupBox)
         self.groupFitStrainPenalty_lineEdit.setObjectName(u"groupFitStrainPenalty_lineEdit")
 
-        self.groupSettings_Layout.setWidget(6, QFormLayout.FieldRole, self.groupFitStrainPenalty_lineEdit)
+        self.groupSettings_Layout.setWidget(7, QFormLayout.FieldRole, self.groupFitStrainPenalty_lineEdit)
 
         self.groupFitCurvaturePenalty_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupFitCurvaturePenalty_checkBox.setObjectName(u"groupFitCurvaturePenalty_checkBox")
         self.groupFitCurvaturePenalty_checkBox.setTristate(True)
 
-        self.groupSettings_Layout.setWidget(7, QFormLayout.LabelRole, self.groupFitCurvaturePenalty_checkBox)
+        self.groupSettings_Layout.setWidget(8, QFormLayout.LabelRole, self.groupFitCurvaturePenalty_checkBox)
 
         self.groupFitCurvaturePenalty_lineEdit = QLineEdit(self.groupSettings_groupBox)
         self.groupFitCurvaturePenalty_lineEdit.setObjectName(u"groupFitCurvaturePenalty_lineEdit")
 
-        self.groupSettings_Layout.setWidget(7, QFormLayout.FieldRole, self.groupFitCurvaturePenalty_lineEdit)
+        self.groupSettings_Layout.setWidget(8, QFormLayout.FieldRole, self.groupFitCurvaturePenalty_lineEdit)
 
         self.groupFitDataSlidingFactor_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupFitDataSlidingFactor_checkBox.setObjectName(u"groupFitDataSlidingFactor_checkBox")
@@ -415,6 +415,17 @@ class Ui_GeometryFitterWidget(object):
         self.groupFitDataSlidingFactor_lineEdit.setObjectName(u"groupFitDataSlidingFactor_lineEdit")
 
         self.groupSettings_Layout.setWidget(5, QFormLayout.FieldRole, self.groupFitDataSlidingFactor_lineEdit)
+
+        self.groupFitDataStretch_checkBox = QCheckBox(self.groupSettings_groupBox)
+        self.groupFitDataStretch_checkBox.setObjectName(u"groupFitDataStretch_checkBox")
+        self.groupFitDataStretch_checkBox.setTristate(True)
+
+        self.groupSettings_Layout.setWidget(6, QFormLayout.LabelRole, self.groupFitDataStretch_checkBox)
+
+        self.groupFitDataStretchSet_checkBox = QCheckBox(self.groupSettings_groupBox)
+        self.groupFitDataStretchSet_checkBox.setObjectName(u"groupFitDataStretchSet_checkBox")
+
+        self.groupSettings_Layout.setWidget(6, QFormLayout.FieldRole, self.groupFitDataStretchSet_checkBox)
 
 
         self.verticalLayout_3.addWidget(self.groupSettings_groupBox)
@@ -878,9 +889,9 @@ class Ui_GeometryFitterWidget(object):
         self.groupSettings_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Group:", None))
         self.groupConfigCentralProjection_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Central projection:", None))
 #if QT_CONFIG(tooltip)
-        self.groupConfigSetCentralProjection_checkBox.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>When set, data projections are made as if centroid of group data has been moved to centroid of model group they project on to.</p><p>Use early in fit for groups that are not near their data, but generally unset later.</p></body></html>", None))
+        self.groupConfigCentralProjectionSet_checkBox.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>When set, data projections are made as if centroid of group data has been moved to centroid of model group they project on to.</p><p>Use early in fit for groups that are not near their data, but generally unset later.</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
-        self.groupConfigSetCentralProjection_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Set", None))
+        self.groupConfigCentralProjectionSet_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Set", None))
         self.groupConfigDataProportion_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Data proportion:", None))
 #if QT_CONFIG(tooltip)
         self.groupConfigDataProportion_lineEdit.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Value from 0.0 to 1.0 giving proportion of data included in fit expression.</p></body></html>", None))
@@ -901,6 +912,11 @@ class Ui_GeometryFitterWidget(object):
 #if QT_CONFIG(tooltip)
         self.groupFitDataSlidingFactor_lineEdit.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Factor multiplying group weight in sliding directions.</p><p>Default value 0.0 gives zero sliding resistance.</p><p>A small positive value &lt;&lt; 1.0 may aid stability in the absence of other constraints.</p><p>Higher values increasingly apply stretch to span of data, but also limit movement which can cause tangential wrinkling.</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
+        self.groupFitDataStretch_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Stretch to data:", None))
+#if QT_CONFIG(tooltip)
+        self.groupFitDataStretchSet_checkBox.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Default On stretches model to span of data by applying full data weight in projection tangent direction where projections have a non-negligible tangent component.</p><p>Set to Off for groups cut to variable lengths between specimens so feature is oriented but keeps reference length from model.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.groupFitDataStretchSet_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Set", None))
         self.displayAxes_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Axes", None))
         self.displayGroup_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Group:", None))
 #if QT_CONFIG(tooltip)
