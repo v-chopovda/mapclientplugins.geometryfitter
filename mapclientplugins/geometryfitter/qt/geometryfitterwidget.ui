@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1634</width>
+    <width>1329</width>
     <height>1260</height>
    </rect>
   </property>
@@ -26,6 +26,21 @@
    <string>Geometry Fitter</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>4</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QDockWidget" name="dockWidget">
      <property name="sizePolicy">
@@ -152,9 +167,9 @@
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>-430</y>
-               <width>605</width>
-               <height>1065</height>
+               <y>-416</y>
+               <width>372</width>
+               <height>728</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -669,7 +684,7 @@
                  <item row="5" column="1">
                   <widget class="QLineEdit" name="groupFitDataSlidingFactor_lineEdit">
                    <property name="toolTip">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Factor multiplying group weight in sliding directions.&lt;/p&gt;&lt;p&gt;Default value 0.0 gives zero sliding resistance.&lt;/p&gt;&lt;p&gt;A small positive value &amp;lt;&amp;lt; 1.0 may aid stability in the absence of other constraints.&lt;/p&gt;&lt;p&gt;Higher values increasingly apply stretch to span of data, but also limit movement which can cause tangential wrinkling.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Factor multiplying group weight in sliding directions.&lt;/p&gt;&lt;p&gt;Default value 0.1 gives some sliding resistance.&lt;/p&gt;&lt;p&gt;Value 0.0 gives zero sliding resistance. Note a small positive value &amp;lt;&amp;lt; 1.0 may aid stability in the absence of other constraints.&lt;/p&gt;&lt;p&gt;Higher values increasingly apply stretch to span of data, but also limit movement which can cause tangential wrinkling.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                   </widget>
                  </item>
