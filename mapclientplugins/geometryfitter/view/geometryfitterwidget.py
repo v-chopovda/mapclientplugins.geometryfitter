@@ -20,6 +20,18 @@ from scaffoldfitter.fitterstepfit import FitterStepFit
 logger = logging.getLogger(__name__)
 
 
+def field_is_managed_group_mesh(field, mesh):
+    """
+    Chooser conditional function limiting to field group with a mesh group for mesh.
+    """
+    if field_is_managed_group(field):
+        elementGroup = field.castGroup().getFieldElementGroup(mesh)
+        if elementGroup.isValid():
+            if elementGroup.getMeshGroup().getSize() > 0:
+                return True
+    return False
+
+
 def QLineEdit_parseVector3(lineedit):
     """
     Return 3 component real vector as list from comma separated text in QLineEdit widget
@@ -103,10 +115,11 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         """
         self._setupConfigWidgets()
         self._setupGroupSettingWidgets()
+        self._updateGroupSettingWidgets()  # needed because group is generally reset to None
         sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
         if sceneviewer is not None:
             self._model.createGraphics()
-            self._setupGroupDisplayWidgets()
+            self._setupDisplayGroupWidgets()
             sceneviewer.setScene(self._model.getScene())
             self._refreshGraphics()
             groupName = self._getGroupSettingsGroupName()
@@ -387,29 +400,25 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.displaySurfacesExterior_checkBox.clicked.connect(self._displaySurfacesExteriorClicked)
         self._ui.displaySurfacesTranslucent_checkBox.clicked.connect(self._displaySurfacesTranslucentClicked)
         self._ui.displaySurfacesWireframe_checkBox.clicked.connect(self._displaySurfacesWireframeClicked)
-        self._setupGroupDisplayWidgets()
+        self._setupDisplayGroupWidgets()
     
-    def _setupGroupDisplayWidgets(self):
+    def _setupDisplayGroupWidgets(self):
         """
         Set up group display widgets and display values from fitter object.
         """
-        self._ui.groupDisplay_fieldChooser.setRegion(self._fitter.getRegion())
-        self._ui.groupDisplay_fieldChooser.setNullObjectName("- All -")
-        self._ui.groupDisplay_fieldChooser.setConditional(field_is_managed_group)
-        displayGroupFieldName = self._model.getGraphicsDisplaySubgroupFieldName()
-        displayGroupField = Field()
-        if displayGroupFieldName:
-            displayGroupField = self._fitter.getFieldmodule().findFieldByName(displayGroupFieldName)
-        self._ui.groupDisplay_fieldChooser.setField(displayGroupField)
-        self._model.setGraphicsDisplaySubgroupFieldName(displayGroupField.getName() if displayGroupField else None)
-        self._model.setGraphicsDisplaySubgroupField(displayGroupField)
+        self._ui.displayGroup_fieldChooser.setRegion(self._fitter.getRegion())
+        self._ui.displayGroup_fieldChooser.setNullObjectName("- All -")
+        self._ui.displayGroup_fieldChooser.setConditional(field_is_managed_group)
+        displayGroupField = self._model.getGraphicsDisplaySubgroupField()
+        if displayGroupField:
+            self._ui.displayGroup_fieldChooser.setField(displayGroupField)
 
     def _updateDisplayWidgets(self):
         """
         Update display widgets to display settings for model graphics display.
         """
         self._ui.displayAxes_checkBox.setChecked(self._model.isDisplayAxes())
-        self._ui.groupDisplay_fieldChooser.currentIndexChanged.connect(self._displayGroupChanged)
+        self._ui.displayGroup_fieldChooser.currentIndexChanged.connect(self._displayGroupChanged)
         self._ui.displayMarkerDataPoints_checkBox.setChecked(self._model.isDisplayMarkerDataPoints())
         self._ui.displayMarkerDataNames_checkBox.setChecked(self._model.isDisplayMarkerDataNames())
         self._ui.displayMarkerDataProjections_checkBox.setChecked(self._model.isDisplayMarkerDataProjections())
@@ -451,10 +460,9 @@ class GeometryFitterWidget(QtWidgets.QWidget):
 
     def _displayGroupChanged(self, index):
         """
-        Callback for change in group display field chooser widget.
+        Callback for change in display group field chooser widget.
         """
-        displayGroupField = self._ui.groupDisplay_fieldChooser.getField()
-        self._model.setGraphicsDisplaySubgroupFieldName(displayGroupField.getName() if displayGroupField else None)
+        displayGroupField = self._ui.displayGroup_fieldChooser.getField()
         self._model.setGraphicsDisplaySubgroupField(displayGroupField)
 
     def _displayAxesClicked(self):
@@ -548,7 +556,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         Set up group setting widgets and display values from fitter object.
         """
         self._ui.groupSettings_fieldChooser.setRegion(self._fitter.getRegion())
-        self._ui.groupSettings_fieldChooser.setNullObjectName("-")
+        self._ui.groupSettings_fieldChooser.setNullObjectName("- Default -")
         self._ui.groupSettings_fieldChooser.setConditional(field_is_managed_group)
         self._ui.groupSettings_fieldChooser.setField(Field())
 
@@ -678,10 +686,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
     def _groupConfigDataProportionEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.groupConfigDataProportion_lineEdit)
         groupName = self._getGroupSettingsGroupName()
-        if value > 0.0:
-            self._getConfig().setGroupDataProportion(groupName, value)
-        else:
-            print("Invalid model Data Proportion entered")
+        self._getConfig().setGroupDataProportion(groupName, value)
         self._updateGroupConfigDataProportion()
 
     def _updateGroupFitDataWeight(self):
@@ -705,10 +710,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
     def _groupFitDataWeightEntered(self):
         value = QLineEdit_parseRealNonNegative(self._ui.groupFitDataWeight_lineEdit)
         groupName = self._getGroupSettingsGroupName()
-        if value > 0.0:
-            self._getFit().setGroupDataWeight(groupName, value)
-        else:
-            print("Invalid model Data Weight entered")
+        self._getFit().setGroupDataWeight(groupName, value)
         self._updateGroupFitDataWeight()
 
     def _updateGroupFitStrainPenalty(self):
@@ -769,10 +771,19 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.configModelCoordinates_fieldChooser.setNullObjectName("-")
         self._ui.configModelCoordinates_fieldChooser.setConditional(field_is_managed_coordinates)
         self._ui.configModelCoordinates_fieldChooser.setField(self._fitter.getModelCoordinatesField())
+        self._ui.configModelFitGroup_fieldChooser.setRegion(self._fitter.getRegion())
+        self._ui.configModelFitGroup_fieldChooser.setNullObjectName("-")
+        self._ui.configModelFitGroup_fieldChooser.setConditional(
+            lambda field: field_is_managed_group_mesh(field, self._fitter.getHighestDimensionMesh()))
+        self._ui.configModelFitGroup_fieldChooser.setField(self._fitter.getModelFitGroup())
         self._ui.configFibreOrientation_fieldChooser.setRegion(self._fitter.getRegion())
         self._ui.configFibreOrientation_fieldChooser.setNullObjectName("-")
         self._ui.configFibreOrientation_fieldChooser.setConditional(field_is_managed_real_1_to_3_components)
         self._ui.configFibreOrientation_fieldChooser.setField(self._fitter.getFibreField())
+        self._ui.configFlattenGroup_fieldChooser.setRegion(self._fitter.getRegion())
+        self._ui.configFlattenGroup_fieldChooser.setNullObjectName("-")
+        self._ui.configFlattenGroup_fieldChooser.setConditional(field_is_managed_group)
+        self._ui.configFlattenGroup_fieldChooser.setField(self._fitter.getFlattenGroup())
         self._ui.configDataCoordinates_fieldChooser.setRegion(self._fitter.getRegion())
         self._ui.configDataCoordinates_fieldChooser.setNullObjectName("-")
         self._ui.configDataCoordinates_fieldChooser.setConditional(field_is_managed_coordinates)
@@ -785,7 +796,9 @@ class GeometryFitterWidget(QtWidgets.QWidget):
 
     def _makeConnectionsConfig(self):
         self._ui.configModelCoordinates_fieldChooser.currentIndexChanged.connect(self._configModelCoordinatesFieldChanged)
+        self._ui.configModelFitGroup_fieldChooser.currentIndexChanged.connect(self._configModelFitGroupChanged)
         self._ui.configFibreOrientation_fieldChooser.currentIndexChanged.connect(self._configFibreOrientationFieldChanged)
+        self._ui.configFlattenGroup_fieldChooser.currentIndexChanged.connect(self._configFlattenGroupChanged)
         self._ui.configDataCoordinates_fieldChooser.currentIndexChanged.connect(self._configDataCoordinatesFieldChanged)
         self._ui.configMarkerGroup_fieldChooser.currentIndexChanged.connect(self._configMarkerGroupChanged)
         self._ui.configDiagnosticLevel_spinBox.valueChanged.connect(self._configDiagnosticLevelValueChanged)
@@ -810,11 +823,23 @@ class GeometryFitterWidget(QtWidgets.QWidget):
             self._fitter.setModelCoordinatesField(field)
             self._model.createGraphics()
 
+    def _configModelFitGroupChanged(self, index):
+        """
+        Callback for change in model fit group field chooser widget.
+        """
+        self._fitter.setModelFitGroup(self._ui.configModelFitGroup_fieldChooser.getField())
+
     def _configFibreOrientationFieldChanged(self, index):
         """
         Callback for change in model coordinates field chooser widget.
         """
         self._fitter.setFibreField(self._ui.configFibreOrientation_fieldChooser.getField())
+
+    def _configFlattenGroupChanged(self, index):
+        """
+        Callback for change in flatten group field chooser widget.
+        """
+        self._fitter.setFlattenGroup(self._ui.configFlattenGroup_fieldChooser.getField())
 
     def _configDataCoordinatesFieldChanged(self, index):
         """
@@ -844,6 +869,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.alignMarkers_checkBox.clicked.connect(self._alignMarkersClicked)
         self._ui.alignRotation_lineEdit.editingFinished.connect(self._alignRotationEntered)
         self._ui.alignScale_lineEdit.editingFinished.connect(self._alignScaleEntered)
+        self._ui.alignScaleProportion_lineEdit.editingFinished.connect(self._alignScaleProportionEntered)
         self._ui.alignTranslation_lineEdit.editingFinished.connect(self._alignTranslationEntered)
 
     def _getAlign(self):
@@ -861,6 +887,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.alignMarkers_checkBox.setCheckState(QtCore.Qt.Checked if align.isAlignMarkers() else QtCore.Qt.Unchecked)
         self._ui.alignRotation_lineEdit.setText(", ".join(realFormat.format(value) for value in align.getRotation()))
         self._ui.alignScale_lineEdit.setText(realFormat.format(align.getScale()))
+        self._ui.alignScaleProportion_lineEdit.setText(realFormat.format(align.getScaleProportion()))
         self._ui.alignTranslation_lineEdit.setText(", ".join(realFormat.format(value) for value in align.getTranslation()))
 
     def _alignGroupsClicked(self):
@@ -885,6 +912,11 @@ class GeometryFitterWidget(QtWidgets.QWidget):
             self._getAlign().setScale(value)
         else:
             print("Invalid model scale entered")
+        self._updateAlignWidgets()
+
+    def _alignScaleProportionEntered(self):
+        value = QLineEdit_parseRealNonNegative(self._ui.alignScaleProportion_lineEdit)
+        self._getAlign().setScaleProportion(value)
         self._updateAlignWidgets()
 
     def _alignTranslationEntered(self):
@@ -916,46 +948,6 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.fitMaximumSubIterations_spinBox.setValue(fit.getMaximumSubIterations())
         self._ui.fitUpdateReferenceState_checkBox.setCheckState(QtCore.Qt.Checked if fit.isUpdateReferenceState() else QtCore.Qt.Unchecked)
         self._updateGroupSettingWidgets()
-
-    def _fitLineWeightEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.fitLineWeight_lineEdit)
-        if value >= 0.0:
-            self._getFit().setLineWeight(value)
-        else:
-            print("Invalid line weight; must be non-negative")
-        self._updateFitWidgets()
-
-    def _fitMarkerWeightEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.fitMarkerWeight_lineEdit)
-        if value >= 0.0:
-            self._getFit().setMarkerWeight(value)
-        else:
-            print("Invalid marker weight; must be non-negative")
-        self._updateFitWidgets()
-
-    def _fitStrainPenaltyEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.fitStrainPenalty_lineEdit)
-        if value >= 0.0:
-            self._getFit().setStrainPenaltyWeight(value)
-        else:
-            print("Invalid penalty weight; must be non-negative")
-        self._updateFitWidgets()
-
-    def _fitCurvaturePenaltyEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.fitCurvaturePenalty_lineEdit)
-        if value >= 0.0:
-            self._getFit().setCurvaturePenaltyWeight(value)
-        else:
-            print("Invalid penalty weight; must be non-negative")
-        self._updateFitWidgets()
-
-    def _fitEdgeDiscontinuityPenaltyEntered(self):
-        value = QLineEdit_parseRealNonNegative(self._ui.fitEdgeDiscontinuityPenalty_lineEdit)
-        if value >= 0.0:
-            self._getFit().setEdgeDiscontinuityPenaltyWeight(value)
-        else:
-            print("Invalid penalty weight; must be non-negative")
-        self._updateFitWidgets()
 
     def _fitIterationsValueChanged(self, value):
         self._getFit().setNumberOfIterations(value)

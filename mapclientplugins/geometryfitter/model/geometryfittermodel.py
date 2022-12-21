@@ -680,27 +680,57 @@ class GeometryFitterModel(object):
             surfaces.setName("displaySurfaces")
             surfaces.setVisibilityFlag(self.isDisplaySurfaces())
 
+            # above graphics are created without subgroup field set, and modified here:
+            displaySubgroupField = self.getGraphicsDisplaySubgroupField()
+            if displaySubgroupField:
+                self._updateGraphicsDisplaySubgroupField(displaySubgroupField)
+
+    def getGraphicsDisplaySubgroupField(self):
+        """
+        :return: Field or None.
+        """
+        displayGroupFieldName = self._settings["displaySubgroupFieldName"]
+        displayGroupField = None
+        if displayGroupFieldName:
+            displayGroupField = self._fitter.getFieldmodule().findFieldByName(displayGroupFieldName)
+            if not displayGroupField.isValid():
+                displayGroupField = None
+                self._settings["displaySubgroupFieldName"] = None
+        return displayGroupField
+
     def setGraphicsDisplaySubgroupField(self, subgroupField: Field):
         """
         Set graphics to only show a particular group, or all.
         :param subgroupField: Subgroup field to set or None for none.
         """
+        self._settings["displaySubgroupFieldName"] = subgroupField.getName() if subgroupField else None
+        self._updateGraphicsDisplaySubgroupField(subgroupField)
+
+    def _updateGraphicsDisplaySubgroupField(self, subgroupField: Field):
+        """
+        Modify graphics to use the supplied subgroupField, or clear it if None.
+        Currently only affects model graphics.
+        :param subgroupField: The group to show, or None for whole model.
+        :return:
+        """
         scene = self._fitter.getRegion().getScene()
         useSubgroupField = subgroupField if subgroupField else Field()
         with ChangeManager(scene):
             graphicsNames = [
+                # we need a separate flag to use subgroup for data as not always wanted
+                # "displayDataPoints",
+                # "displayDataProjectionPoints",
+                # "displayDataProjections",
+                "displayElementAxes",
+                "displayElementNumbers",
                 "displayLines",
-                "displaySurfaces",
+                "displayNodeNumbers",
+                "displayNodePoints",
+                "displaySurfaces"
             ]
             for graphicsName in graphicsNames:
                 graphics = scene.findGraphicsByName(graphicsName)
                 graphics.setSubgroupField(useSubgroupField)
-
-    def setGraphicsDisplaySubgroupFieldName(self, subgroupFieldName):
-        self._settings["displaySubgroupFieldName"] = subgroupFieldName
-
-    def getGraphicsDisplaySubgroupFieldName(self):
-        return self._settings["displaySubgroupFieldName"]
 
     def autorangeSpectrum(self):
         scene = self._fitter.getRegion().getScene()
