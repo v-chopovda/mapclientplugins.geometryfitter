@@ -4,7 +4,7 @@ User interface for github.com/ABI-Software/scaffoldfitter
 import logging
 import webbrowser
 
-from PySide2 import QtCore, QtGui, QtWidgets
+from PySide6 import QtCore, QtWidgets
 
 from mapclientplugins.geometryfitter.utils.zinc_utils import field_is_managed_real_1_to_3_components
 from mapclientplugins.geometryfitter.view.ui_geometryfitterwidget import Ui_GeometryFitterWidget
