@@ -3,7 +3,7 @@
 MAP Client Plugin
 """
 
-__version__ = '0.3.2'
+__version__ = '0.4.0'
 __author__ = 'Auckland Bioengineering Institute'
 __stepname__ = 'Geometry Fitter'
 __location__ = 'https://github.com/ABI-Software/mapclientplugins.geometryfitter'

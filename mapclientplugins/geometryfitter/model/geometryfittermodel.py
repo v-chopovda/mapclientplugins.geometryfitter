@@ -562,9 +562,9 @@ class GeometryFitterModel(object):
                 dataProjectionNodeGroup = self._fitter.getDataProjectionNodeGroupField(projectionMeshDimension)
                 if dataProjectionNodeGroup.getNodesetGroup().getSize() == 0:
                     continue
-                dataProjectionCoordinates = self._fitter.getDataProjectionCoordinatesField(projectionMeshDimension)
-                dataProjectionDelta = self._fitter.getDataProjectionDeltaField(projectionMeshDimension)
-                dataProjectionError = self._fitter.getDataProjectionErrorField(projectionMeshDimension)
+                dataProjectionCoordinates = self._fitter.getDataHostCoordinatesField()
+                dataProjectionDelta = self._fitter.getDataDeltaField()
+                dataProjectionError = self._fitter.getDataErrorField()
 
                 dataProjections = scene.createGraphicsPoints()
                 dataProjections.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
@@ -592,10 +592,15 @@ class GeometryFitterModel(object):
                 if dataProjectionCoordinates:
                     dataProjectionPoints.setCoordinateField(dataProjectionCoordinates)
                 pointattr = dataProjectionPoints.getGraphicspointattributes()
-                # pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_DIAMOND)
-                # pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
-                pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
-                dataProjectionPoints.setRenderPointSize(3.0)
+                if True:
+                    # visualize local projection tangent 1
+                    pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_LINE)
+                    pointattr.setOrientationScaleField(self._fitter.getDataProjectionOrientationField())
+                    pointattr.setBaseSize([glyphWidthSmall, glyphWidthSmall, glyphWidthSmall])
+                    pointattr.setScaleFactors([0.0, 0.0, 0.0])
+                else:
+                    pointattr.setGlyphShapeType(Glyph.SHAPE_TYPE_POINT)
+                    dataProjectionPoints.setRenderPointSize(3.0)
                 dataProjectionPoints.setMaterial(self._materialmodule.findMaterialByName("grey50"))
                 dataProjectionPoints.setName("displayDataProjectionPoints")
                 dataProjectionPoints.setVisibilityFlag(self.isDisplayDataProjectionPoints())
@@ -683,27 +688,57 @@ class GeometryFitterModel(object):
             surfaces.setName("displaySurfaces")
             surfaces.setVisibilityFlag(self.isDisplaySurfaces())
 
+            # above graphics are created without subgroup field set, and modified here:
+            displaySubgroupField = self.getGraphicsDisplaySubgroupField()
+            if displaySubgroupField:
+                self._updateGraphicsDisplaySubgroupField(displaySubgroupField)
+
+    def getGraphicsDisplaySubgroupField(self):
+        """
+        :return: Field or None.
+        """
+        displayGroupFieldName = self._settings["displaySubgroupFieldName"]
+        displayGroupField = None
+        if displayGroupFieldName:
+            displayGroupField = self._fitter.getFieldmodule().findFieldByName(displayGroupFieldName)
+            if not displayGroupField.isValid():
+                displayGroupField = None
+                self._settings["displaySubgroupFieldName"] = None
+        return displayGroupField
+
     def setGraphicsDisplaySubgroupField(self, subgroupField: Field):
         """
         Set graphics to only show a particular group, or all.
         :param subgroupField: Subgroup field to set or None for none.
         """
+        self._settings["displaySubgroupFieldName"] = subgroupField.getName() if subgroupField else None
+        self._updateGraphicsDisplaySubgroupField(subgroupField)
+
+    def _updateGraphicsDisplaySubgroupField(self, subgroupField: Field):
+        """
+        Modify graphics to use the supplied subgroupField, or clear it if None.
+        Currently only affects model graphics.
+        :param subgroupField: The group to show, or None for whole model.
+        :return:
+        """
         scene = self._fitter.getRegion().getScene()
         useSubgroupField = subgroupField if subgroupField else Field()
         with ChangeManager(scene):
             graphicsNames = [
+                # we need a separate flag to use subgroup for data as not always wanted
+                # "displayDataPoints",
+                # "displayDataProjectionPoints",
+                # "displayDataProjections",
+                "displayElementAxes",
+                "displayElementNumbers",
                 "displayLines",
-                "displaySurfaces",
+                "displayNodeNumbers",
+                "displayNodePoints",
+                "displaySurfaces"
             ]
             for graphicsName in graphicsNames:
                 graphics = scene.findGraphicsByName(graphicsName)
                 graphics.setSubgroupField(useSubgroupField)
-
-    def setGraphicsDisplaySubgroupFieldName(self, subgroupFieldName):
-        self._settings["displaySubgroupFieldName"] = subgroupFieldName
-
-    def getGraphicsDisplaySubgroupFieldName(self):
-        return self._settings["displaySubgroupFieldName"]
 
     def autorangeSpectrum(self):
         scene = self._fitter.getRegion().getScene()

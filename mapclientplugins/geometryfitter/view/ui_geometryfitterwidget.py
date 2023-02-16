@@ -21,7 +21,7 @@ class Ui_GeometryFitterWidget(object):
     def setupUi(self, GeometryFitterWidget):
         if not GeometryFitterWidget.objectName():
             GeometryFitterWidget.setObjectName(u"GeometryFitterWidget")
-        GeometryFitterWidget.resize(1718, 1365)
+        GeometryFitterWidget.resize(1329, 1260)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -29,7 +29,9 @@ class Ui_GeometryFitterWidget(object):
         GeometryFitterWidget.setSizePolicy(sizePolicy)
         GeometryFitterWidget.setMinimumSize(QSize(0, 0))
         self.horizontalLayout = QHBoxLayout(GeometryFitterWidget)
+        self.horizontalLayout.setSpacing(4)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.dockWidget = QDockWidget(GeometryFitterWidget)
         self.dockWidget.setObjectName(u"dockWidget")
         sizePolicy.setHeightForWidth(self.dockWidget.sizePolicy().hasHeightForWidth())
@@ -102,7 +104,7 @@ class Ui_GeometryFitterWidget(object):
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollAreaWidgetContents = QWidget()
         self.stepedit_scrollAreaWidgetContents.setObjectName(u"stepedit_scrollAreaWidgetContents")
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 356, 604))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, -416, 372, 728))
         self.verticalLayout_3 = QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -116,6 +118,7 @@ class Ui_GeometryFitterWidget(object):
         self.configInitial_groupBox.setSizePolicy(sizePolicy2)
         self.formLayout = QFormLayout(self.configInitial_groupBox)
         self.formLayout.setObjectName(u"formLayout")
+        self.formLayout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
         self.configModelCoordinates_label = QLabel(self.configInitial_groupBox)
         self.configModelCoordinates_label.setObjectName(u"configModelCoordinates_label")
 
@@ -131,50 +134,70 @@ class Ui_GeometryFitterWidget(object):
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.configModelCoordinates_fieldChooser)
 
+        self.configModelFitGrouplabel = QLabel(self.configInitial_groupBox)
+        self.configModelFitGrouplabel.setObjectName(u"configModelFitGrouplabel")
+
+        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.configModelFitGrouplabel)
+
+        self.configModelFitGroup_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
+        self.configModelFitGroup_fieldChooser.setObjectName(u"configModelFitGroup_fieldChooser")
+
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.configModelFitGroup_fieldChooser)
+
+        self.configFlattenGroup_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
+        self.configFlattenGroup_fieldChooser.setObjectName(u"configFlattenGroup_fieldChooser")
+
+        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.configFlattenGroup_fieldChooser)
+
+        self.configFlattenGroup_label = QLabel(self.configInitial_groupBox)
+        self.configFlattenGroup_label.setObjectName(u"configFlattenGroup_label")
+
+        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.configFlattenGroup_label)
+
+        self.configFibreOrientation_label = QLabel(self.configInitial_groupBox)
+        self.configFibreOrientation_label.setObjectName(u"configFibreOrientation_label")
+
+        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.configFibreOrientation_label)
+
+        self.configFibreOrientation_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
+        self.configFibreOrientation_fieldChooser.setObjectName(u"configFibreOrientation_fieldChooser")
+
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.configFibreOrientation_fieldChooser)
+
         self.configDataCoordinates_label = QLabel(self.configInitial_groupBox)
         self.configDataCoordinates_label.setObjectName(u"configDataCoordinates_label")
 
-        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.configDataCoordinates_label)
+        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.configDataCoordinates_label)
 
         self.configDataCoordinates_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
         self.configDataCoordinates_fieldChooser.setObjectName(u"configDataCoordinates_fieldChooser")
         sizePolicy3.setHeightForWidth(self.configDataCoordinates_fieldChooser.sizePolicy().hasHeightForWidth())
         self.configDataCoordinates_fieldChooser.setSizePolicy(sizePolicy3)
 
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.configDataCoordinates_fieldChooser)
-
-        self.configDiagnosticLevel_spinBox = QSpinBox(self.configInitial_groupBox)
-        self.configDiagnosticLevel_spinBox.setObjectName(u"configDiagnosticLevel_spinBox")
-        self.configDiagnosticLevel_spinBox.setMaximum(2)
-
-        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.configDiagnosticLevel_spinBox)
+        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.configDataCoordinates_fieldChooser)
 
         self.configDiagnosticLevel_label = QLabel(self.configInitial_groupBox)
         self.configDiagnosticLevel_label.setObjectName(u"configDiagnosticLevel_label")
 
-        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.configDiagnosticLevel_label)
+        self.formLayout.setWidget(6, QFormLayout.LabelRole, self.configDiagnosticLevel_label)
 
         self.configMarkerGroup_label = QLabel(self.configInitial_groupBox)
         self.configMarkerGroup_label.setObjectName(u"configMarkerGroup_label")
 
-        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.configMarkerGroup_label)
+        self.formLayout.setWidget(5, QFormLayout.LabelRole, self.configMarkerGroup_label)
 
         self.configMarkerGroup_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
         self.configMarkerGroup_fieldChooser.setObjectName(u"configMarkerGroup_fieldChooser")
         sizePolicy3.setHeightForWidth(self.configMarkerGroup_fieldChooser.sizePolicy().hasHeightForWidth())
         self.configMarkerGroup_fieldChooser.setSizePolicy(sizePolicy3)
 
-        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.configMarkerGroup_fieldChooser)
+        self.formLayout.setWidget(5, QFormLayout.FieldRole, self.configMarkerGroup_fieldChooser)
 
-        self.configFibreOrientation_label = QLabel(self.configInitial_groupBox)
-        self.configFibreOrientation_label.setObjectName(u"configFibreOrientation_label")
+        self.configDiagnosticLevel_spinBox = QSpinBox(self.configInitial_groupBox)
+        self.configDiagnosticLevel_spinBox.setObjectName(u"configDiagnosticLevel_spinBox")
+        self.configDiagnosticLevel_spinBox.setMaximum(2)
 
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.configFibreOrientation_label)
-
-        self.configFibreOrientation_fieldChooser = FieldChooserWidget(self.configInitial_groupBox)
-        self.configFibreOrientation_fieldChooser.setObjectName(u"configFibreOrientation_fieldChooser")
-
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.configFibreOrientation_fieldChooser)
+        self.formLayout.setWidget(6, QFormLayout.FieldRole, self.configDiagnosticLevel_spinBox)
 
 
         self.verticalLayout_3.addWidget(self.configInitial_groupBox)
@@ -248,6 +271,16 @@ class Ui_GeometryFitterWidget(object):
 
         self.alignStep_formLayout.setWidget(6, QFormLayout.FieldRole, self.alignTranslation_lineEdit)
 
+        self.alignScaleProportion_lineEdit = QLineEdit(self.align_groupBox)
+        self.alignScaleProportion_lineEdit.setObjectName(u"alignScaleProportion_lineEdit")
+
+        self.formLayout_2.setWidget(7, QFormLayout.FieldRole, self.alignScaleProportion_lineEdit)
+
+        self.alignScaleProportion_label = QLabel(self.align_groupBox)
+        self.alignScaleProportion_label.setObjectName(u"alignScaleProportion_label")
+
+        self.formLayout_2.setWidget(7, QFormLayout.LabelRole, self.alignScaleProportion_label)
+
 
         self.verticalLayout_3.addWidget(self.align_groupBox)
 
@@ -277,11 +310,13 @@ class Ui_GeometryFitterWidget(object):
 
         self.fitMaximumSubIterations_label = QLabel(self.fit_groupBox)
         self.fitMaximumSubIterations_label.setObjectName(u"fitMaximumSubIterations_label")
+        self.fitMaximumSubIterations_label.setEnabled(False)
 
         self.formLayout_3.setWidget(2, QFormLayout.LabelRole, self.fitMaximumSubIterations_label)
 
         self.fitMaximumSubIterations_spinBox = QSpinBox(self.fit_groupBox)
         self.fitMaximumSubIterations_spinBox.setObjectName(u"fitMaximumSubIterations_spinBox")
+        self.fitMaximumSubIterations_spinBox.setEnabled(False)
         sizePolicy3.setHeightForWidth(self.fitMaximumSubIterations_spinBox.sizePolicy().hasHeightForWidth())
         self.fitMaximumSubIterations_spinBox.setSizePolicy(sizePolicy3)
         self.fitMaximumSubIterations_spinBox.setMinimum(1)
@@ -323,13 +358,15 @@ class Ui_GeometryFitterWidget(object):
 
         self.groupSettings_Layout.setWidget(2, QFormLayout.LabelRole, self.groupConfigCentralProjection_checkBox)
 
-        self.groupConfigSetCentralProjection_checkBox = QCheckBox(self.groupSettings_groupBox)
-        self.groupConfigSetCentralProjection_checkBox.setObjectName(u"groupConfigSetCentralProjection_checkBox")
+        self.groupConfigCentralProjectionSet_checkBox = QCheckBox(self.groupSettings_groupBox)
+        self.groupConfigCentralProjectionSet_checkBox.setObjectName(u"groupConfigCentralProjectionSet_checkBox")
+        self.groupConfigCentralProjectionSet_checkBox.setTristate(False)
 
-        self.groupSettings_Layout.setWidget(2, QFormLayout.FieldRole, self.groupConfigSetCentralProjection_checkBox)
+        self.groupSettings_Layout.setWidget(2, QFormLayout.FieldRole, self.groupConfigCentralProjectionSet_checkBox)
 
         self.groupConfigDataProportion_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupConfigDataProportion_checkBox.setObjectName(u"groupConfigDataProportion_checkBox")
+        self.groupConfigDataProportion_checkBox.setTristate(True)
 
         self.groupSettings_Layout.setWidget(3, QFormLayout.LabelRole, self.groupConfigDataProportion_checkBox)
 
@@ -340,6 +377,7 @@ class Ui_GeometryFitterWidget(object):
 
         self.groupFitDataWeight_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupFitDataWeight_checkBox.setObjectName(u"groupFitDataWeight_checkBox")
+        self.groupFitDataWeight_checkBox.setTristate(True)
 
         self.groupSettings_Layout.setWidget(4, QFormLayout.LabelRole, self.groupFitDataWeight_checkBox)
 
@@ -350,23 +388,47 @@ class Ui_GeometryFitterWidget(object):
 
         self.groupFitStrainPenalty_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupFitStrainPenalty_checkBox.setObjectName(u"groupFitStrainPenalty_checkBox")
+        self.groupFitStrainPenalty_checkBox.setTristate(True)
 
-        self.groupSettings_Layout.setWidget(5, QFormLayout.LabelRole, self.groupFitStrainPenalty_checkBox)
+        self.groupSettings_Layout.setWidget(7, QFormLayout.LabelRole, self.groupFitStrainPenalty_checkBox)
 
         self.groupFitStrainPenalty_lineEdit = QLineEdit(self.groupSettings_groupBox)
         self.groupFitStrainPenalty_lineEdit.setObjectName(u"groupFitStrainPenalty_lineEdit")
 
-        self.groupSettings_Layout.setWidget(5, QFormLayout.FieldRole, self.groupFitStrainPenalty_lineEdit)
+        self.groupSettings_Layout.setWidget(7, QFormLayout.FieldRole, self.groupFitStrainPenalty_lineEdit)
 
         self.groupFitCurvaturePenalty_checkBox = QCheckBox(self.groupSettings_groupBox)
         self.groupFitCurvaturePenalty_checkBox.setObjectName(u"groupFitCurvaturePenalty_checkBox")
+        self.groupFitCurvaturePenalty_checkBox.setTristate(True)
 
-        self.groupSettings_Layout.setWidget(6, QFormLayout.LabelRole, self.groupFitCurvaturePenalty_checkBox)
+        self.groupSettings_Layout.setWidget(8, QFormLayout.LabelRole, self.groupFitCurvaturePenalty_checkBox)
 
         self.groupFitCurvaturePenalty_lineEdit = QLineEdit(self.groupSettings_groupBox)
         self.groupFitCurvaturePenalty_lineEdit.setObjectName(u"groupFitCurvaturePenalty_lineEdit")
 
-        self.groupSettings_Layout.setWidget(6, QFormLayout.FieldRole, self.groupFitCurvaturePenalty_lineEdit)
+        self.groupSettings_Layout.setWidget(8, QFormLayout.FieldRole, self.groupFitCurvaturePenalty_lineEdit)
+
+        self.groupFitDataSlidingFactor_checkBox = QCheckBox(self.groupSettings_groupBox)
+        self.groupFitDataSlidingFactor_checkBox.setObjectName(u"groupFitDataSlidingFactor_checkBox")
+        self.groupFitDataSlidingFactor_checkBox.setTristate(True)
+
+        self.groupSettings_Layout.setWidget(5, QFormLayout.LabelRole, self.groupFitDataSlidingFactor_checkBox)
+
+        self.groupFitDataSlidingFactor_lineEdit = QLineEdit(self.groupSettings_groupBox)
+        self.groupFitDataSlidingFactor_lineEdit.setObjectName(u"groupFitDataSlidingFactor_lineEdit")
+
+        self.groupSettings_Layout.setWidget(5, QFormLayout.FieldRole, self.groupFitDataSlidingFactor_lineEdit)
+
+        self.groupFitDataStretch_checkBox = QCheckBox(self.groupSettings_groupBox)
+        self.groupFitDataStretch_checkBox.setObjectName(u"groupFitDataStretch_checkBox")
+        self.groupFitDataStretch_checkBox.setTristate(True)
+
+        self.groupSettings_Layout.setWidget(6, QFormLayout.LabelRole, self.groupFitDataStretch_checkBox)
+
+        self.groupFitDataStretchSet_checkBox = QCheckBox(self.groupSettings_groupBox)
+        self.groupFitDataStretchSet_checkBox.setObjectName(u"groupFitDataStretchSet_checkBox")
+
+        self.groupSettings_Layout.setWidget(6, QFormLayout.FieldRole, self.groupFitDataStretchSet_checkBox)
 
 
         self.verticalLayout_3.addWidget(self.groupSettings_groupBox)
@@ -401,21 +463,21 @@ class Ui_GeometryFitterWidget(object):
 
         self.horizontalLayout_8.addWidget(self.displayAxes_checkBox)
 
-        self.groupDisplay_label = QLabel(self.displayMisc_frame)
-        self.groupDisplay_label.setObjectName(u"groupDisplay_label")
+        self.displayMisc_horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_8.addWidget(self.groupDisplay_label)
+        self.horizontalLayout_8.addItem(self.displayMisc_horizontalSpacer)
 
-        self.groupDisplay_fieldChooser = FieldChooserWidget(self.displayMisc_frame)
-        self.groupDisplay_fieldChooser.setObjectName(u"groupDisplay_fieldChooser")
-        sizePolicy3.setHeightForWidth(self.groupDisplay_fieldChooser.sizePolicy().hasHeightForWidth())
-        self.groupDisplay_fieldChooser.setSizePolicy(sizePolicy3)
+        self.displayGroup_label = QLabel(self.displayMisc_frame)
+        self.displayGroup_label.setObjectName(u"displayGroup_label")
 
-        self.horizontalLayout_8.addWidget(self.groupDisplay_fieldChooser)
+        self.horizontalLayout_8.addWidget(self.displayGroup_label)
 
-        self.displaytMisc_horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.displayGroup_fieldChooser = FieldChooserWidget(self.displayMisc_frame)
+        self.displayGroup_fieldChooser.setObjectName(u"displayGroup_fieldChooser")
+        sizePolicy3.setHeightForWidth(self.displayGroup_fieldChooser.sizePolicy().hasHeightForWidth())
+        self.displayGroup_fieldChooser.setSizePolicy(sizePolicy3)
 
-        self.horizontalLayout_8.addItem(self.displaytMisc_horizontalSpacer)
+        self.horizontalLayout_8.addWidget(self.displayGroup_fieldChooser)
 
 
         self.verticalLayout_7.addWidget(self.displayMisc_frame)
@@ -781,12 +843,29 @@ class Ui_GeometryFitterWidget(object):
         self.stepsDelete_pushButton.setText(QCoreApplication.translate("GeometryFitterWidget", u"Delete", None))
         self.configInitial_groupBox.setTitle(QCoreApplication.translate("GeometryFitterWidget", u"Initial", None))
         self.configModelCoordinates_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Model coordinates:", None))
-        self.configDataCoordinates_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Data coordinates:", None))
-        self.configDiagnosticLevel_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Diagnostic level:", None))
-        self.configMarkerGroup_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Marker group:", None))
+#if QT_CONFIG(tooltip)
+        self.configModelCoordinates_fieldChooser.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Model coordinate field to fit.<br/>Output fitted field takes name of this field preceded by &quot;fitted &quot;.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.configModelFitGrouplabel.setText(QCoreApplication.translate("GeometryFitterWidget", u"Model fit group:", None))
+#if QT_CONFIG(tooltip)
+        self.configModelFitGroup_fieldChooser.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Optional subset of model to fit.<br/>If not set, whole model is fitted.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
+        self.configFlattenGroup_fieldChooser.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Optional surface or line group to constrain to z = 0.</p><p>Data weight for this group scales flattening term.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.configFlattenGroup_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Flatten group:", None))
         self.configFibreOrientation_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Fibre orientation:", None))
 #if QT_CONFIG(tooltip)
-        self.configFibreOrientation_fieldChooser.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Field supplying Euler angles to rotate local 'fibre' axes on which strain and curvature penalties are applied. Clear to apply on global x, y, z axes. Required for fitting 2D meshes with 3 coordinate components.</p></body></html>", None))
+        self.configFibreOrientation_fieldChooser.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Optional field supplying Euler angles to rotate local 'fibre' axes on which strain and curvature penalties are applied. Clear to apply on global x, y, z axes.</p><p>Required for applying strain and curvature penalties on 2D mesh fits with 3 coordinate components.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.configDataCoordinates_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Data coordinates:", None))
+#if QT_CONFIG(tooltip)
+        self.configDataCoordinates_fieldChooser.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Field giving coordinates of data points.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.configDiagnosticLevel_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Diagnostic level:", None))
+        self.configMarkerGroup_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Marker group:", None))
+#if QT_CONFIG(tooltip)
+        self.configDiagnosticLevel_spinBox.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Increase to 1 to see diagnostic output, 2 to see more verbose optimization diagnostic output.</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.config_groupBox.setTitle(QCoreApplication.translate("GeometryFitterWidget", u"Config", None))
         self.align_groupBox.setTitle(QCoreApplication.translate("GeometryFitterWidget", u"Align", None))
@@ -801,23 +880,57 @@ class Ui_GeometryFitterWidget(object):
         self.alignRotation_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Rotation:", None))
         self.alignScale_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Scale:", None))
         self.alignTranslation_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Translation:", None))
+#if QT_CONFIG(tooltip)
+        self.alignScaleProportion_lineEdit.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>With Align groups and Align markers: proportion of optimal scale to use.<br/>E.g. 0.9 makes the scale 90% of the optimal value.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.alignScaleProportion_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Scale proportion:", None))
         self.fit_groupBox.setTitle(QCoreApplication.translate("GeometryFitterWidget", u"Fit", None))
         self.fitIterations_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Iterations:", None))
+#if QT_CONFIG(tooltip)
+        self.fitIterations_spinBox.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Number of full iterations with reprojection of data.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.fitMaximumSubIterations_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Maximum subiterations:", None))
+#if QT_CONFIG(tooltip)
+        self.fitUpdateReferenceState_checkBox.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Advanced: Update reference state to coordinates at end of this step for applying subsequent strain and curvature penalties.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.fitUpdateReferenceState_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Update reference state", None))
         self.groupSettings_groupBox.setTitle(QCoreApplication.translate("GeometryFitterWidget", u"Group settings", None))
         self.groupSettings_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Group:", None))
-        self.groupConfigCentralProjection_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Central Projection", None))
-        self.groupConfigSetCentralProjection_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Set", None))
-        self.groupConfigDataProportion_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Data Proportion", None))
+        self.groupConfigCentralProjection_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Central projection:", None))
 #if QT_CONFIG(tooltip)
-        self.groupConfigDataProportion_lineEdit.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"Value from 0.0 to 1.0", None))
+        self.groupConfigCentralProjectionSet_checkBox.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>When set, data projections are made as if centroid of group data has been moved to centroid of model group they project on to.</p><p>Use early in fit for groups that are not near their data, but generally unset later.</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
-        self.groupFitDataWeight_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Data Weight", None))
-        self.groupFitStrainPenalty_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Strain Penalty", None))
-        self.groupFitCurvaturePenalty_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Curvature Penalty", None))
+        self.groupConfigCentralProjectionSet_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Set", None))
+        self.groupConfigDataProportion_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Data proportion:", None))
+#if QT_CONFIG(tooltip)
+        self.groupConfigDataProportion_lineEdit.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Value from 0.0 to 1.0 giving proportion of data included in fit expression.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.groupFitDataWeight_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Data weight:", None))
+#if QT_CONFIG(tooltip)
+        self.groupFitDataWeight_lineEdit.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Real value multiplying the data projection error; higher values make the group fit closer relative to other groups</p><p>It is recommended that the default group data weight be kept at 1.0 and other weights or penalties changed relative to it.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.groupFitStrainPenalty_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Strain penalty", None))
+#if QT_CONFIG(tooltip)
+        self.groupFitStrainPenalty_lineEdit.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Penalty on finite (Lagrange) strains relative to last reference state.</p><p>Up to 9 values for 3D model fit, 4 for 2D, 1 for 1D.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.groupFitCurvaturePenalty_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Curvature penalty", None))
+#if QT_CONFIG(tooltip)
+        self.groupFitCurvaturePenalty_lineEdit.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Penalty on curvature (gradient of displacement gradient) relative to last reference state.</p><p>Up to 9 values per coordinate component for 3D model fit, 4 for 2D, 1 for 1D.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.groupFitDataSlidingFactor_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Data sliding factor:", None))
+#if QT_CONFIG(tooltip)
+        self.groupFitDataSlidingFactor_lineEdit.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Factor multiplying group weight in sliding directions.</p><p>Default value 0.1 gives some sliding resistance.</p><p>Value 0.0 gives zero sliding resistance. Note a small positive value &lt;&lt; 1.0 may aid stability in the absence of other constraints.</p><p>Higher values increasingly apply stretch to span of data, but also limit movement which can cause tangential wrinkling.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.groupFitDataStretch_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Stretch to data:", None))
+#if QT_CONFIG(tooltip)
+        self.groupFitDataStretchSet_checkBox.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Default On stretches model to span of data by applying full data weight in projection tangent direction where projections have a non-negligible tangent component.</p><p>Set to Off for groups cut to variable lengths between specimens so feature is oriented but keeps reference length from model.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.groupFitDataStretchSet_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Set", None))
         self.displayAxes_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Axes", None))
-        self.groupDisplay_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Group:", None))
+        self.displayGroup_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Group:", None))
+#if QT_CONFIG(tooltip)
+        self.displayGroup_fieldChooser.setToolTip(QCoreApplication.translate("GeometryFitterWidget", u"<html><head/><body><p>Optional group to limit display of model and data to.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.displayMarkerDataNames_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Marker data names", None))
         self.displayMarkerDataPoints_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Marker data points", None))
         self.displayMarkerNames_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Marker names", None))
@@ -825,7 +938,7 @@ class Ui_GeometryFitterWidget(object):
         self.displayMarkerDataProjections_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Marker projections", None))
         self.displayDataPoints_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Data points", None))
         self.displayDataProjections_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Data projections", None))
-        self.displayDataProjectionPoints_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Data projection points", None))
+        self.displayDataProjectionPoints_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Data projection tangents", None))
         self.displayNodePoints_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Node points", None))
         self.displayNodeNumbers_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Node numbers", None))
         self.displayNodeDerivatives_checkBox.setText(QCoreApplication.translate("GeometryFitterWidget", u"Node derivatives", None))
