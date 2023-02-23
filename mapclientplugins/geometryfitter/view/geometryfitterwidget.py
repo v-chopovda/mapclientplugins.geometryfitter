@@ -243,6 +243,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
             if isinstance(self._currentFitterStep, FitterStepAlign):
                 self._model.setStateAlign(True)
                 self._model.setAlignStep(self._currentFitterStep)
+                self._model.setAlignSettingsUIUpdateCallback(self._updateAlignWidgets)
                 self._model.setAlignSettingsChangeCallback(self._alignCallback)
             else:
                 self._model.setStateAlign(False)
@@ -293,7 +294,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         """
         For steps list drag and drop event.
         Update the order of steps in fitterSteps.
-        """ 
+        """
         if newRow != prevRow:
             if newRow != 0 and prevRow != 0:
                 sceneChanged, endIndex = self._fitter.moveFitterStep(prevRow, newRow, self._model.getOutputModelFileNameStem())
@@ -408,7 +409,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.displaySurfacesTranslucent_checkBox.clicked.connect(self._displaySurfacesTranslucentClicked)
         self._ui.displaySurfacesWireframe_checkBox.clicked.connect(self._displaySurfacesWireframeClicked)
         self._setupDisplayGroupWidgets()
-    
+
     def _setupDisplayGroupWidgets(self):
         """
         Set up group display widgets and display values from fitter object.
@@ -453,7 +454,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.displaySurfacesTranslucent_checkBox.setChecked(self._model.isDisplaySurfacesTranslucent())
         self._ui.displaySurfacesWireframe_checkBox.setChecked(self._model.isDisplaySurfacesWireframe())
         self._displayErrors()
-    
+
     def _displayErrors(self):
         rmsError, maxError = self._fitter.getDataRMSAndMaximumProjectionError()
         rms_error_text = "-" if rmsError is None else f"{rmsError}"
@@ -968,7 +969,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._updateAlignWidgets()
         fitterSteps = self._fitter.getFitterSteps()
         index = fitterSteps.index(self._currentFitterStep)
-        self._fitter.run(fitterSteps[index], reorder = True)
+        self._fitter.run(fitterSteps[index], reorder=True)
         for index in range(0, len(fitterSteps)):
             self._refreshStepItem(fitterSteps[index])
         self._sceneChanged()

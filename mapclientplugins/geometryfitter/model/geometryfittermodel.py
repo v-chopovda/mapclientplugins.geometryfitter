@@ -3,8 +3,10 @@ Geometric fit model adding visualisations to github.com/ABI-Software/scaffoldfit
 """
 import os
 import json
+import math
 
-from opencmiss.maths.vectorops import add, axis_angle_to_rotation_matrix, euler_to_rotation_matrix, matrix_mult, rotation_matrix_to_euler
+from opencmiss.maths.vectorops import add, axis_angle_to_rotation_matrix, euler_to_rotation_matrix, matrix_minor, \
+    matrix_mult, rotation_matrix_to_euler, matrix_inv
 from opencmiss.utils.zinc.finiteelement import evaluateFieldNodesetRange
 from opencmiss.utils.zinc.general import ChangeManager
 from opencmiss.zinc.field import Field, FieldGroup
@@ -13,6 +15,7 @@ from opencmiss.zinc.graphics import Graphics
 from opencmiss.zinc.material import Material
 from opencmiss.zinc.node import Node
 from opencmiss.zinc.scenefilter import Scenefilter
+from opencmiss.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_WORLD
 from scaffoldfitter.fitter import Fitter
 from scaffoldfitter.fitterjson import decodeJSONFitterSteps
 from mapclientplugins.geometryfitter.utils.zinc_utils import get_scene_selection_group, create_scene_selection_group, group_add_group_elements, group_add_group_nodes
@@ -29,6 +32,7 @@ class GeometryFitterModel(object):
         """
         :param location: Path to folder for mapclient step name.
         """
+        self._initial_matrix = []
         self._fitter = Fitter(inputZincModelFile, inputZincDataFile)
         # self._fitter.setDiagnosticLevel(1)
         self._location = os.path.join(location, identifier)
@@ -344,7 +348,7 @@ class GeometryFitterModel(object):
             return False
         return self.isDisplayLines() and self.isDisplaySurfaces() and not self.isDisplaySurfacesTranslucent()
 
-    def setSelectHighlightGroup(self, group : FieldGroup):
+    def setSelectHighlightGroup(self, group: FieldGroup):
         """
         Select and highlight objects in the group.
         :param group: FieldGroup to select, or None to clear selection.
@@ -393,7 +397,8 @@ class GeometryFitterModel(object):
             nodeDerivativeFields = [fieldmodule.createFieldNodeValue(modelCoordinates, derivative, 1) for derivative in [
                 Node.VALUE_LABEL_D_DS1, Node.VALUE_LABEL_D_DS2, Node.VALUE_LABEL_D_DS3,
                 Node.VALUE_LABEL_D2_DS1DS2, Node.VALUE_LABEL_D2_DS1DS3, Node.VALUE_LABEL_D2_DS2DS3, Node.VALUE_LABEL_D3_DS1DS2DS3]]
-            elementDerivativesField = fieldmodule.createFieldConcatenate([fieldmodule.createFieldDerivative(modelCoordinates, d + 1) for d in range(meshDimension)])
+            elementDerivativesField = fieldmodule.createFieldConcatenate(
+                [fieldmodule.createFieldDerivative(modelCoordinates, d + 1) for d in range(meshDimension)])
             cmiss_number = fieldmodule.findFieldByName("cmiss_number")
             markerNodeGroup, markerLocation, markerCoordinates, markerName = self._fitter.getMarkerModelFields()
 
@@ -546,6 +551,7 @@ class GeometryFitterModel(object):
 
             dataCoordinates = self._fitter.getDataCoordinatesField()
             dataPoints = scene.createGraphicsPoints()
+            dataPoints.setScenecoordinatesystem(SCENECOORDINATESYSTEM_WORLD)
             dataPoints.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
             if dataCoordinates:
                 dataPoints.setCoordinateField(dataCoordinates)
@@ -757,6 +763,9 @@ class GeometryFitterModel(object):
     def setAlignStep(self, alignStep):
         self._alignStep = alignStep
 
+    def setAlignSettingsUIUpdateCallback(self, alignSettingsUIUpdateCallback):
+        self._alignSettingsUIUpdateCallback = alignSettingsUIUpdateCallback
+
     def setAlignSettingsChangeCallback(self, alignSettingsChangeCallback):
         self._alignSettingsChangeCallback = alignSettingsChangeCallback
 
@@ -764,16 +773,35 @@ class GeometryFitterModel(object):
         mat1 = axis_angle_to_rotation_matrix(axis, angle)
         mat2 = euler_to_rotation_matrix(self._alignStep.getRotation())
         newmat = matrix_mult(mat1, mat2)
-        self._alignStep.setRotation(rotation_matrix_to_euler(newmat))
-        self._applyAlignSettings()
+        rotation = rotation_matrix_to_euler(newmat)
+
+        self._alignStep.setRotation(rotation)
+        self._setGraphicsTransformation()
+        self._alignSettingsUIUpdateCallback()
 
     def scaleModel(self, factor):
         newScale = self._alignStep.getScale() * factor
         self._alignStep.setScale(newScale)
-        self._applyAlignSettings()
+        self._setGraphicsTransformation()
+        self._alignSettingsUIUpdateCallback()
 
     def offsetModel(self, relativeOffset):
-        self._alignStep.setTranslation(add(self._alignStep.getTranslation(), relativeOffset))
+        newTranslation = add(self._alignStep.getTranslation(), relativeOffset)
+        self._alignStep.setTranslation(newTranslation)
+        self._setGraphicsTransformation()
+        self._alignSettingsUIUpdateCallback()
+
+    def interactionStart(self):
+        self._initial_matrix = self._alignStep.getTransformationMatrix() if self._alignStep.hasRun() else [
+            [1.0, 0.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0, 0.0],
+            [0.0, 0.0, 1.0, 0.0],
+            [0.0, 0.0, 0.0, 1.0]]
+        
+
+        
+
+    def interactionEnd(self):
         self._applyAlignSettings()
 
     def _autorangeSpectrum(self):
@@ -788,3 +816,26 @@ class GeometryFitterModel(object):
         if not self._fitter.getModelCoordinatesField().isValid():
             print("Can't create transformed model coordinate field. Is problem 2-D?")
         self._alignSettingsChangeCallback()
+
+    def _setGraphicsTransformation(self):
+        """
+        Establish 4x4 graphics transformation for current scaffold package.
+        :param transformationMatrix: 4x4 transformation matrix in row major format
+        i.e. 4 rows of 4 values, or None to clear.
+        """
+        transformationMatrix = self._alignStep.getTransformationMatrix()
+        scene = self.getScene()
+        if transformationMatrix:
+            initial_matrix_inv = matrix_inv(self._initial_matrix)
+            transMat = matrix_mult(transformationMatrix, initial_matrix_inv)
+            # flatten to list of 16 components for passing to Zinc
+            scene.setTransformationMatrix(transMat[0] + transMat[1] + transMat[2] + transMat[3])
+        else:
+            scene.clearTransformation()
+        # rescale axes for new scale
+        # axesScale = self._getAxesScale()
+        # with ChangeManager(scene):
+        #     axes = scene.findGraphicsByName('displayAxes')
+        #     pointattr = axes.getGraphicspointattributes()
+        #     pointattr.setBaseSize([axesScale])
+        #     pointattr.setLabelText(1, '  {:2g}'.format(axesScale))

@@ -274,12 +274,12 @@ class Ui_GeometryFitterWidget(object):
         self.alignScaleProportion_lineEdit = QLineEdit(self.align_groupBox)
         self.alignScaleProportion_lineEdit.setObjectName(u"alignScaleProportion_lineEdit")
 
-        self.formLayout_2.setWidget(7, QFormLayout.FieldRole, self.alignScaleProportion_lineEdit)
+        self.alignStep_formLayout.setWidget(7, QFormLayout.FieldRole, self.alignScaleProportion_lineEdit)
 
         self.alignScaleProportion_label = QLabel(self.align_groupBox)
         self.alignScaleProportion_label.setObjectName(u"alignScaleProportion_label")
 
-        self.formLayout_2.setWidget(7, QFormLayout.LabelRole, self.alignScaleProportion_label)
+        self.alignStep_formLayout.setWidget(7, QFormLayout.LabelRole, self.alignScaleProportion_label)
 
 
         self.verticalLayout_3.addWidget(self.align_groupBox)
