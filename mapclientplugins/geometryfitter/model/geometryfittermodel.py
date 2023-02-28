@@ -5,7 +5,7 @@ import os
 import json
 
 from opencmiss.maths.vectorops import add, axis_angle_to_rotation_matrix, euler_to_rotation_matrix, matrix_minor, \
-    matrix_mult, rotation_matrix_to_euler, matrix_inv
+    matrix_mult, rotation_matrix_to_euler, matrix_inv, identity_matrix
 from opencmiss.utils.zinc.finiteelement import evaluateFieldNodesetRange
 from opencmiss.utils.zinc.general import ChangeManager
 from opencmiss.zinc.field import Field, FieldGroup
@@ -791,11 +791,7 @@ class GeometryFitterModel(object):
         self._alignSettingsUIUpdateCallback()
 
     def interactionStart(self):
-        self._initial_matrix = self._alignStep.getTransformationMatrix() if self._alignStep.hasRun() else [
-            [1.0, 0.0, 0.0, 0.0],
-            [0.0, 1.0, 0.0, 0.0],
-            [0.0, 0.0, 1.0, 0.0],
-            [0.0, 0.0, 0.0, 1.0]]
+        self._initial_matrix = self._alignStep.getTransformationMatrix() if self._alignStep.hasRun() else identity_matrix(4)
         manualAlignGraphicsNames = [
             # we need a separate flag to use manual align for data as not always wanted
             "displayMarkerDataPoints",
