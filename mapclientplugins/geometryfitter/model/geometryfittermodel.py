@@ -3,7 +3,6 @@ Geometric fit model adding visualisations to github.com/ABI-Software/scaffoldfit
 """
 import os
 import json
-import math
 
 from opencmiss.maths.vectorops import add, axis_angle_to_rotation_matrix, euler_to_rotation_matrix, matrix_minor, \
     matrix_mult, rotation_matrix_to_euler, matrix_inv
@@ -797,12 +796,25 @@ class GeometryFitterModel(object):
             [0.0, 1.0, 0.0, 0.0],
             [0.0, 0.0, 1.0, 0.0],
             [0.0, 0.0, 0.0, 1.0]]
-        
-
-        
+        manualAlignGraphicsNames = [
+            # we need a separate flag to use manual align for data as not always wanted
+            "displayMarkerDataPoints",
+            "displayMarkerDataNames",
+            "displayMarkerDataProjections",
+            "displayDataProjectionPoints",
+            "displayDataProjections",
+            "displayAxes",
+        ]
+        self._manualAlignTempInvisible = []
+        for graphicsName in manualAlignGraphicsNames:
+            if self._getVisibility(graphicsName) == True:
+                self._manualAlignTempInvisible.append(graphicsName)
+                self._setVisibility(graphicsName, False)
 
     def interactionEnd(self):
         self._applyAlignSettings()
+        for graphicsName in self._manualAlignTempInvisible:
+            self._setVisibility(graphicsName, True)
 
     def _autorangeSpectrum(self):
         scene = self.getScene()
@@ -832,10 +844,3 @@ class GeometryFitterModel(object):
             scene.setTransformationMatrix(transMat[0] + transMat[1] + transMat[2] + transMat[3])
         else:
             scene.clearTransformation()
-        # rescale axes for new scale
-        # axesScale = self._getAxesScale()
-        # with ChangeManager(scene):
-        #     axes = scene.findGraphicsByName('displayAxes')
-        #     pointattr = axes.getGraphicspointattributes()
-        #     pointattr.setBaseSize([axesScale])
-        #     pointattr.setLabelText(1, '  {:2g}'.format(axesScale))

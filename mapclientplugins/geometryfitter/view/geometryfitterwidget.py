@@ -969,7 +969,9 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._updateAlignWidgets()
         fitterSteps = self._fitter.getFitterSteps()
         index = fitterSteps.index(self._currentFitterStep)
+        QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         self._fitter.run(fitterSteps[index], reorder=True)
+        QtWidgets.QApplication.restoreOverrideCursor()
         for index in range(0, len(fitterSteps)):
             self._refreshStepItem(fitterSteps[index])
         self._sceneChanged()
