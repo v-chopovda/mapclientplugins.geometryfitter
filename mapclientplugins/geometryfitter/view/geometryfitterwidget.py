@@ -241,7 +241,6 @@ class GeometryFitterWidget(QtWidgets.QWidget):
             self._model.setAlignSettingsChangeCallback(self._alignCallback)
         else:
             self._model.setStateAlign(False)
-        self._updateFitterStepWidgets()
 
     def _stepsListItemClicked(self, item):
         """
@@ -252,6 +251,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         step = fitterSteps[clickedIndex]
         if step != self._currentFitterStep:
             self._change_fitter_step(step)
+            self._updateFitterStepWidgets()
         isInitialConfig = step is self._fitter.getInitialFitterStepConfig()
         isChecked = True if isInitialConfig else (item.checkState() == QtCore.Qt.Checked)
         if step.hasRun() != isChecked:
