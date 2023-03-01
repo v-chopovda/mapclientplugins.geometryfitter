@@ -803,7 +803,7 @@ class GeometryFitterModel(object):
         ]
         self._manualAlignTempInvisible = []
         for graphicsName in manualAlignGraphicsNames:
-            if self._getVisibility(graphicsName) == True:
+            if self._getVisibility(graphicsName):
                 self._manualAlignTempInvisible.append(graphicsName)
                 self._setVisibility(graphicsName, False)
 
