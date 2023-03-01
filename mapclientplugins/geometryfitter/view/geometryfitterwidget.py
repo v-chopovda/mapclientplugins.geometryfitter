@@ -12,6 +12,7 @@ from opencmiss.maths.vectorops import dot, magnitude, mult, normalize, sub
 
 from opencmiss.utils.zinc.field import field_is_managed_coordinates, field_is_managed_group
 from opencmiss.zinc.field import Field
+from opencmiss.zincwidgets.utils import set_wait_cursor
 from scaffoldfitter.fitterstepalign import FitterStepAlign
 from scaffoldfitter.fitterstepconfig import FitterStepConfig
 from scaffoldfitter.fitterstepfit import FitterStepFit
@@ -175,7 +176,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         """
         Add a new align step.
         """
-        self._currentFitterStep = FitterStepAlign()
+        self._change_fitter_step(FitterStepAlign())
         self._fitter.addFitterStep(self._currentFitterStep)  # Future: , lastFitterStep
         self._buildStepsList()
 
@@ -183,7 +184,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         """
         Add a new config step.
         """
-        self._currentFitterStep = FitterStepConfig()
+        self._change_fitter_step(FitterStepConfig())
         self._fitter.addFitterStep(self._currentFitterStep)  # Future: , lastFitterStep
         self._buildStepsList()
 
@@ -191,7 +192,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         """
         Add a new fit step.
         """
-        self._currentFitterStep = FitterStepFit()
+        self._change_fitter_step(FitterStepFit())
         self._fitter.addFitterStep(self._currentFitterStep)  # Future: , lastFitterStep
         self._buildStepsList()
 
@@ -201,7 +202,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         """
         fitterSteps = self._fitter.getFitterSteps()
         endIndex = fitterSteps.index(endStep)
-        sceneChanged = self._fitter.run(endStep, self._model.getOutputModelFileNameStem())
+        sceneChanged = self._run_fitter(endStep, stem=self._model.getOutputModelFileNameStem())
         self._reloadSteps(sceneChanged, endIndex)
 
     def _reloadSteps(self, sceneChanged, endIndex):
@@ -231,6 +232,16 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._currentFitterStep = self._fitter.removeFitterStep(self._currentFitterStep)
         self._buildStepsList()
 
+    def _change_fitter_step(self, step):
+        self._currentFitterStep = step
+        if isinstance(self._currentFitterStep, FitterStepAlign):
+            self._model.setStateAlign(True)
+            self._model.setAlignStep(self._currentFitterStep)
+            self._model.setAlignSettingsUIUpdateCallback(self._updateAlignWidgets)
+            self._model.setAlignSettingsChangeCallback(self._alignCallback)
+        else:
+            self._model.setStateAlign(False)
+
     def _stepsListItemClicked(self, item):
         """
         Changes current step and possibly changes checked/run status.
@@ -239,7 +250,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         fitterSteps = self._fitter.getFitterSteps()
         step = fitterSteps[clickedIndex]
         if step != self._currentFitterStep:
-            self._currentFitterStep = step
+            self._change_fitter_step(step)
             self._updateFitterStepWidgets()
         isInitialConfig = step is self._fitter.getInitialFitterStepConfig()
         isChecked = True if isInitialConfig else (item.checkState() == QtCore.Qt.Checked)
@@ -260,7 +271,6 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         firstStep = True
         fitterSteps = self._fitter.getFitterSteps()
         for step in fitterSteps:
-            name = None
             if isinstance(step, FitterStepAlign):
                 name = "Align"
             elif isinstance(step, FitterStepConfig):
@@ -287,7 +297,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         """
         For steps list drag and drop event.
         Update the order of steps in fitterSteps.
-        """ 
+        """
         if newRow != prevRow:
             if newRow != 0 and prevRow != 0:
                 sceneChanged, endIndex = self._fitter.moveFitterStep(prevRow, newRow, self._model.getOutputModelFileNameStem())
@@ -402,7 +412,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.displaySurfacesTranslucent_checkBox.clicked.connect(self._displaySurfacesTranslucentClicked)
         self._ui.displaySurfacesWireframe_checkBox.clicked.connect(self._displaySurfacesWireframeClicked)
         self._setupDisplayGroupWidgets()
-    
+
     def _setupDisplayGroupWidgets(self):
         """
         Set up group display widgets and display values from fitter object.
@@ -447,7 +457,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.displaySurfacesTranslucent_checkBox.setChecked(self._model.isDisplaySurfacesTranslucent())
         self._ui.displaySurfacesWireframe_checkBox.setChecked(self._model.isDisplaySurfacesWireframe())
         self._displayErrors()
-    
+
     def _displayErrors(self):
         rmsError, maxError = self._fitter.getDataRMSAndMaximumProjectionError()
         rms_error_text = "-" if rmsError is None else f"{rmsError}"
@@ -956,14 +966,42 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.alignScale_lineEdit.setText(realFormat.format(align.getScale()))
         self._ui.alignScaleProportion_lineEdit.setText(realFormat.format(align.getScaleProportion()))
         self._ui.alignTranslation_lineEdit.setText(", ".join(realFormat.format(value) for value in align.getTranslation()))
+        self._updateManualAlignment()
+
+    @set_wait_cursor
+    def _run_fitter(self, fit_step, stem=None, reorder=False):
+        return self._fitter.run(fit_step, modelFileNameStem=stem, reorder=reorder)
+
+    def _alignCallback(self):
+        self._updateAlignWidgets()
+        fitterSteps = self._fitter.getFitterSteps()
+        index = fitterSteps.index(self._currentFitterStep)
+        self._run_fitter(fitterSteps[index], reorder=True)
+        for index in range(0, len(fitterSteps)):
+            self._refreshStepItem(fitterSteps[index])
+        self._sceneChanged()
 
     def _alignGroupsClicked(self):
         state = self._ui.alignGroups_checkBox.checkState()
         self._getAlign().setAlignGroups(state == QtCore.Qt.Checked)
+        self._updateManualAlignment()
 
     def _alignMarkersClicked(self):
         state = self._ui.alignMarkers_checkBox.checkState()
         self._getAlign().setAlignMarkers(state == QtCore.Qt.Checked)
+        self._updateManualAlignment()
+
+    def _updateManualAlignment(self):
+        isAlignGroups = self._ui.alignGroups_checkBox.checkState()
+        isAlignMarkers = self._ui.alignMarkers_checkBox.checkState()
+        if isAlignGroups == QtCore.Qt.Checked or isAlignMarkers == QtCore.Qt.Checked:
+            manualAlignmentEnabled = False
+        else:
+            manualAlignmentEnabled = True
+        self._model.setStateAlign(manualAlignmentEnabled)
+        self._ui.alignRotation_lineEdit.setEnabled(manualAlignmentEnabled)
+        self._ui.alignScale_lineEdit.setEnabled(manualAlignmentEnabled)
+        self._ui.alignTranslation_lineEdit.setEnabled(manualAlignmentEnabled)
 
     def _alignRotationEntered(self):
         values = QLineEdit_parseVector3(self._ui.alignRotation_lineEdit)
