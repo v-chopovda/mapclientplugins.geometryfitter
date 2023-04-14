@@ -1455,18 +1455,18 @@
   <customwidget>
    <class>AlignmentSceneviewerWidget</class>
    <extends>QWidget</extends>
-   <header>opencmiss/zincwidgets/alignmentsceneviewerwidget.h</header>
+   <header>cmlibs/widgets/alignmentsceneviewerwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>FieldChooserWidget</class>
    <extends>QComboBox</extends>
-   <header>opencmiss/zincwidgets/fieldchooserwidget.h</header>
+   <header>cmlibs/widgets/fieldchooserwidget.h</header>
   </customwidget>
   <customwidget>
    <class>DraggableListWidget</class>
    <extends>QWidget</extends>
-   <header>opencmiss/zincwidgets/draggablelistwidget.h</header>
+   <header>cmlibs/widgets/draggablelistwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

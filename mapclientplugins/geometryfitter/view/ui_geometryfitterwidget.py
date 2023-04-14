@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'geometryfitterwidget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.1
+## Created by: Qt User Interface Compiler version 6.5.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -21,9 +21,9 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDockWidget, QFormLayout
     QSizePolicy, QSpacerItem, QSpinBox, QTabWidget,
     QVBoxLayout, QWidget)
 
-from opencmiss.zincwidgets.alignmentsceneviewerwidget import AlignmentSceneviewerWidget
-from opencmiss.zincwidgets.draggablelistwidget import DraggableListWidget
-from opencmiss.zincwidgets.fieldchooserwidget import FieldChooserWidget
+from cmlibs.widgets.alignmentsceneviewerwidget import AlignmentSceneviewerWidget
+from cmlibs.widgets.draggablelistwidget import DraggableListWidget
+from cmlibs.widgets.fieldchooserwidget import FieldChooserWidget
 
 class Ui_GeometryFitterWidget(object):
     def setupUi(self, GeometryFitterWidget):

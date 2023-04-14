@@ -110,7 +110,7 @@ def matrixmult(a, b):
 
 def eulerToRotationMatrix3(euler_angles):
     '''
-    From OpenCMISS-Zinc graphics_library.cpp
+    From CMLibs-Zinc graphics_library.cpp
     '''
     cos_azimuth = cos(euler_angles[0])
     sin_azimuth = sin(euler_angles[0])
@@ -126,7 +126,7 @@ def eulerToRotationMatrix3(euler_angles):
 
 def rotationMatrix3ToEuler(matrix):
     '''
-    From OpenCMISS-Zinc graphics_library.cpp
+    From CMLibs-Zinc graphics_library.cpp
     '''
     MATRIX_TO_EULER_TOLERANCE = 1.0E-12
     euler_angles = [0.0, 0.0, 0.0]
