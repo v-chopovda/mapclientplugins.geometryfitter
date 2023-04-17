@@ -21,9 +21,9 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDockWidget, QFormLayout
     QSizePolicy, QSpacerItem, QSpinBox, QTabWidget,
     QVBoxLayout, QWidget)
 
-from opencmiss.zincwidgets.alignmentsceneviewerwidget import AlignmentSceneviewerWidget
-from opencmiss.zincwidgets.draggablelistwidget import DraggableListWidget
-from opencmiss.zincwidgets.fieldchooserwidget import FieldChooserWidget
+from cmlibs.widgets.alignmentsceneviewerwidget import AlignmentSceneviewerWidget
+from cmlibs.widgets.draggablelistwidget import DraggableListWidget
+from cmlibs.widgets.fieldchooserwidget import FieldChooserWidget
 
 class Ui_GeometryFitterWidget(object):
     def setupUi(self, GeometryFitterWidget):

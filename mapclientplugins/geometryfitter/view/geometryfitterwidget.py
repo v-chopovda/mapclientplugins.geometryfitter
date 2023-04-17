@@ -8,11 +8,11 @@ from PySide6 import QtCore, QtWidgets
 
 from mapclientplugins.geometryfitter.utils.zinc_utils import field_is_managed_real_1_to_3_components
 from mapclientplugins.geometryfitter.view.ui_geometryfitterwidget import Ui_GeometryFitterWidget
-from opencmiss.maths.vectorops import dot, magnitude, mult, normalize, sub
+from cmlibs.maths.vectorops import dot, magnitude, mult, normalize, sub
 
-from opencmiss.utils.zinc.field import field_is_managed_coordinates, field_is_managed_group
-from opencmiss.zinc.field import Field
-from opencmiss.zincwidgets.utils import set_wait_cursor
+from cmlibs.utils.zinc.field import field_is_managed_coordinates, field_is_managed_group
+from cmlibs.zinc.field import Field
+from cmlibs.widgets.utils import set_wait_cursor
 from scaffoldfitter.fitterstepalign import FitterStepAlign
 from scaffoldfitter.fitterstepconfig import FitterStepConfig
 from scaffoldfitter.fitterstepfit import FitterStepFit
