@@ -399,7 +399,6 @@ class GeometryFitterModel(object):
             elementDerivativesField = fieldmodule.createFieldConcatenate(
                 [fieldmodule.createFieldDerivative(modelCoordinates, d + 1) for d in range(meshDimension)])
             cmiss_number = fieldmodule.findFieldByName("cmiss_number")
-            markerNodeGroup, markerLocation, markerCoordinates, markerName = self._fitter.getMarkerModelFields()
 
             # get sizing for axes
             axesScale = 1.0
@@ -565,7 +564,7 @@ class GeometryFitterModel(object):
 
             for projectionMeshDimension in range(1, 3):
                 dataProjectionNodeGroup = self._fitter.getDataProjectionNodeGroupField(projectionMeshDimension)
-                if dataProjectionNodeGroup.getNodesetGroup().getSize() == 0:
+                if dataProjectionNodeGroup.isEmpty():
                     continue
                 dataProjectionCoordinates = self._fitter.getDataHostCoordinatesField()
                 dataProjectionDelta = self._fitter.getDataDeltaField()

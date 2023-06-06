@@ -26,10 +26,9 @@ def field_is_managed_group_mesh(field, mesh):
     Chooser conditional function limiting to field group with a mesh group for mesh.
     """
     if field_is_managed_group(field):
-        elementGroup = field.castGroup().getFieldElementGroup(mesh)
-        if elementGroup.isValid():
-            if elementGroup.getMeshGroup().getSize() > 0:
-                return True
+        meshGroup = field.castGroup().getMeshGroup(mesh)
+        if meshGroup.isValid() and (meshGroup.getSize() > 0):
+            return True
     return False
 
 
