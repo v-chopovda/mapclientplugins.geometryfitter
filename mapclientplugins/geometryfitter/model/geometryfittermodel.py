@@ -8,6 +8,8 @@ from cmlibs.maths.vectorops import add, axis_angle_to_rotation_matrix, euler_to_
     matrix_mult, rotation_matrix_to_euler, matrix_inv, identity_matrix
 from cmlibs.utils.zinc.finiteelement import evaluateFieldNodesetRange
 from cmlibs.utils.zinc.general import ChangeManager
+from cmlibs.utils.zinc.group import group_add_group_elements, group_add_group_nodes
+from cmlibs.utils.zinc.scene import scene_get_selection_group, scene_create_selection_group
 from cmlibs.zinc.field import Field, FieldGroup
 from cmlibs.zinc.glyph import Glyph
 from cmlibs.zinc.graphics import Graphics
@@ -17,7 +19,6 @@ from cmlibs.zinc.scenefilter import Scenefilter
 from cmlibs.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_WORLD
 from scaffoldfitter.fitter import Fitter
 from scaffoldfitter.fitterjson import decodeJSONFitterSteps
-from mapclientplugins.geometryfitter.utils.zinc_utils import get_scene_selection_group, create_scene_selection_group, group_add_group_elements, group_add_group_nodes
 
 nodeDerivativeLabels = ["D1", "D2", "D3", "D12", "D13", "D23", "D123"]
 
@@ -356,15 +357,17 @@ class GeometryFitterModel(object):
         with ChangeManager(fieldmodule):
             scene = self.getScene()
             # can't use SUBELEMENT_HANDLING_MODE_FULL as some groups have been tweaked to omit some faces
-            selectionGroup = get_scene_selection_group(scene, subelementHandlingMode=FieldGroup.SUBELEMENT_HANDLING_MODE_NONE)
+            selectionGroup = scene_get_selection_group(scene)
             if group:
                 if selectionGroup:
                     selectionGroup.clear()
                 else:
-                    selectionGroup = create_scene_selection_group(scene, subelementHandlingMode=FieldGroup.SUBELEMENT_HANDLING_MODE_NONE)
+                    selectionGroup = scene_create_selection_group(scene)
+                oldSubelementHandlingMode = selectionGroup.getSubelementHandlingMode()
+                selectionGroup.setSubelementHandlingMode(FieldGroup.SUBELEMENT_HANDLING_MODE_NONE)
                 group_add_group_elements(selectionGroup, group, highest_dimension_only=False)
-                for fieldDomainType in (Field.DOMAIN_TYPE_NODES, Field.DOMAIN_TYPE_DATAPOINTS):
-                    group_add_group_nodes(selectionGroup, group, fieldmodule.findNodesetByFieldDomainType(fieldDomainType))
+                group_add_group_nodes(selectionGroup, group, Field.DOMAIN_TYPE_DATAPOINTS)
+                selectionGroup.setSubelementHandlingMode(oldSubelementHandlingMode)
             else:
                 if selectionGroup:
                     selectionGroup.clear()
