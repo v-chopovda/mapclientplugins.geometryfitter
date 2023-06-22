@@ -26,7 +26,7 @@ def field_is_managed_group_mesh(field, mesh):
     """
     if field_is_managed_group(field):
         meshGroup = field.castGroup().getMeshGroup(mesh)
-        if meshGroup.isValid() and (meshGroup.getSize() > 0):
+        if meshGroup.isValid():
             return True
     return False
 
