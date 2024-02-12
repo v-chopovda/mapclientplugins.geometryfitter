@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'geometryfitterwidget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.0
+## Created by: Qt User Interface Compiler version 6.6.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -112,7 +112,7 @@ class Ui_GeometryFitterWidget(object):
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollAreaWidgetContents = QWidget()
         self.stepedit_scrollAreaWidgetContents.setObjectName(u"stepedit_scrollAreaWidgetContents")
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, -416, 372, 728))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 396, 794))
         self.verticalLayout_3 = QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -757,25 +757,35 @@ class Ui_GeometryFitterWidget(object):
         self.formLayout_2 = QFormLayout(self.error_group_frame)
         self.formLayout_2.setObjectName(u"formLayout_2")
         self.formLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.displayRMSError_label = QLabel(self.error_group_frame)
-        self.displayRMSError_label.setObjectName(u"displayRMSError_label")
-
-        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.displayRMSError_label)
-
         self.displayRMSError_lineEdit = QLineEdit(self.error_group_frame)
         self.displayRMSError_lineEdit.setObjectName(u"displayRMSError_lineEdit")
 
-        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.displayRMSError_lineEdit)
+        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.displayRMSError_lineEdit)
+
+        self.displayRMSError_label = QLabel(self.error_group_frame)
+        self.displayRMSError_label.setObjectName(u"displayRMSError_label")
+
+        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.displayRMSError_label)
 
         self.displayMaxError_label = QLabel(self.error_group_frame)
         self.displayMaxError_label.setObjectName(u"displayMaxError_label")
 
-        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.displayMaxError_label)
+        self.formLayout_2.setWidget(2, QFormLayout.LabelRole, self.displayMaxError_label)
 
         self.displayMaxError_lineEdit = QLineEdit(self.error_group_frame)
         self.displayMaxError_lineEdit.setObjectName(u"displayMaxError_lineEdit")
 
-        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.displayMaxError_lineEdit)
+        self.formLayout_2.setWidget(2, QFormLayout.FieldRole, self.displayMaxError_lineEdit)
+
+        self.displayError_fieldChooser = FieldChooserWidget(self.error_group_frame)
+        self.displayError_fieldChooser.setObjectName(u"displayError_fieldChooser")
+
+        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.displayError_fieldChooser)
+
+        self.displayErrorGroup_label = QLabel(self.error_group_frame)
+        self.displayErrorGroup_label.setObjectName(u"displayErrorGroup_label")
+
+        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.displayErrorGroup_label)
 
 
         self.verticalLayout_12.addWidget(self.error_group_frame)
@@ -834,7 +844,7 @@ class Ui_GeometryFitterWidget(object):
 
         self.retranslateUi(GeometryFitterWidget)
 
-        self.controls_tabWidget.setCurrentIndex(0)
+        self.controls_tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(GeometryFitterWidget)
@@ -968,6 +978,7 @@ class Ui_GeometryFitterWidget(object):
         self.controls_tabWidget.setTabText(self.controls_tabWidget.indexOf(self.display_tab), QCoreApplication.translate("GeometryFitterWidget", u"Display", None))
         self.displayRMSError_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"RMS error:", None))
         self.displayMaxError_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Maximum error:", None))
+        self.displayErrorGroup_label.setText(QCoreApplication.translate("GeometryFitterWidget", u"Group:", None))
         self.controls_tabWidget.setTabText(self.controls_tabWidget.indexOf(self.error_statistics_tab), QCoreApplication.translate("GeometryFitterWidget", u"Error Statistics", None))
         self.pushButtonDocumentation.setText(QCoreApplication.translate("GeometryFitterWidget", u"Online Documentation", None))
         self.viewAll_pushButton.setText(QCoreApplication.translate("GeometryFitterWidget", u"View All", None))

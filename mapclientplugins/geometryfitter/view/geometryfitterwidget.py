@@ -131,7 +131,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         Also show up-to-date error estimates.
         """
         self._model.autorangeSpectrum()
-        self._displayErrors()
+        self._setupDisplayErrors()
 
     def _makeConnections(self):
         self._makeConnectionsGeneral()
@@ -454,10 +454,24 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.displaySurfacesExterior_checkBox.setChecked(self._model.isDisplaySurfacesExterior())
         self._ui.displaySurfacesTranslucent_checkBox.setChecked(self._model.isDisplaySurfacesTranslucent())
         self._ui.displaySurfacesWireframe_checkBox.setChecked(self._model.isDisplaySurfacesWireframe())
+        self._ui.displayError_fieldChooser.currentIndexChanged.connect(self._displayErrorGroupChanged)
+
+    def _setupDisplayErrors(self):
+        self._ui.displayError_fieldChooser.setRegion(self._fitter.getRegion())
+        self._ui.displayError_fieldChooser.setNullObjectName("- All -")
+        self._ui.displayError_fieldChooser.setConditional(field_is_managed_group)
         self._displayErrors()
 
-    def _displayErrors(self):
-        rmsError, maxError = self._fitter.getDataRMSAndMaximumProjectionError()
+    def _displayErrors(self, group = None):
+        """
+
+        """
+        if group is None:
+            rmsError, maxError = self._fitter.getDataRMSAndMaximumProjectionError()
+        else:
+            groupName = group.getName()
+            rmsError, maxError = self._fitter.getDataRMSAndMaximumProjectionErrorForGroup(groupName)
+
         rms_error_text = "-" if rmsError is None else f"{rmsError}"
         self._ui.displayRMSError_lineEdit.setText(rms_error_text)
         self._ui.displayRMSError_lineEdit.setCursorPosition(0)
@@ -466,6 +480,11 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.displayMaxError_lineEdit.setCursorPosition(0)
         logger.info(f"RMS Error: {rms_error_text}")
         logger.info(f"Max. Error: {max_error_text}")
+
+    def _displayErrorGroupChanged(self, index):
+
+        errorGroup = self._ui.displayError_fieldChooser.getField()
+        self._displayErrors(errorGroup)
 
     def _displayGroupChanged(self, index):
         """

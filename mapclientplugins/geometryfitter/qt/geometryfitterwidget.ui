@@ -167,9 +167,9 @@
              <property name="geometry">
               <rect>
                <x>0</x>
-               <y>-416</y>
-               <width>372</width>
-               <height>728</height>
+               <y>0</y>
+               <width>396</width>
+               <height>794</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -736,7 +736,7 @@
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="display_tab">
           <attribute name="title">
@@ -1347,25 +1347,35 @@
               <property name="bottomMargin">
                <number>0</number>
               </property>
-              <item row="0" column="0">
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="displayRMSError_lineEdit"/>
+              </item>
+              <item row="1" column="0">
                <widget class="QLabel" name="displayRMSError_label">
                 <property name="text">
                  <string>RMS error:</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="displayRMSError_lineEdit"/>
-              </item>
-              <item row="1" column="0">
+              <item row="2" column="0">
                <widget class="QLabel" name="displayMaxError_label">
                 <property name="text">
                  <string>Maximum error:</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
+              <item row="2" column="1">
                <widget class="QLineEdit" name="displayMaxError_lineEdit"/>
+              </item>
+              <item row="0" column="1">
+               <widget class="FieldChooserWidget" name="displayError_fieldChooser"/>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="displayErrorGroup_label">
+                <property name="text">
+                 <string>Group:</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
