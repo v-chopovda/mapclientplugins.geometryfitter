@@ -9,6 +9,8 @@ from PySide6 import QtCore, QtWidgets
 from cmlibs.maths.vectorops import dot, magnitude, mult, normalize, sub
 from cmlibs.utils.zinc.field import field_is_managed_coordinates, field_is_managed_group, \
     field_is_managed_real_1_to_3_components
+from cmlibs.widgets.handlers.modelalignment import ModelAlignment
+from cmlibs.widgets.handlers.scenemanipulation import SceneManipulation
 from cmlibs.widgets.utils import set_wait_cursor
 from cmlibs.zinc.field import Field
 from mapclientplugins.geometryfitter.view.ui_geometryfitterwidget import Ui_GeometryFitterWidget
@@ -73,6 +75,10 @@ def QLineEdit_parseRealNonNegative(lineedit):
     return -1.0
 
 
+def _documentation_button_clicked():
+    webbrowser.open("https://abi-mapping-tools.readthedocs.io/en/latest/mapclientplugins.geometryfitter/docs/index.html")
+
+
 class GeometryFitterWidget(QtWidgets.QWidget):
     """
     User interface for github.com/ABI-Software/scaffoldfitter
@@ -84,12 +90,15 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         super(GeometryFitterWidget, self).__init__(parent)
         self._ui = Ui_GeometryFitterWidget()
         self._ui.setupUi(self)
-        self._ui.alignmentsceneviewerwidget.setContext(model.getContext())
-        self._ui.alignmentsceneviewerwidget.setModel(model)
+        self._ui.baseSceneviewerWidget.set_grab_focus(True)
+        self._ui.baseSceneviewerWidget.set_context(model.getContext())
+        self._ui.baseSceneviewerWidget.register_handler(SceneManipulation())
+        self._align_model_handler = ModelAlignment(QtCore.Qt.Key.Key_A)
+        self._align_model_handler.set_model(model)
+        self._ui.baseSceneviewerWidget.register_handler(self._align_model_handler)
         self._model = model
         self._fitter = self._model.getFitter()
         self._currentFitterStep = self._fitter.getInitialFitterStepConfig()  # always exists
-        self._ui.alignmentsceneviewerwidget.graphicsInitialized.connect(self._graphicsInitialized)
         self._callback = None
         self._setupConfigWidgets()
         self._setupGroupSettingWidgets()
@@ -97,12 +106,12 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._updateDisplayWidgets()
         self._makeConnections()
 
-    def _graphicsInitialized(self):
+    def _graphics_ready(self):
         """
         Callback for when SceneviewerWidget is initialised
         """
         self._sceneChanged()
-        sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
+        sceneviewer = self._ui.baseSceneviewerWidget.get_zinc_sceneviewer()
         if sceneviewer is not None:
             sceneviewer.setTransparencyMode(sceneviewer.TRANSPARENCY_MODE_SLOW)
             self._autoPerturbLines()
@@ -115,7 +124,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._setupConfigWidgets()
         self._setupGroupSettingWidgets()
         self._updateGroupSettingWidgets()  # needed because group is generally reset to None
-        sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
+        sceneviewer = self._ui.baseSceneviewerWidget.get_zinc_sceneviewer()
         if sceneviewer is not None:
             self._model.createGraphics()
             self._setupDisplayGroupWidgets()
@@ -134,6 +143,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._displayErrors()
 
     def _makeConnections(self):
+        self._ui.baseSceneviewerWidget.graphics_initialized.connect(self._graphics_ready)
         self._makeConnectionsGeneral()
         self._makeConnectionsDisplay()
         self._makeConnectionsGroup()
@@ -149,7 +159,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         Enable scene viewer perturb lines iff solid surfaces are drawn with lines.
         Call whenever lines, surfaces or translucency changes
         """
-        sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
+        sceneviewer = self._ui.baseSceneviewerWidget.get_zinc_sceneviewer()
         if sceneviewer is not None:
             sceneviewer.setPerturbLinesFlag(self._model.needPerturbLines())
 
@@ -161,7 +171,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.stepsAddFit_pushButton.clicked.connect(self._stepsAddFitClicked)
         self._ui.stepsDelete_pushButton.clicked.connect(self._stepsDeleteClicked)
         self._ui.steps_listWidget.itemClicked.connect(self._stepsListItemClicked)
-        self._ui.pushButtonDocumentation.clicked.connect(self._documentationButtonClicked)
+        self._ui.pushButtonDocumentation.clicked.connect(_documentation_button_clicked)
         self._ui.done_pushButton.clicked.connect(self._doneButtonClicked)
         self._ui.stdViews_pushButton.clicked.connect(self._stdViewsButtonClicked)
         self._ui.viewAll_pushButton.clicked.connect(self._viewAllButtonClicked)
@@ -234,11 +244,13 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._currentFitterStep = step
         if isinstance(self._currentFitterStep, FitterStepAlign):
             self._model.setStateAlign(True)
+            self._align_model_handler.set_enabled(True)
             self._model.setAlignStep(self._currentFitterStep)
             self._model.setAlignSettingsUIUpdateCallback(self._updateAlignWidgets)
             self._model.setAlignSettingsChangeCallback(self._alignCallback)
         else:
             self._model.setStateAlign(False)
+            self._align_model_handler.set_enabled(False)
 
     def _stepsListItemClicked(self, item):
         """
@@ -337,9 +349,6 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         self._ui.groupSettings_groupBox.setVisible(not isAlign)
         self._ui.stepsDelete_pushButton.setEnabled(not isInitialConfig)
 
-    def _documentationButtonClicked(self):
-        webbrowser.open("https://abi-mapping-tools.readthedocs.io/en/latest/mapclientplugins.geometryfitter/docs/index.html")
-
     def _doneButtonClicked(self):
         QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.CursorShape.WaitCursor)
         self._model.done()
@@ -348,17 +357,17 @@ class GeometryFitterWidget(QtWidgets.QWidget):
         QtWidgets.QApplication.restoreOverrideCursor()
 
     def _stdViewsButtonClicked(self):
-        sceneviewer = self._ui.alignmentsceneviewerwidget.getSceneviewer()
+        sceneviewer = self._ui.baseSceneviewerWidget.get_zinc_sceneviewer()
         if sceneviewer is not None:
             result, eyePosition, lookatPosition, upVector = sceneviewer.getLookatParameters()
             upVector = normalize(upVector)
             viewVector = sub(lookatPosition, eyePosition)
             viewDistance = magnitude(viewVector)
             viewVector = normalize(viewVector)
-            viewX = dot(viewVector, [1.0, 0.0, 0.0])
+            # viewX = dot(viewVector, [1.0, 0.0, 0.0])
             viewY = dot(viewVector, [0.0, 1.0, 0.0])
             viewZ = dot(viewVector, [0.0, 0.0, 1.0])
-            upX = dot(upVector, [1.0, 0.0, 0.0])
+            # upX = dot(upVector, [1.0, 0.0, 0.0])
             upY = dot(upVector, [0.0, 1.0, 0.0])
             upZ = dot(upVector, [0.0, 0.0, 1.0])
             if (viewZ < -0.999) and (upY > 0.999):
@@ -377,7 +386,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
             sceneviewer.setLookatParametersNonSkew(eyePosition, lookatPosition, upVector)
 
     def _viewAllButtonClicked(self):
-        self._ui.alignmentsceneviewerwidget.viewAll()
+        self._ui.baseSceneviewerWidget.view_all()
 
     # === display widgets ===
 
@@ -992,10 +1001,7 @@ class GeometryFitterWidget(QtWidgets.QWidget):
     def _updateManualAlignment(self):
         isAlignGroups = self._ui.alignGroups_checkBox.checkState()
         isAlignMarkers = self._ui.alignMarkers_checkBox.checkState()
-        if isAlignGroups == QtCore.Qt.CheckState.Checked or isAlignMarkers == QtCore.Qt.CheckState.Checked:
-            manualAlignmentEnabled = False
-        else:
-            manualAlignmentEnabled = True
+        manualAlignmentEnabled = isAlignGroups == QtCore.Qt.CheckState.Checked or isAlignMarkers == QtCore.Qt.CheckState.Checked
         self._model.setStateAlign(manualAlignmentEnabled)
         self._ui.alignRotation_lineEdit.setEnabled(manualAlignmentEnabled)
         self._ui.alignScale_lineEdit.setEnabled(manualAlignmentEnabled)
