@@ -28,10 +28,11 @@ class GeometryFitterModel(object):
     Geometric fit model adding visualisations to github.com/ABI-Software/scaffoldfitter
     """
 
-    def __init__(self, inputZincModelFile, inputZincDataFile, location, identifier):
+    def __init__(self, inputZincModelFile, inputZincDataFile, location, identifier, reset_settings):
         """
         :param location: Path to folder for mapclient step name.
         """
+        self._manualAlignTempInvisible = None
         self._initial_matrix = []
         self._fitter = Fitter(inputZincModelFile, inputZincDataFile)
         # self._fitter.setDiagnosticLevel(1)
@@ -62,7 +63,7 @@ class GeometryFitterModel(object):
             "displaySurfacesWireframe": False,
             "displaySubgroupFieldName":  None
         }
-        self._loadSettings()
+        self._loadSettings(reset_settings)
         self._fitter.load()
         self._isStateAlign = False
         self._alignStep = None
@@ -102,21 +103,29 @@ class GeometryFitterModel(object):
     def _getDisplaySettingsFileName(self):
         return self._location + "-display-settings.json"
 
-    def _loadSettings(self):
+    def _loadSettings(self, reset_settings):
         # try:
         fitSettingsFileName = self._getFitSettingsFileName()
         if os.path.isfile(fitSettingsFileName):
-            with open(fitSettingsFileName, "r") as f:
-                self._fitter.decodeSettingsJSON(f.read(), decodeJSONFitterSteps)
+            if reset_settings:
+                if os.path.isfile(fitSettingsFileName):
+                    os.remove(fitSettingsFileName)
+            else:
+                with open(fitSettingsFileName, "r") as f:
+                    self._fitter.decodeSettingsJSON(f.read(), decodeJSONFitterSteps)
         # except:
         #    print('_loadSettings FitSettings EXCEPTION')
         #    raise()
         # try:
         displaySettingsFileName = self._getDisplaySettingsFileName()
         if os.path.isfile(displaySettingsFileName):
-            with open(displaySettingsFileName, "r") as f:
-                savedSettings = json.loads(f.read())
-                self._settings.update(savedSettings)
+            if reset_settings:
+                if os.path.isfile(displaySettingsFileName):
+                    os.remove(displaySettingsFileName)
+            else:
+                with open(displaySettingsFileName, "r") as f:
+                    savedSettings = json.loads(f.read())
+                    self._settings.update(savedSettings)
         # except:
         #    print('_loadSettings DisplaySettings EXCEPTION')
         #    pass
@@ -830,7 +839,7 @@ class GeometryFitterModel(object):
     def _setGraphicsTransformation(self):
         """
         Establish 4x4 graphics transformation for current scaffold package.
-        :param transformationMatrix: 4x4 transformation matrix in row major format
+        transformationMatrix 4x4 transformation matrix in row major format
         i.e. 4 rows of 4 values, or None to clear.
         """
         transformationMatrix = self._alignStep.getTransformationMatrix()

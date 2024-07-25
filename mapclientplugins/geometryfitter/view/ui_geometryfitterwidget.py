@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'geometryfitterwidget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.0
+## Created by: Qt User Interface Compiler version 6.5.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -21,7 +21,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDockWidget, QFormLayout
     QSizePolicy, QSpacerItem, QSpinBox, QTabWidget,
     QVBoxLayout, QWidget)
 
-from cmlibs.widgets.alignmentsceneviewerwidget import AlignmentSceneviewerWidget
+from cmlibs.widgets.basesceneviewerwidget import BaseSceneviewerWidget
 from cmlibs.widgets.draggablelistwidget import DraggableListWidget
 from cmlibs.widgets.fieldchooserwidget import FieldChooserWidget
 
@@ -44,8 +44,8 @@ class Ui_GeometryFitterWidget(object):
         self.dockWidget.setObjectName(u"dockWidget")
         sizePolicy.setHeightForWidth(self.dockWidget.sizePolicy().hasHeightForWidth())
         self.dockWidget.setSizePolicy(sizePolicy)
-        self.dockWidget.setFeatures(QDockWidget.DockWidgetFloatable|QDockWidget.DockWidgetMovable)
-        self.dockWidget.setAllowedAreas(Qt.AllDockWidgetAreas)
+        self.dockWidget.setFeatures(QDockWidget.DockWidgetFeature.DockWidgetFloatable|QDockWidget.DockWidgetFeature.DockWidgetMovable)
+        self.dockWidget.setAllowedAreas(Qt.DockWidgetArea.AllDockWidgetAreas)
         self.dockWidgetContents = QWidget()
         self.dockWidgetContents.setObjectName(u"dockWidgetContents")
         sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
@@ -70,8 +70,8 @@ class Ui_GeometryFitterWidget(object):
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.stepsAddDelete_frame = QFrame(self.steps_groupBox)
         self.stepsAddDelete_frame.setObjectName(u"stepsAddDelete_frame")
-        self.stepsAddDelete_frame.setFrameShape(QFrame.StyledPanel)
-        self.stepsAddDelete_frame.setFrameShadow(QFrame.Raised)
+        self.stepsAddDelete_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.stepsAddDelete_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.horizontalLayout_10 = QHBoxLayout(self.stepsAddDelete_frame)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
@@ -107,12 +107,12 @@ class Ui_GeometryFitterWidget(object):
         self.stepedit_scrollArea.setObjectName(u"stepedit_scrollArea")
         sizePolicy.setHeightForWidth(self.stepedit_scrollArea.sizePolicy().hasHeightForWidth())
         self.stepedit_scrollArea.setSizePolicy(sizePolicy)
-        self.stepedit_scrollArea.setFrameShape(QFrame.NoFrame)
-        self.stepedit_scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.stepedit_scrollArea.setFrameShape(QFrame.Shape.NoFrame)
+        self.stepedit_scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.stepedit_scrollArea.setWidgetResizable(True)
         self.stepedit_scrollAreaWidgetContents = QWidget()
         self.stepedit_scrollAreaWidgetContents.setObjectName(u"stepedit_scrollAreaWidgetContents")
-        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, -416, 372, 728))
+        self.stepedit_scrollAreaWidgetContents.setGeometry(QRect(0, 0, 435, 955))
         self.verticalLayout_3 = QVBoxLayout(self.stepedit_scrollAreaWidgetContents)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -126,7 +126,7 @@ class Ui_GeometryFitterWidget(object):
         self.configInitial_groupBox.setSizePolicy(sizePolicy2)
         self.formLayout = QFormLayout(self.configInitial_groupBox)
         self.formLayout.setObjectName(u"formLayout")
-        self.formLayout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
+        self.formLayout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         self.configModelCoordinates_label = QLabel(self.configInitial_groupBox)
         self.configModelCoordinates_label.setObjectName(u"configModelCoordinates_label")
 
@@ -216,7 +216,7 @@ class Ui_GeometryFitterWidget(object):
         self.config_groupBox.setSizePolicy(sizePolicy)
         self.verticalLayout_4 = QVBoxLayout(self.config_groupBox)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.config_verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.config_verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.verticalLayout_4.addItem(self.config_verticalSpacer)
 
@@ -229,7 +229,7 @@ class Ui_GeometryFitterWidget(object):
         self.align_groupBox.setSizePolicy(sizePolicy)
         self.alignStep_formLayout = QFormLayout(self.align_groupBox)
         self.alignStep_formLayout.setObjectName(u"alignStep_formLayout")
-        self.alignStep_formLayout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
+        self.alignStep_formLayout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         self.alignGroups_checkBox = QCheckBox(self.align_groupBox)
         self.alignGroups_checkBox.setObjectName(u"alignGroups_checkBox")
         self.alignGroups_checkBox.setToolTipDuration(2)
@@ -296,12 +296,12 @@ class Ui_GeometryFitterWidget(object):
         self.fit_groupBox.setObjectName(u"fit_groupBox")
         sizePolicy.setHeightForWidth(self.fit_groupBox.sizePolicy().hasHeightForWidth())
         self.fit_groupBox.setSizePolicy(sizePolicy)
-        self.fit_groupBox.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.fit_groupBox.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
         self.fit_groupBox.setFlat(False)
         self.fit_groupBox.setCheckable(False)
         self.formLayout_3 = QFormLayout(self.fit_groupBox)
         self.formLayout_3.setObjectName(u"formLayout_3")
-        self.formLayout_3.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
+        self.formLayout_3.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         self.fitIterations_label = QLabel(self.fit_groupBox)
         self.fitIterations_label.setObjectName(u"fitIterations_label")
 
@@ -461,8 +461,8 @@ class Ui_GeometryFitterWidget(object):
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.displayMisc_frame = QFrame(self.display_tab)
         self.displayMisc_frame.setObjectName(u"displayMisc_frame")
-        self.displayMisc_frame.setFrameShape(QFrame.StyledPanel)
-        self.displayMisc_frame.setFrameShadow(QFrame.Raised)
+        self.displayMisc_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.displayMisc_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.horizontalLayout_8 = QHBoxLayout(self.displayMisc_frame)
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
         self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
@@ -492,8 +492,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.displayMarker_frame = QFrame(self.display_tab)
         self.displayMarker_frame.setObjectName(u"displayMarker_frame")
-        self.displayMarker_frame.setFrameShape(QFrame.StyledPanel)
-        self.displayMarker_frame.setFrameShadow(QFrame.Raised)
+        self.displayMarker_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.displayMarker_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.gridLayout = QGridLayout(self.displayMarker_frame)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -527,8 +527,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.displayData_frame = QFrame(self.display_tab)
         self.displayData_frame.setObjectName(u"displayData_frame")
-        self.displayData_frame.setFrameShape(QFrame.StyledPanel)
-        self.displayData_frame.setFrameShadow(QFrame.Raised)
+        self.displayData_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.displayData_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.horizontalLayout_9 = QHBoxLayout(self.displayData_frame)
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
         self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
@@ -556,8 +556,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.displayNodes_frame = QFrame(self.display_tab)
         self.displayNodes_frame.setObjectName(u"displayNodes_frame")
-        self.displayNodes_frame.setFrameShape(QFrame.StyledPanel)
-        self.displayNodes_frame.setFrameShadow(QFrame.Raised)
+        self.displayNodes_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.displayNodes_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.horizontalLayout_6 = QHBoxLayout(self.displayNodes_frame)
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
@@ -592,8 +592,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.displayNodeDerivativeLabels_frame = QFrame(self.display_tab)
         self.displayNodeDerivativeLabels_frame.setObjectName(u"displayNodeDerivativeLabels_frame")
-        self.displayNodeDerivativeLabels_frame.setFrameShape(QFrame.StyledPanel)
-        self.displayNodeDerivativeLabels_frame.setFrameShadow(QFrame.Raised)
+        self.displayNodeDerivativeLabels_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.displayNodeDerivativeLabels_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.horizontalLayout_7 = QHBoxLayout(self.displayNodeDerivativeLabels_frame)
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
@@ -655,8 +655,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.displayElements_frame = QFrame(self.display_tab)
         self.displayElements_frame.setObjectName(u"displayElements_frame")
-        self.displayElements_frame.setFrameShape(QFrame.StyledPanel)
-        self.displayElements_frame.setFrameShadow(QFrame.Raised)
+        self.displayElements_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.displayElements_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.horizontalLayout_4 = QHBoxLayout(self.displayElements_frame)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -681,8 +681,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.displayLines_frame = QFrame(self.display_tab)
         self.displayLines_frame.setObjectName(u"displayLines_frame")
-        self.displayLines_frame.setFrameShape(QFrame.StyledPanel)
-        self.displayLines_frame.setFrameShadow(QFrame.Raised)
+        self.displayLines_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.displayLines_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.horizontalLayout_5 = QHBoxLayout(self.displayLines_frame)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
@@ -707,8 +707,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.displaySurfaces_frame = QFrame(self.display_tab)
         self.displaySurfaces_frame.setObjectName(u"displaySurfaces_frame")
-        self.displaySurfaces_frame.setFrameShape(QFrame.StyledPanel)
-        self.displaySurfaces_frame.setFrameShadow(QFrame.Raised)
+        self.displaySurfaces_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.displaySurfaces_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.horizontalLayout_3 = QHBoxLayout(self.displaySurfaces_frame)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -752,8 +752,8 @@ class Ui_GeometryFitterWidget(object):
         self.verticalLayout_12.setObjectName(u"verticalLayout_12")
         self.error_group_frame = QFrame(self.error_statistics_tab)
         self.error_group_frame.setObjectName(u"error_group_frame")
-        self.error_group_frame.setFrameShape(QFrame.StyledPanel)
-        self.error_group_frame.setFrameShadow(QFrame.Raised)
+        self.error_group_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.error_group_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.formLayout_2 = QFormLayout(self.error_group_frame)
         self.formLayout_2.setObjectName(u"formLayout_2")
         self.formLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -786,8 +786,8 @@ class Ui_GeometryFitterWidget(object):
 
         self.bottom_frame = QFrame(self.dockWidgetContents)
         self.bottom_frame.setObjectName(u"bottom_frame")
-        self.bottom_frame.setFrameShape(QFrame.StyledPanel)
-        self.bottom_frame.setFrameShadow(QFrame.Raised)
+        self.bottom_frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.bottom_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.horizontalLayout_2 = QHBoxLayout(self.bottom_frame)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(3, 3, 3, 3)
@@ -820,16 +820,16 @@ class Ui_GeometryFitterWidget(object):
 
         self.horizontalLayout.addWidget(self.dockWidget)
 
-        self.alignmentsceneviewerwidget = AlignmentSceneviewerWidget(GeometryFitterWidget)
-        self.alignmentsceneviewerwidget.setObjectName(u"alignmentsceneviewerwidget")
+        self.baseSceneviewerWidget = BaseSceneviewerWidget(GeometryFitterWidget)
+        self.baseSceneviewerWidget.setObjectName(u"baseSceneviewerWidget")
         sizePolicy6 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy6.setHorizontalStretch(1)
         sizePolicy6.setVerticalStretch(1)
-        sizePolicy6.setHeightForWidth(self.alignmentsceneviewerwidget.sizePolicy().hasHeightForWidth())
-        self.alignmentsceneviewerwidget.setSizePolicy(sizePolicy6)
-        self.alignmentsceneviewerwidget.setAutoFillBackground(False)
+        sizePolicy6.setHeightForWidth(self.baseSceneviewerWidget.sizePolicy().hasHeightForWidth())
+        self.baseSceneviewerWidget.setSizePolicy(sizePolicy6)
+        self.baseSceneviewerWidget.setAutoFillBackground(False)
 
-        self.horizontalLayout.addWidget(self.alignmentsceneviewerwidget)
+        self.horizontalLayout.addWidget(self.baseSceneviewerWidget)
 
 
         self.retranslateUi(GeometryFitterWidget)
