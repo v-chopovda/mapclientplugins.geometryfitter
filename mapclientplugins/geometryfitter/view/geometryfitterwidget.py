@@ -351,10 +351,12 @@ class GeometryFitterWidget(QtWidgets.QWidget):
 
     def _doneButtonClicked(self):
         QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.CursorShape.WaitCursor)
-        self._model.done()
-        self._ui.dockWidget.setFloating(False)
-        self._callback()
-        QtWidgets.QApplication.restoreOverrideCursor()
+        try:
+            self._model.done()
+            self._ui.dockWidget.setFloating(False)
+            self._callback()
+        finally:
+            QtWidgets.QApplication.restoreOverrideCursor()
 
     def _stdViewsButtonClicked(self):
         sceneviewer = self._ui.baseSceneviewerWidget.get_zinc_sceneviewer()

@@ -36,7 +36,7 @@ class ConfigureDialog(QtWidgets.QDialog):
         return super().event(e)
 
     def _make_connections(self):
-        self._ui.lineEdit0.textChanged.connect(self.validate)
+        self._ui.lineEditIdentifier.textChanged.connect(self.validate)
 
     def accept(self):
         """
@@ -61,12 +61,12 @@ class ConfigureDialog(QtWidgets.QDialog):
         """
         # Determine if the current identifier is unique throughout the workflow
         # The identifierOccursCount method is part of the interface to the workflow framework.
-        value = self.identifierOccursCount(self._ui.lineEdit0.text())
-        valid = (value == 0) or (value == 1 and self._previousIdentifier == self._ui.lineEdit0.text())
+        value = self.identifierOccursCount(self._ui.lineEditIdentifier.text())
+        valid = (value == 0) or (value == 1 and self._previousIdentifier == self._ui.lineEditIdentifier.text())
         if valid:
-            self._ui.lineEdit0.setStyleSheet(DEFAULT_STYLE_SHEET)
+            self._ui.lineEditIdentifier.setStyleSheet(DEFAULT_STYLE_SHEET)
         else:
-            self._ui.lineEdit0.setStyleSheet(INVALID_STYLE_SHEET)
+            self._ui.lineEditIdentifier.setStyleSheet(INVALID_STYLE_SHEET)
 
         return valid
 
@@ -76,8 +76,12 @@ class ConfigureDialog(QtWidgets.QDialog):
         set the _previousIdentifier value so that we can check uniqueness of the
         identifier over the whole of the workflow.
         """
-        self._previousIdentifier = self._ui.lineEdit0.text()
-        config = {'identifier': self._ui.lineEdit0.text(), 'reset': self._ui.checkBoxResetSettings.isChecked()}
+        self._previousIdentifier = self._ui.lineEditIdentifier.text()
+        config = {
+            'auto-fit': self._ui.checkBoxRunFitHeadless.isChecked(),
+            'identifier': self._ui.lineEditIdentifier.text(),
+            'reset': self._ui.checkBoxResetSettings.isChecked(),
+        }
         return config
 
     def setConfig(self, config):
@@ -87,6 +91,7 @@ class ConfigureDialog(QtWidgets.QDialog):
         identifier over the whole of the workflow.
         """
         self._previousIdentifier = config['identifier']
-        self._ui.lineEdit0.setText(config['identifier'])
+        self._ui.lineEditIdentifier.setText(config['identifier'])
         self._ui.checkBoxResetSettings.setChecked(config.get('reset', False))
+        self._ui.checkBoxRunFitHeadless.setChecked(config.get('auto-fit', False))
 

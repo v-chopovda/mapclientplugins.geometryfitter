@@ -38,7 +38,7 @@ class GeometryFitterStep(WorkflowStepMountPoint):
         self._port1_inputZincDataFile = None  # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
         self._port2_outputZincModelFile = None  # http://physiomeproject.org/workflow/1.0/rdf-schema#file_location
         # Config:
-        self._config = {'identifier': '', 'reset': False}
+        self._config = {'identifier': '', 'reset': False, 'auto-fit': False}
         self._model = None
         self._view = None
 
@@ -53,9 +53,13 @@ class GeometryFitterStep(WorkflowStepMountPoint):
         try:
             self._model = GeometryFitterModel(self._port0_inputZincModelFile, self._port1_inputZincDataFile, self._location, self._config['identifier'], self._config['reset'])
             self._config['reset'] = False
-            self._view = GeometryFitterWidget(self._model)
-            self._view.registerDoneExecution(self._doneExecution)
-            self._setCurrentWidget(self._view)
+            if self._config['auto-fit']:
+                self._model.done()
+                self._doneExecution()
+            else:
+                self._view = GeometryFitterWidget(self._model)
+                self._view.registerDoneExecution(self._doneExecution)
+                self._setCurrentWidget(self._view)
         finally:
             QtWidgets.QApplication.restoreOverrideCursor()
 

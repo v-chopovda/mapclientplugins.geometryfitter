@@ -17,7 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractButton, QApplication, QCheckBox, QDialog,
     QDialogButtonBox, QGridLayout, QGroupBox, QLabel,
-    QLineEdit, QSizePolicy, QWidget)
+    QLineEdit, QSizePolicy, QSpacerItem, QWidget)
 
 class Ui_ConfigureDialog(object):
     def setupUi(self, ConfigureDialog):
@@ -30,16 +30,22 @@ class Ui_ConfigureDialog(object):
         self.configGroupBox.setObjectName(u"configGroupBox")
         self.gridLayout_2 = QGridLayout(self.configGroupBox)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.lineEdit0 = QLineEdit(self.configGroupBox)
-        self.lineEdit0.setObjectName(u"lineEdit0")
+        self.labelIdentifier = QLabel(self.configGroupBox)
+        self.labelIdentifier.setObjectName(u"labelIdentifier")
+        self.labelIdentifier.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
-        self.gridLayout_2.addWidget(self.lineEdit0, 0, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.labelIdentifier, 0, 0, 1, 1)
 
-        self.label0 = QLabel(self.configGroupBox)
-        self.label0.setObjectName(u"label0")
-        self.label0.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.labelRunFitHeadless = QLabel(self.configGroupBox)
+        self.labelRunFitHeadless.setObjectName(u"labelRunFitHeadless")
+        self.labelRunFitHeadless.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
-        self.gridLayout_2.addWidget(self.label0, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.labelRunFitHeadless, 2, 0, 1, 1)
+
+        self.checkBoxResetSettings = QCheckBox(self.configGroupBox)
+        self.checkBoxResetSettings.setObjectName(u"checkBoxResetSettings")
+
+        self.gridLayout_2.addWidget(self.checkBoxResetSettings, 1, 2, 1, 1)
 
         self.labelResetSettings = QLabel(self.configGroupBox)
         self.labelResetSettings.setObjectName(u"labelResetSettings")
@@ -47,20 +53,29 @@ class Ui_ConfigureDialog(object):
 
         self.gridLayout_2.addWidget(self.labelResetSettings, 1, 0, 1, 1)
 
-        self.checkBoxResetSettings = QCheckBox(self.configGroupBox)
-        self.checkBoxResetSettings.setObjectName(u"checkBoxResetSettings")
+        self.checkBoxRunFitHeadless = QCheckBox(self.configGroupBox)
+        self.checkBoxRunFitHeadless.setObjectName(u"checkBoxRunFitHeadless")
 
-        self.gridLayout_2.addWidget(self.checkBoxResetSettings, 1, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.checkBoxRunFitHeadless, 2, 2, 1, 1)
+
+        self.lineEditIdentifier = QLineEdit(self.configGroupBox)
+        self.lineEditIdentifier.setObjectName(u"lineEditIdentifier")
+
+        self.gridLayout_2.addWidget(self.lineEditIdentifier, 0, 2, 1, 1)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_2.addItem(self.verticalSpacer, 3, 0, 1, 1)
 
 
-        self.gridLayout.addWidget(self.configGroupBox, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.configGroupBox, 2, 0, 1, 1)
 
         self.buttonBox = QDialogButtonBox(ConfigureDialog)
         self.buttonBox.setObjectName(u"buttonBox")
         self.buttonBox.setOrientation(Qt.Orientation.Horizontal)
         self.buttonBox.setStandardButtons(QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Ok)
 
-        self.gridLayout.addWidget(self.buttonBox, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.buttonBox, 3, 0, 1, 1)
 
 
         self.retranslateUi(ConfigureDialog)
@@ -73,14 +88,22 @@ class Ui_ConfigureDialog(object):
     def retranslateUi(self, ConfigureDialog):
         ConfigureDialog.setWindowTitle(QCoreApplication.translate("ConfigureDialog", u"Configure Geometry Fitter", None))
         self.configGroupBox.setTitle("")
-        self.label0.setText(QCoreApplication.translate("ConfigureDialog", u"identifier:", None))
+        self.labelIdentifier.setText(QCoreApplication.translate("ConfigureDialog", u"Identifier:", None))
+#if QT_CONFIG(tooltip)
+        self.labelRunFitHeadless.setToolTip(QCoreApplication.translate("ConfigureDialog", u"Reset the settings to their default values on the next run", None))
+#endif // QT_CONFIG(tooltip)
+        self.labelRunFitHeadless.setText(QCoreApplication.translate("ConfigureDialog", u"Run fit headless:", None))
+#if QT_CONFIG(tooltip)
+        self.checkBoxResetSettings.setToolTip(QCoreApplication.translate("ConfigureDialog", u"Reset the settings to their default values on the next run", None))
+#endif // QT_CONFIG(tooltip)
+        self.checkBoxResetSettings.setText("")
 #if QT_CONFIG(tooltip)
         self.labelResetSettings.setToolTip(QCoreApplication.translate("ConfigureDialog", u"Reset the settings to their default values on the next run", None))
 #endif // QT_CONFIG(tooltip)
         self.labelResetSettings.setText(QCoreApplication.translate("ConfigureDialog", u"Reset settings:", None))
 #if QT_CONFIG(tooltip)
-        self.checkBoxResetSettings.setToolTip(QCoreApplication.translate("ConfigureDialog", u"Reset the settings to their default values on the next run", None))
+        self.checkBoxRunFitHeadless.setToolTip(QCoreApplication.translate("ConfigureDialog", u"Run the fit as it is currently defined without showing the user interface.", None))
 #endif // QT_CONFIG(tooltip)
-        self.checkBoxResetSettings.setText("")
+        self.checkBoxRunFitHeadless.setText("")
     # retranslateUi
 
